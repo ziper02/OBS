@@ -5,7 +5,7 @@ import java.util.Date;
 public class Schedule
 {
 
-	private int ID;
+	private String ID;
 	private String lecturer;
 	private String type;
 	private String day;
@@ -13,15 +13,14 @@ public class Schedule
 	private String startTime;
 	private String endTime;
 	private Boolean available;
-	private Date lastTimeAvailable;
 	
 	
-	public int getID() 
+	public String getID() 
 	{
 		return ID;
 	}
 	
-	public void setID(int iD) 
+	public void setID(String iD) 
 	{
 		ID = iD;
 	}
@@ -96,13 +95,5 @@ public class Schedule
 		this.available = available;
 	}
 	
-	public Date getLastTimeAvailable() 
-	{
-		return lastTimeAvailable;
-	}
-	
-	public void setLastTimeAvailable(Date lastTimeAvailable) 
-	{
-		this.lastTimeAvailable = lastTimeAvailable;
-	}
+
 }

@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import util.Scanner;
 
 public class Main extends Application
 {
@@ -26,6 +27,7 @@ public class Main extends Application
 
 	public static void main(String[] args) 
 	{
+		Scanner.setScanner();
 		launch(args);
 	}
 

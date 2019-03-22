@@ -6,13 +6,13 @@ import java.util.ArrayList;
 public class Course
 {
 
-	private int ID;
+	private String ID;
 	private String Name;
 	private int Semester;
 	private ArrayList<Schedule> Schedule;
 	
 
-	public Course(int iD, String name, int semester) 
+	public Course(String iD, String name, int semester) 
 	{
 		ID = iD;
 		Name = name;
@@ -35,11 +35,11 @@ public class Course
 		return Schedule.get(i);
 	}
 
-	public int getID()
+	public String getID()
 	{
 		return ID;
 	}
-	public void setID(int iD)
+	public void setID(String iD)
 	{
 		ID = iD;
 	}
