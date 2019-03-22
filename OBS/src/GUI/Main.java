@@ -15,7 +15,7 @@ public class Main extends Application
 	  {
 		    // constructing our scene
 		    URL url = getClass().getResource("ScheduleController.fxml");
-		    AnchorPane pane = FXMLLoader.load( url );
+		    AnchorPane pane = FXMLLoader.load( url );//
 		    Scene scene = new Scene( pane );
 		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/icons/date_and_time_clock-512.png")));
 		    // setting the stage
