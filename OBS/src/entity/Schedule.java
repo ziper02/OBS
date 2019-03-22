@@ -12,8 +12,6 @@ public class Schedule
 	private String classlec;
 	private String startTime;
 	private String endTime;
-	private Boolean available;
-	
 	
 	public String getID() 
 	{
@@ -85,15 +83,6 @@ public class Schedule
 		this.endTime = endTime;
 	}
 	
-	public Boolean getAvailable() 
-	{
-		return available;
-	}
-	
-	public void setAvailable(Boolean available) 
-	{
-		this.available = available;
-	}
 	
 
 }

@@ -31,7 +31,7 @@
                         <Font size="15.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton fx:id="CreateAutomaticSchedule" layoutX="-4.0" layoutY="267.0" prefHeight="61.0" prefWidth="208.0" style="-fx-background-color: #6495ed;" text="מערכת מותאמת אוטומטית" textFill="#fff8f8">
+                  <JFXButton fx:id="CreateAutomaticSchedule" layoutY="268.0" prefHeight="61.0" prefWidth="208.0" style="-fx-background-color: #6495ed;" text="מערכת מותאמת אוטומטית" textFill="#fff8f8">
                      <font>
                         <Font size="15.0" />
                      </font>

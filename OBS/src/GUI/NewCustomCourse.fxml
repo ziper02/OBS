@@ -2,15 +2,16 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="801.0" prefWidth="275.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.NewCustomCourseController">
    <children>
-      <FlowPane layoutY="157.0" prefHeight="645.0" prefWidth="275.0" />
       <Label alignment="CENTER" layoutX="1.0" prefHeight="41.0" prefWidth="275.0" text="קורס חדש">
          <font>
             <Font size="19.0" />
@@ -19,5 +20,41 @@
       <Label fx:id="IDcourseLBL" layoutX="210.0" layoutY="63.0" nodeOrientation="RIGHT_TO_LEFT" text="קוד קורס:" />
       <TextField fx:id="IDcourseTF" layoutX="115.0" layoutY="89.0" nodeOrientation="RIGHT_TO_LEFT" onKeyTyped="#keyTypedCourseTF" prefHeight="27.0" prefWidth="146.0" promptText="קוד הקורס" />
       <JFXButton fx:id="SearchBTN" layoutX="30.0" layoutY="90.0" onAction="#searchCourse" prefHeight="25.0" prefWidth="59.0" style="-fx-background-color: #6495ed;" text="חפש" />
+      <TabPane fx:id="SelectPane" layoutY="172.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="634.0" prefWidth="275.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="lectureTAB" closable="false" text="הרצאה">
+               <content>
+                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                     <content>
+                        <FlowPane fx:id="lecturePane" prefHeight="642.0" prefWidth="269.0" />
+                     </content>
+                  </ScrollPane>
+               </content>
+          </Tab>
+          <Tab fx:id="exerciseTAB" closable="false" text="תרגול">
+               <content>
+                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                     <content>
+                        <FlowPane fx:id="exercisePane" prefHeight="645.0" prefWidth="275.0" />
+                     </content>
+                  </ScrollPane>
+               </content>
+          </Tab>
+          <Tab fx:id="labTAB" closable="false" text="מעבדה">
+               <content>
+                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                     <content>
+                        <FlowPane fx:id="labPane" prefHeight="647.0" prefWidth="275.0" />
+                     </content>
+                  </ScrollPane>
+               </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+      <Label fx:id="CourseName" alignment="CENTER" layoutY="131.0" prefHeight="41.0" prefWidth="275.0" visible="false">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

@@ -36,6 +36,7 @@ public abstract class Scanner
 	{
 		Course course=new Course();
 		course.setID(ID);
+		driver.findElement(By.id("SubjectCode")).clear();
 		driver.findElement(By.id("SubjectCode")).sendKeys(ID); //insert the id of course in to text field of searchID
 		driver.findElement(By.name("B2")).click();
 		List<WebElement> courseAvailable = driver.findElements(By.xpath(".//input[@value='חזור לדף הקודם']")); //check if the course available
@@ -46,6 +47,22 @@ public abstract class Scanner
 	 	}
 	 	else
 	 	{
+	 		WebElement Name=driver.findElement(By.xpath(".//h1[@style='text-align:center']"));
+	 		String tempName=Name.getText();
+	 		String[] splitedName = tempName.split("\\s+");
+	 		tempName="";
+	 		for(int i=1;i<splitedName.length;i++)
+	 		{
+	 			if(splitedName[i].contains("שנה"))
+	 			{
+	 				break;
+	 			}
+	 			else
+	 			{
+	 				tempName=tempName+" "+splitedName[i];
+	 			}
+	 		}
+	 		course.setName(tempName);
 	 		List<WebElement> elements=driver.findElements(By.className("odd"));
 	 	    List<WebElement> typeOfelement = driver.findElements(By.xpath(".//div[@class='text'][contains(@style,'text-align:right')]"));
 	 	    for(int i=0;i<elements.size();i++)
