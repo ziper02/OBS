@@ -73,6 +73,7 @@ public class Schedule
 	public void setLecturer(String lecturer) 
 	{
 		this.lecturer = lecturer;
+		checkSetUpAllparamters();
 	}
 	
 	public String getType() 
@@ -104,6 +105,7 @@ public class Schedule
 	public void setClasslec(String classlec) 
 	{
 		this.classlec = classlec;
+		checkSetUpAllparamters();
 	}
 	
 	public Hours getStartTime() 
@@ -130,7 +132,7 @@ public class Schedule
 	
 	private void checkSetUpAllparamters()
 	{
-		if(endTime!=null && startTime!=null && day!=null)
+		if(endTime!=null && startTime!=null && day!=null&&lecturer!=null&&classlec!=null)
 		{
 			setVBox();
 		}
@@ -163,7 +165,7 @@ public class Schedule
 		GridPaneVBox1.setAlignment(Pos.CENTER);
 		L1.setStyle("-fx-font-weight: bold;\n");
 		GridPaneVBox1.getChildren().add(L1);
-		GridPaneVBox1.getChildren().add(new Label(course.getName()));
+		GridPaneVBox1.getChildren().add(setupCourseName());
 		GridPaneVBox1.getChildren().add(new Label(lecturer));
 		GridPaneVBox1.getChildren().add(new Label(classlec));
 		if ((startTime.getIndex() < 5) && (endTime.getIndex() > 5)) 
@@ -174,12 +176,48 @@ public class Schedule
 			GridPaneVBox2.setStyle(cssLayout);
 			GridPaneVBox2.setAlignment(Pos.CENTER);
 			GridPaneVBox2.getChildren().add(L1);
-			GridPaneVBox2.getChildren().add(new Label(course.getName()));
+			GridPaneVBox2.getChildren().add(setupCourseName());
 			GridPaneVBox2.getChildren().add(new Label(lecturer));
 			GridPaneVBox2.getChildren().add(new Label(classlec));
 		}
 		else 
 			splited = false;
+	}
+	
+	private Label setupCourseName()
+	{
+		int i;
+		int counter=0;
+		String courseName="";
+		boolean check=false;
+		String[] splitedName = course.getName().split("\\s+");
+		for(i=1;i<splitedName.length-1;i++)
+		{
+			check=false;
+			if(splitedName[i].length()>10)
+			{
+				courseName=courseName+splitedName[i]+"\n";
+			}
+			else if(splitedName[i].length()+splitedName[i+1].length()<12)
+			{
+				check=true;
+				courseName=courseName+splitedName[i]+" "+splitedName[i+1]+"\n";
+				i++;
+			}
+			else
+			{
+				check=true;
+				courseName=courseName+splitedName[i]+"\n"+splitedName[i+1];
+				i++;
+			}
+		}
+		if(check==false)
+		{
+			courseName=courseName+splitedName[i];
+		}
+		Label result=new Label(courseName);
+		result.setAlignment(Pos.CENTER_RIGHT);
+		return result;
 	}
 	
 

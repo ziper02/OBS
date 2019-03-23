@@ -21,37 +21,41 @@ public class Hours
 		{
 			index=3;
 		}
-		else if(Hour.equals("11:30")||Hour.equals("12:20"))
+		else if(Hour.equals("11:30"))
 		{
 			index=4;
 		}
-		else if(Hour.equals("12:50")||Hour.equals("13:40"))
+		else if(Hour.equals("12:20"))
 		{
 			index=5;
 		}
-		else if(Hour.equals("13:50")||Hour.equals("14:40"))
+		else if(Hour.equals("12:50")||Hour.equals("13:40"))
 		{
 			index=6;
 		}
-		else if(Hour.equals("14:50")||Hour.equals("15:40"))
+		else if(Hour.equals("13:50")||Hour.equals("14:40"))
 		{
 			index=7;
 		}
-		else if(Hour.equals("15:50")||Hour.equals("16:40"))
+		else if(Hour.equals("14:50")||Hour.equals("15:40"))
 		{
 			index=8;
 		}
-		else if(Hour.equals("16:50")||Hour.equals("17:40"))
+		else if(Hour.equals("15:50")||Hour.equals("16:40"))
 		{
 			index=9;
 		}
-		else if(Hour.equals("17:50")||Hour.equals("18:40"))
+		else if(Hour.equals("16:50")||Hour.equals("17:40"))
 		{
 			index=10;
 		}
-		else if(Hour.equals("18:50")||Hour.equals("19:40"))
+		else if(Hour.equals("17:50")||Hour.equals("18:40"))
 		{
 			index=11;
+		}
+		else if(Hour.equals("18:50")||Hour.equals("19:40"))
+		{
+			index=12;
 		}
 		else if(Hour.equals("19:50")||Hour.equals("20:40"))
 		{

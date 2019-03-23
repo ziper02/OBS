@@ -29,9 +29,9 @@ public class ScheduleController {
     private Pane LeftPane;
 
     @FXML
-    public static GridPane ScheduleGrid;
-    
-    private int selection;
+    private GridPane ScheduleGrid;
+
+	private int selection;
 
     @FXML
     void LoadNewCusomCourseController(ActionEvent event) 
@@ -52,5 +52,15 @@ public class ScheduleController {
 		}
     	
     }
+    
+    public GridPane getScheduleGrid() 
+    {
+		return ScheduleGrid;
+	}
+
+	public void setScheduleGrid(GridPane scheduleGrid) 
+	{
+		ScheduleGrid = scheduleGrid;
+	}
 
 }

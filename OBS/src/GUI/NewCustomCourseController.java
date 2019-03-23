@@ -172,14 +172,14 @@ public class NewCustomCourseController {
 		{ 
 			Schedule schedule=(Schedule)userData;
 			if (schedule.getSplited() == true) { //If there is a break
-				ScheduleController.ScheduleGrid.add(schedule.getGridPaneVBox1(), schedule.getDay().getIndex(), schedule.getStartTime().getIndex(), 1, 5 - schedule.getStartTime().getIndex());
+				Main.scheduleController.getScheduleGrid().add(schedule.getGridPaneVBox1(), schedule.getDay().getIndex(), schedule.getStartTime().getIndex(), 1, 5 - schedule.getStartTime().getIndex());
 				if (schedule.getDay().getIndex() == 4)  //if tuesday 
-					ScheduleController.ScheduleGrid.add(schedule.getGridPaneVBox2(), schedule.getDay().getIndex(), 8, 1, schedule.getEndTime().getIndex() - 8);
+					Main.scheduleController.getScheduleGrid().add(schedule.getGridPaneVBox2(), schedule.getDay().getIndex(), 8, 1, schedule.getEndTime().getIndex() - 8);
 				else 
-					ScheduleController.ScheduleGrid.add(schedule.getGridPaneVBox2(), schedule.getDay().getIndex(), 6, 1, schedule.getEndTime().getIndex() - 6);
+					Main.scheduleController.getScheduleGrid().add(schedule.getGridPaneVBox2(), schedule.getDay().getIndex(), 6, 1, schedule.getEndTime().getIndex() - 6);
 			}
 			else 
-				ScheduleController.ScheduleGrid.add(schedule.getGridPaneVBox1(), schedule.getDay().getIndex(), schedule.getStartTime().getIndex(), 1, schedule.getEndTime().getIndex());
+				Main.scheduleController.getScheduleGrid().add(schedule.getGridPaneVBox1(), schedule.getDay().getIndex(), schedule.getStartTime().getIndex(), 1, schedule.getEndTime().getIndex() - schedule.getStartTime().getIndex());
 		});
 	}
 	
