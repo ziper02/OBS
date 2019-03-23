@@ -29,7 +29,7 @@ public class ScheduleController {
     private Pane LeftPane;
 
     @FXML
-    private GridPane ScheduleGrid;
+    public static GridPane ScheduleGrid;
     
     private int selection;
 

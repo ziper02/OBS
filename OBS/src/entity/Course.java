@@ -11,6 +11,7 @@ public class Course
 	private int Semester;
 	private ArrayList<Schedule> Schedule;
 	
+	
 
 	public Course(String iD, String name, int semester) 
 	{

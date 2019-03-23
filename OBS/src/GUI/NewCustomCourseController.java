@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 
 import entity.Course;
 import entity.Schedule;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -11,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 import util.Scanner;
@@ -116,6 +118,8 @@ public class NewCustomCourseController {
     			button.setPrefHeight(90);
     			button.setAlignment(Pos.CENTER_LEFT);
     			button.setStyle("-fx-font-size:12px;-fx-background-color:#66cdaa;-fx-text-fill:#fff8f8;");
+    			button.setUserData(schedule);
+    			button.setOnAction(e -> addToGrid(button.getUserData()));
     			if(schedule.getType().equals("הרצאה"))
     			{
     				countLec=true;
@@ -159,6 +163,33 @@ public class NewCustomCourseController {
     		CourseName.setVisible(true);
     		SelectPane.setVisible(true);
     	}
+    }
+
+
+	private void addToGrid(Object userData) 
+	{
+		Platform.runLater(()->
+		{ 
+			Schedule schedule=(Schedule)userData;
+			if (schedule.getSplited() == true) { //If there is a break
+				ScheduleController.ScheduleGrid.add(schedule.getGridPaneVBox1(), schedule.getDay().getIndex(), schedule.getStartTime().getIndex(), 1, 5 - schedule.getStartTime().getIndex());
+				if (schedule.getDay().getIndex() == 4)  //if tuesday 
+					ScheduleController.ScheduleGrid.add(schedule.getGridPaneVBox2(), schedule.getDay().getIndex(), 8, 1, schedule.getEndTime().getIndex() - 8);
+				else 
+					ScheduleController.ScheduleGrid.add(schedule.getGridPaneVBox2(), schedule.getDay().getIndex(), 6, 1, schedule.getEndTime().getIndex() - 6);
+			}
+			else 
+				ScheduleController.ScheduleGrid.add(schedule.getGridPaneVBox1(), schedule.getDay().getIndex(), schedule.getStartTime().getIndex(), 1, schedule.getEndTime().getIndex());
+		});
+	}
+	
+	@FXML
+    void makeSearchWithEnterBtn(KeyEvent event)
+    {
+    	if(event.getCode().equals(KeyCode.ENTER))
+    	{
+    		searchCourse(new ActionEvent());
+       }
     }
 
 }

@@ -1,28 +1,70 @@
 package entity;
 
-import java.util.Date;
+
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
 public class Schedule
 {
 
-	private String ID;
+	private Course course;
 	private String lecturer;
 	private String type;
-	private String day;
 	private String classlec;
-	private String startTime;
-	private String endTime;
 	
-	public String getID() 
+	private Days day;
+	private Hours startTime;
+	private Hours endTime;
+	
+	private VBox GridPaneVBox1, GridPaneVBox2;
+	private Boolean splited;
+	
+
+	public Schedule()
 	{
-		return ID;
+		
+	}
+
+	public VBox getGridPaneVBox1() 
+	{
+		return GridPaneVBox1;
+	}
+
+	public void setGridPaneVBox1(VBox gridPaneVBox1) 
+	{
+		GridPaneVBox1 = gridPaneVBox1;
+	}
+
+	public VBox getGridPaneVBox2() 
+	{
+		return GridPaneVBox2;
+	}
+
+	public void setGridPaneVBox2(VBox gridPaneVBox2) 
+	{
+		GridPaneVBox2 = gridPaneVBox2;
 	}
 	
-	public void setID(String iD) 
+	public Boolean getSplited() 
 	{
-		ID = iD;
+		return splited;
 	}
-	
+
+	public void setSplited(Boolean splited) 
+	{
+		this.splited = splited;
+	}
+	public Course getCourse() 
+	{
+		return course;
+	}
+
+	public void setCourse(Course course) 
+	{
+		this.course = course;
+	}
+
 	public String getLecturer() 
 	{
 		return lecturer;
@@ -43,14 +85,15 @@ public class Schedule
 		this.type = type;
 	}
 	
-	public String getDay() 
+	public Days getDay() 
 	{
 		return day;
 	}
 	
-	public void setDay(String day) 
+	public void setDay(Days day) 
 	{
 		this.day = day;
+		checkSetUpAllparamters();
 	}
 	
 	public String getClasslec() 
@@ -63,26 +106,81 @@ public class Schedule
 		this.classlec = classlec;
 	}
 	
-	public String getStartTime() 
+	public Hours getStartTime() 
 	{
 		return startTime;
 	}
 	
-	public void setStartTime(String startTime) 
+	public void setStartTime(Hours startTime) 
 	{
 		this.startTime = startTime;
+		checkSetUpAllparamters();
 	}
 	
-	public String getEndTime() 
+	public Hours getEndTime() 
 	{
 		return endTime;
 	}
 	
-	public void setEndTime(String endTime) 
+	public void setEndTime(Hours endTime) 
 	{
 		this.endTime = endTime;
+		checkSetUpAllparamters();
 	}
 	
+	private void checkSetUpAllparamters()
+	{
+		if(endTime!=null && startTime!=null && day!=null)
+		{
+			setVBox();
+		}
+		else
+		{
+			GridPaneVBox1=null;
+			GridPaneVBox2=null;
+		}
+	}
+	
+	private void setVBox()
+	{
+		GridPaneVBox1 = new VBox(0);
+		Label L1 = new Label(type);
+		String Color;
+		if(type.equals("הרצאה"))
+		{
+			Color="#98fb98";
+		}
+		else if(type.equals("תרגיל"))
+		{
+			Color="#87cefa";
+		}
+		else
+		{
+			Color="#ffebcd";
+		}
+		String cssLayout = "-fx-font-size: 14;\n" + "-fx-border-color: black;\n" + "-fx-border-width: 1;\n" + "-fx-background-color: " + Color + ";\n";
+		GridPaneVBox1.setStyle(cssLayout);
+		GridPaneVBox1.setAlignment(Pos.CENTER);
+		L1.setStyle("-fx-font-weight: bold;\n");
+		GridPaneVBox1.getChildren().add(L1);
+		GridPaneVBox1.getChildren().add(new Label(course.getName()));
+		GridPaneVBox1.getChildren().add(new Label(lecturer));
+		GridPaneVBox1.getChildren().add(new Label(classlec));
+		if ((startTime.getIndex() < 5) && (endTime.getIndex() > 5)) 
+		{
+			splited = true;
+			GridPaneVBox2 = new VBox(0);
+			cssLayout = "-fx-font-size: 14;\n" + "-fx-border-width: 1;\n" + "-fx-background-color: " +Color + ";\n";
+			GridPaneVBox2.setStyle(cssLayout);
+			GridPaneVBox2.setAlignment(Pos.CENTER);
+			GridPaneVBox2.getChildren().add(L1);
+			GridPaneVBox2.getChildren().add(new Label(course.getName()));
+			GridPaneVBox2.getChildren().add(new Label(lecturer));
+			GridPaneVBox2.getChildren().add(new Label(classlec));
+		}
+		else 
+			splited = false;
+	}
 	
 
 }

@@ -14,6 +14,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import entity.Schedule;
 import entity.Course;
+import entity.Days;
+import entity.Hours;
 
 public abstract class Scanner 
 {
@@ -73,10 +75,11 @@ public abstract class Scanner
 	 	    	String[] splitedTypeCourse = tempTypeCourse.split("\\s+");
 	 	    	Boolean stopThisSet=true;
 	 	    	Schedule schedule=new Schedule();
+	 	    	schedule.setCourse(course);
 	 	    	schedule.setType(splitedTypeCourse[2]);
 	 	    	try
 	 	    	{
-	 	    		schedule.setDay(splitedNameCourse[2]);
+	 	    		schedule.setDay(new Days(splitedNameCourse[2]));
 	 	    	}
 	 	    	catch(Exception e)
 	 	        {
@@ -84,8 +87,8 @@ public abstract class Scanner
 	 	        }
 	 	    	if(stopThisSet)
 	 	    	{
-		 	        schedule.setStartTime(splitedNameCourse[3]);
-		 	        schedule.setEndTime(splitedNameCourse[4]);
+		 	        schedule.setStartTime(new Hours(splitedNameCourse[3]));
+		 	        schedule.setEndTime(new Hours(splitedNameCourse[4]));
 		 	        boolean check=false;
 		 	        try
 		 	        {
@@ -116,7 +119,7 @@ public abstract class Scanner
 			 	        }
 		 	        }
 	 	    	}
-	 	    	course.add(schedule);	
+	 	    	course.add(schedule);
 	 	    }
 	 	}
 		driver.navigate().back();
