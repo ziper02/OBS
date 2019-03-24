@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
@@ -59,13 +60,19 @@ public class NewCustomCourseController {
     private Label CourseName;
     
 	@FXML
-    private ProgressBar PBar;
-
-    ExecutorService pool = Executors.newFixedThreadPool(15);
+    private ProgressIndicator PBar;
+	
+    
+    private Scanner st ;
+    
+    private Course course;
+    
+    private Boolean byThread;
     
 	@FXML 
 	public void initialize() 
 	{
+		byThread=false;
 		lecturePane.setVgap(8);
 		lecturePane.setHgap(4);
 		lecturePane.setPrefWrapLength(300); // preferred width = 300
@@ -100,32 +107,30 @@ public class NewCustomCourseController {
     @FXML
     void searchCourse(ActionEvent event) 
     {
-    	Course course;
-    	boolean countLec=false,countEx=false,countLab=false;
     	if(Course.couseExist(Integer.parseInt(IDcourseTF.getText())))
     	{
     		course=Course.getCourse(Integer.parseInt(IDcourseTF.getText()));
+    		resultSearchCouse(); 
     	}
     	else
     	{
-			Platform.runLater(()->
-			{ 
-				PBar.setVisible(true);
-				PBar.setProgress(2/100);
-			});
-	    	Future<Course> result=pool.submit(()->Scanner.getSchedule(IDcourseTF.getText()));
-	    	
-			try 
-			{
-				course = result.get();
-			} 
-			catch (InterruptedException | ExecutionException e1) 
-			{
-				e1.printStackTrace();
-				System.exit(0);
-				course=null;
-			}
-	    	//Course course=Scanner.getSchedule(IDcourseTF.getText());
+             st = new Scanner(IDcourseTF.getText());
+             PBar.setVisible(true);
+             SearchBTN.setDisable(true);
+     		 CourseName.setVisible(false);
+     		 SelectPane.setVisible(false);
+             st.start();
+             byThread=true;
+            
+    	}
+    }
+    
+    public void resultSearchCouse()
+    {
+    	if(byThread)
+    	{
+    			course=st.getValue();
+    			byThread=false;
     	}
     	if(course==null)
     	{
@@ -136,6 +141,9 @@ public class NewCustomCourseController {
     	else
     	{
     		Course.addCourse(course);
+ 			Platform.runLater(()->
+ 			{ 
+ 				boolean countLec=false,countEx=false,countLab=false;
     		lecturePane.getChildren().clear();
     		exercisePane.getChildren().clear();
     		labPane.getChildren().clear();
@@ -195,11 +203,14 @@ public class NewCustomCourseController {
     		{
     			labTAB.setDisable(true);
     		}
+    		SearchBTN.setDisable(false);
     		PBar.setVisible(false);
     		CourseName.setVisible(true);
     		SelectPane.setVisible(true);
+ 			});
     	}
     }
+
 
 
 	private void addToGrid(Object userData) 
@@ -228,16 +239,6 @@ public class NewCustomCourseController {
        }
     }
 	
-    public ProgressBar getPBar() 
-    {
-		return PBar;
-	}
-
-
-	public void setPBar(ProgressBar pBar) 
-	{
-		PBar = pBar;
-	}
 
 
 }
