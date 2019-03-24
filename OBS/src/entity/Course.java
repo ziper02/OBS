@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class Course
@@ -11,7 +12,7 @@ public class Course
 	private int Semester;
 	private ArrayList<Schedule> Schedule;
 	
-	
+	private static HashMap<Integer, Course> map = new HashMap<>(); 
 
 	public Course(String iD, String name, int semester) 
 	{
@@ -29,6 +30,26 @@ public class Course
 	public void add(Schedule schedule)
 	{
 		Schedule.add(schedule);
+	}
+	
+	public static void addCourse(Course course)
+	{
+		map.put( Integer.valueOf(course.getID()), course);
+	}
+	
+	public static Course getCourse(Integer ID)
+	{
+		return map.get(ID);  
+	}
+	
+	public static Boolean couseExist(Integer ID)
+	{
+		return map.containsKey(ID);
+	}
+	
+	public static Boolean isEmpty()
+	{
+		return map.isEmpty();
 	}
 	
 	public Schedule get(int i)

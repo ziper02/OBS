@@ -172,10 +172,10 @@ public class Schedule
 		{
 			splited = true;
 			GridPaneVBox2 = new VBox(0);
-			cssLayout = "-fx-font-size: 14;\n" + "-fx-border-width: 1;\n" + "-fx-background-color: " +Color + ";\n";
+			//cssLayout = "-fx-font-size: 14;\n" + "-fx-border-width: 1;\n" + "-fx-background-color: " +Color + ";\n";
 			GridPaneVBox2.setStyle(cssLayout);
 			GridPaneVBox2.setAlignment(Pos.CENTER);
-			GridPaneVBox2.getChildren().add(L1);
+			//GridPaneVBox2.getChildren().add(L1);
 			setupCourseName(GridPaneVBox2);
 			setupLecName(GridPaneVBox2);
 			GridPaneVBox2.getChildren().add(new Label(classlec));

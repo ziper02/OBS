@@ -100,25 +100,33 @@ public class NewCustomCourseController {
     @FXML
     void searchCourse(ActionEvent event) 
     {
-    	boolean countLec=false,countEx=false,countLab=false;
-		Platform.runLater(()->
-		{ 
-			PBar.setVisible(true);
-			PBar.setProgress(2/100);
-		});
-    	Future<Course> result=pool.submit(()->Scanner.getSchedule(IDcourseTF.getText()));
     	Course course;
-		try 
-		{
-			course = result.get();
-		} 
-		catch (InterruptedException | ExecutionException e1) 
-		{
-			e1.printStackTrace();
-			System.exit(0);
-			course=null;
-		}
-    	//Course course=Scanner.getSchedule(IDcourseTF.getText());
+    	boolean countLec=false,countEx=false,countLab=false;
+    	if(Course.couseExist(Integer.parseInt(IDcourseTF.getText())))
+    	{
+    		course=Course.getCourse(Integer.parseInt(IDcourseTF.getText()));
+    	}
+    	else
+    	{
+			Platform.runLater(()->
+			{ 
+				PBar.setVisible(true);
+				PBar.setProgress(2/100);
+			});
+	    	Future<Course> result=pool.submit(()->Scanner.getSchedule(IDcourseTF.getText()));
+	    	
+			try 
+			{
+				course = result.get();
+			} 
+			catch (InterruptedException | ExecutionException e1) 
+			{
+				e1.printStackTrace();
+				System.exit(0);
+				course=null;
+			}
+	    	//Course course=Scanner.getSchedule(IDcourseTF.getText());
+    	}
     	if(course==null)
     	{
     		SelectPane.setVisible(false);
@@ -127,6 +135,7 @@ public class NewCustomCourseController {
     	}
     	else
     	{
+    		Course.addCourse(course);
     		lecturePane.getChildren().clear();
     		exercisePane.getChildren().clear();
     		labPane.getChildren().clear();
