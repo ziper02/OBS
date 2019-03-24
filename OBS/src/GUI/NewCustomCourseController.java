@@ -1,5 +1,10 @@
 package GUI;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 import com.jfoenix.controls.JFXButton;
 
 import entity.Course;
@@ -9,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
@@ -51,8 +57,11 @@ public class NewCustomCourseController {
 
     @FXML
     private Label CourseName;
-
     
+	@FXML
+    private ProgressBar PBar;
+
+    ExecutorService pool = Executors.newFixedThreadPool(15);
     
 	@FXML 
 	public void initialize() 
@@ -92,7 +101,21 @@ public class NewCustomCourseController {
     void searchCourse(ActionEvent event) 
     {
     	boolean countLec=false,countEx=false,countLab=false;
-    	Course course=Scanner.getSchedule(IDcourseTF.getText());
+    	PBar.setVisible(true);
+    	PBar.setProgress(2/100);
+    	Future<Course> result=pool.submit(()->Scanner.getSchedule(IDcourseTF.getText()));
+    	Course course;
+		try 
+		{
+			course = result.get();
+		} 
+		catch (InterruptedException | ExecutionException e1) 
+		{
+			e1.printStackTrace();
+			System.exit(0);
+			course=null;
+		}
+    	//Course course=Scanner.getSchedule(IDcourseTF.getText());
     	if(course==null)
     	{
     		SelectPane.setVisible(false);
@@ -160,6 +183,7 @@ public class NewCustomCourseController {
     		{
     			labTAB.setDisable(true);
     		}
+    		PBar.setVisible(false);
     		CourseName.setVisible(true);
     		SelectPane.setVisible(true);
     	}
@@ -191,5 +215,17 @@ public class NewCustomCourseController {
     		searchCourse(new ActionEvent());
        }
     }
+	
+    public ProgressBar getPBar() 
+    {
+		return PBar;
+	}
+
+
+	public void setPBar(ProgressBar pBar) 
+	{
+		PBar = pBar;
+	}
+
 
 }

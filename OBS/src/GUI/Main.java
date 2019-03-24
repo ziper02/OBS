@@ -14,6 +14,7 @@ import util.Scanner;
 public class Main extends Application
 {
 	public static  ScheduleController scheduleController;
+	
 	  public void start(Stage primaryStage) throws IOException 
 	  {
 		    // constructing our scene

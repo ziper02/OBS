@@ -32,7 +32,9 @@ public class ScheduleController {
     private GridPane ScheduleGrid;
 
 	private int selection;
-
+	
+	public static NewCustomCourseController controller;
+	
     @FXML
     void LoadNewCusomCourseController(ActionEvent event) 
     {
@@ -41,8 +43,13 @@ public class ScheduleController {
 		{
 			if(selection!=1)
 			{
-				newLoadedPane = FXMLLoader.load(getClass().getResource("/gui/NewCustomCourse.fxml"));
+				/*newLoadedPane = FXMLLoader.load(getClass().getResource("/gui/NewCustomCourse.fxml"));
 				MiddlePane.getChildren().add(newLoadedPane);
+				selection=1;*/
+				FXMLLoader loader=new FXMLLoader(getClass().getResource("/gui/NewCustomCourse.fxml"));
+				newLoadedPane = loader.load();
+				MiddlePane.getChildren().add(newLoadedPane);
+				controller=loader.getController();
 				selection=1;
 			}
 		} 

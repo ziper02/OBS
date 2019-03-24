@@ -165,8 +165,8 @@ public class Schedule
 		GridPaneVBox1.setAlignment(Pos.CENTER);
 		L1.setStyle("-fx-font-weight: bold;\n");
 		GridPaneVBox1.getChildren().add(L1);
-		GridPaneVBox1.getChildren().add(setupCourseName());
-		GridPaneVBox1.getChildren().add(new Label(lecturer));
+		setupCourseName(GridPaneVBox1);
+		setupLecName(GridPaneVBox1);
 		GridPaneVBox1.getChildren().add(new Label(classlec));
 		if ((startTime.getIndex() < 5) && (endTime.getIndex() > 5)) 
 		{
@@ -176,48 +176,66 @@ public class Schedule
 			GridPaneVBox2.setStyle(cssLayout);
 			GridPaneVBox2.setAlignment(Pos.CENTER);
 			GridPaneVBox2.getChildren().add(L1);
-			GridPaneVBox2.getChildren().add(setupCourseName());
-			GridPaneVBox2.getChildren().add(new Label(lecturer));
+			setupCourseName(GridPaneVBox2);
+			setupLecName(GridPaneVBox2);
 			GridPaneVBox2.getChildren().add(new Label(classlec));
 		}
 		else 
 			splited = false;
 	}
 	
-	private Label setupCourseName()
+	private void setupCourseName(VBox GridPaneVBox)
 	{
 		int i;
-		int counter=0;
-		String courseName="";
-		boolean check=false;
 		String[] splitedName = course.getName().split("\\s+");
-		for(i=1;i<splitedName.length-1;i++)
+		for(i=1;i<splitedName.length;i++)
 		{
-			check=false;
-			if(splitedName[i].length()>10)
+			if(splitedName[i].length()>14)
 			{
-				courseName=courseName+splitedName[i]+"\n";
+				GridPaneVBox.getChildren().add(new Label(splitedName[i]));
 			}
-			else if(splitedName[i].length()+splitedName[i+1].length()<12)
+			else if(splitedName.length!=(i+1))
 			{
-				check=true;
-				courseName=courseName+splitedName[i]+" "+splitedName[i+1]+"\n";
-				i++;
+				if(splitedName[i].length()+splitedName[i+1].length()<15)
+				{
+					GridPaneVBox.getChildren().add(new Label(splitedName[i]+" "+splitedName[i+1]));
+					i++;
+				}
+				else
+				{
+					GridPaneVBox.getChildren().add(new Label(splitedName[i]));
+				}
 			}
 			else
-			{
-				check=true;
-				courseName=courseName+splitedName[i]+"\n"+splitedName[i+1];
-				i++;
-			}
+				GridPaneVBox.getChildren().add(new Label(splitedName[i]));
 		}
-		if(check==false)
+	}
+	
+	private void setupLecName(VBox GridPaneVBox)
+	{
+		int i;
+		String[] splitedName = lecturer.split("\\s+");
+		for(i=0;i<splitedName.length;i++)
 		{
-			courseName=courseName+splitedName[i];
+			if(splitedName[i].length()>14)
+			{
+				GridPaneVBox.getChildren().add(new Label(splitedName[i]));
+			}
+			else if(splitedName.length!=(i+1))
+			{
+				if(splitedName[i].length()+splitedName[i+1].length()<15)
+				{
+					GridPaneVBox.getChildren().add(new Label(splitedName[i]+" "+splitedName[i+1]));
+					i++;
+				}
+				else
+				{
+					GridPaneVBox.getChildren().add(new Label(splitedName[i]));
+				}
+			}
+			else
+				GridPaneVBox.getChildren().add(new Label(splitedName[i]));
 		}
-		Label result=new Label(courseName);
-		result.setAlignment(Pos.CENTER_RIGHT);
-		return result;
 	}
 	
 
