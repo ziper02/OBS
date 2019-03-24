@@ -101,8 +101,11 @@ public class NewCustomCourseController {
     void searchCourse(ActionEvent event) 
     {
     	boolean countLec=false,countEx=false,countLab=false;
-    	PBar.setVisible(true);
-    	PBar.setProgress(2/100);
+		Platform.runLater(()->
+		{ 
+			PBar.setVisible(true);
+			PBar.setProgress(2/100);
+		});
     	Future<Course> result=pool.submit(()->Scanner.getSchedule(IDcourseTF.getText()));
     	Course course;
 		try 

@@ -15,6 +15,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import GUI.ScheduleController;
 import entity.Schedule;
+import javafx.application.Platform;
 import entity.Course;
 import entity.Days;
 import entity.Hours;
@@ -43,23 +44,38 @@ public abstract class Scanner implements Callable<Course>
 		driver.findElement(By.id("SubjectCode")).clear();
 		driver.findElement(By.id("SubjectCode")).sendKeys(ID); //insert the id of course in to text field of searchID
 		driver.findElement(By.name("B2")).click();
-		ScheduleController.controller.getPBar().setProgress(2/100);
+		Platform.runLater(()->
+		{ 
+			ScheduleController.controller.getPBar().setProgress(2/100);
+		});
 		List<WebElement> courseAvailable = driver.findElements(By.xpath(".//input[@value='חזור לדף הקודם']")); //check if the course available
-		ScheduleController.controller.getPBar().setProgress(10/100);
+		Platform.runLater(()->
+		{ 
+			ScheduleController.controller.getPBar().setProgress(10/100);
+		});
 		if(courseAvailable.size()>0)
 	 	{
-			ScheduleController.controller.getPBar().setProgress(100/100);
+			Platform.runLater(()->
+			{ 
+				ScheduleController.controller.getPBar().setProgress(100/100);
+			});
 			driver.navigate().back();
 			return null;
 	 	}
 	 	else
 	 	{
 	 		WebElement Name=driver.findElement(By.xpath(".//h1[@style='text-align:center']"));
-	 		ScheduleController.controller.getPBar().setProgress(20/100);
+			Platform.runLater(()->
+			{ 
+				ScheduleController.controller.getPBar().setProgress(20/100);
+			});
 	 		String tempName=Name.getText();
 	 		String[] splitedName = tempName.split("\\s+");
 	 		tempName="";
-	 		ScheduleController.controller.getPBar().setProgress(25/100);
+			Platform.runLater(()->
+			{ 
+				ScheduleController.controller.getPBar().setProgress(25/100);
+			});
 	 		for(int i=1;i<splitedName.length;i++)
 	 		{
 	 			if(splitedName[i].contains("שנה"))
@@ -71,11 +87,17 @@ public abstract class Scanner implements Callable<Course>
 	 				tempName=tempName+" "+splitedName[i];
 	 			}
 	 		}
-	 		ScheduleController.controller.getPBar().setProgress(30/100);
+			Platform.runLater(()->
+			{ 
+				ScheduleController.controller.getPBar().setProgress(30/100);
+			});
 	 		course.setName(tempName);
 	 		List<WebElement> elements=driver.findElements(By.className("odd"));
 	 	    List<WebElement> typeOfelement = driver.findElements(By.xpath(".//div[@class='text'][contains(@style,'text-align:right')]"));
-	 	   ScheduleController.controller.getPBar().setProgress(50/100);
+			Platform.runLater(()->
+			{ 
+				ScheduleController.controller.getPBar().setProgress(50/100);
+			});
 	 	    for(int i=0;i<elements.size();i++)
 	 	    {
 	 	    	String tempNameCourse=elements.get(i).getText();
@@ -129,7 +151,10 @@ public abstract class Scanner implements Callable<Course>
 		 	        }
 	 	    	}
 	 	    	course.add(schedule);
-	 	    	 ScheduleController.controller.getPBar().setProgress(ScheduleController.controller.getPBar().getProgress()+(50/elements.size()));
+	 			Platform.runLater(()->
+	 			{ 
+	 				ScheduleController.controller.getPBar().setProgress(ScheduleController.controller.getPBar().getProgress()+(50/elements.size()));
+	 			});
 	 	    }
 	 	}
 		driver.navigate().back();
