@@ -22,6 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Priority;
 import util.Scanner;
 
 public class NewCustomCourseController {
@@ -220,10 +221,18 @@ public class NewCustomCourseController {
 			Schedule schedule=(Schedule)userData;
 			if (schedule.getSplited() == true) { //If there is a break
 				Main.scheduleController.getScheduleGrid().add(schedule.getGridPaneVBox1(), schedule.getDay().getIndex(), schedule.getStartTime().getIndex(), 1, 5 - schedule.getStartTime().getIndex());
-				if (schedule.getDay().getIndex() == 4)  //if tuesday 
+				if (schedule.getDay().getIndex() == 4)
+				{//if tuesday 
 					Main.scheduleController.getScheduleGrid().add(schedule.getGridPaneVBox2(), schedule.getDay().getIndex(), 8, 1, schedule.getEndTime().getIndex() - 8);
+					schedule.getGridPaneVBox2().setPrefHeight(30);
+					schedule.getGridPaneVBox2().setPrefWidth(105);
+				}
 				else 
+				{
+					schedule.getGridPaneVBox2().setPrefHeight(30);
+					schedule.getGridPaneVBox2().setPrefWidth(105);
 					Main.scheduleController.getScheduleGrid().add(schedule.getGridPaneVBox2(), schedule.getDay().getIndex(), 6, 1, schedule.getEndTime().getIndex() - 6);
+				}
 			}
 			else 
 				Main.scheduleController.getScheduleGrid().add(schedule.getGridPaneVBox1(), schedule.getDay().getIndex(), schedule.getStartTime().getIndex(), 1, schedule.getEndTime().getIndex() - schedule.getStartTime().getIndex());

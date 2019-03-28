@@ -160,7 +160,7 @@ public class Schedule
 		{
 			Color="#ffebcd";
 		}
-		String cssLayout = "-fx-font-size: 14;\n" + "-fx-border-color: black;\n" + "-fx-border-width: 1;\n" + "-fx-background-color: " + Color + ";\n";
+		String cssLayout = "-fx-font-size: 12;\n" + "-fx-border-color: black;\n" + "-fx-border-width: 1;\n" + "-fx-background-color: " + Color + ";\n";
 		GridPaneVBox1.setStyle(cssLayout);
 		GridPaneVBox1.setAlignment(Pos.CENTER);
 		L1.setStyle("-fx-font-weight: bold;\n");
@@ -172,10 +172,8 @@ public class Schedule
 		{
 			splited = true;
 			GridPaneVBox2 = new VBox(0);
-			//cssLayout = "-fx-font-size: 14;\n" + "-fx-border-width: 1;\n" + "-fx-background-color: " +Color + ";\n";
 			GridPaneVBox2.setStyle(cssLayout);
 			GridPaneVBox2.setAlignment(Pos.CENTER);
-			//GridPaneVBox2.getChildren().add(L1);
 			setupCourseName(GridPaneVBox2);
 			setupLecName(GridPaneVBox2);
 			GridPaneVBox2.getChildren().add(new Label(classlec));
@@ -190,13 +188,19 @@ public class Schedule
 		String[] splitedName = course.getName().split("\\s+");
 		for(i=1;i<splitedName.length;i++)
 		{
-			if(splitedName[i].length()>14)
+			if(splitedName[i].length()>19)
 			{
 				GridPaneVBox.getChildren().add(new Label(splitedName[i]));
 			}
 			else if(splitedName.length!=(i+1))
 			{
-				if(splitedName[i].length()+splitedName[i+1].length()<15)
+				if(splitedName[i].length()+splitedName[i+1].length()+splitedName[i+2].length()<20)
+				{
+					GridPaneVBox.getChildren().add(new Label(splitedName[i]+" "+splitedName[i+1]+" "+splitedName[i+2]));
+					i++;
+					i++;
+				}
+				else if(splitedName[i].length()+splitedName[i+1].length()<20)
 				{
 					GridPaneVBox.getChildren().add(new Label(splitedName[i]+" "+splitedName[i+1]));
 					i++;
@@ -217,13 +221,19 @@ public class Schedule
 		String[] splitedName = lecturer.split("\\s+");
 		for(i=0;i<splitedName.length;i++)
 		{
-			if(splitedName[i].length()>14)
+			if(splitedName[i].length()>35)
 			{
 				GridPaneVBox.getChildren().add(new Label(splitedName[i]));
 			}
 			else if(splitedName.length!=(i+1))
 			{
-				if(splitedName[i].length()+splitedName[i+1].length()<15)
+				if(splitedName[i].length()+splitedName[i+1].length()+splitedName[i+2].length()<36)
+				{
+					GridPaneVBox.getChildren().add(new Label(splitedName[i]+" "+splitedName[i+1]+" "+splitedName[i+2]));
+					i++;
+					i++;
+				}
+				else if(splitedName[i].length()+splitedName[i+1].length()<36)
 				{
 					GridPaneVBox.getChildren().add(new Label(splitedName[i]+" "+splitedName[i+1]));
 					i++;

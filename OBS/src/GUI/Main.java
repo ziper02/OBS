@@ -23,7 +23,7 @@ public class Main extends Application
 		    //AnchorPane pane = FXMLLoader.load( url );
 		    scheduleController=loader.getController();
 		    //Scene scene = new Scene( pane );
-		    Scene scene=new Scene(root, 1411, 800);
+		    Scene scene=new Scene(root, 1639, 1016);
 		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/icons/date_and_time_clock-512.png")));
 		    // setting the stage
 		    primaryStage.setScene( scene );
