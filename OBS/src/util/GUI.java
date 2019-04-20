@@ -3,9 +3,12 @@ package util;
 import java.util.Optional;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.layout.GridPane;
 
 public abstract class GUI 
 {
@@ -38,5 +41,19 @@ public abstract class GUI
 			alert.getButtonTypes().addAll(bttCountiue);
 			Optional<ButtonType> result = alert.showAndWait();
 		});
+	}
+	
+	public static Node getNodeByRowColumnIndex (final int row, final int column, GridPane gridPane) {
+	    Node result = null;
+	    ObservableList<Node> childrens = gridPane.getChildren();
+
+	    for (Node node : childrens) {
+	        if(gridPane.getRowIndex(node) == row && gridPane.getColumnIndex(node) == column) {
+	            result = node;
+	            break;
+	        }
+	    }
+
+	    return result;
 	}
 }

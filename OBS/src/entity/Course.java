@@ -2,6 +2,7 @@ package entity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
 public class Course
@@ -27,6 +28,7 @@ public class Course
 		Schedule=new ArrayList<Schedule>();
 	}
 	
+
 	public void add(Schedule schedule)
 	{
 		Schedule.add(schedule);
@@ -35,6 +37,23 @@ public class Course
 	public static void addCourse(Course course)
 	{
 		map.put( Integer.valueOf(course.getID()), course);
+	}
+	
+	public static ArrayList<Schedule> getSchduledCourses()
+	{
+		ArrayList<Course> list = new ArrayList<Course>(map.values());
+		ArrayList<Schedule> result = new ArrayList<Schedule>();
+		for(int i=0;i<list.size();i++)
+		{
+			for(int j=0;j<list.get(i).getSchedule().size();j++)
+			{
+				if(list.get(i).getSchedule().get(j).getSelected()==true)
+				{
+					result.add(list.get(i).getSchedule().get(j));
+				}
+			}
+		}
+		return result;
 	}
 	
 	public static Course getCourse(Integer ID)
@@ -61,22 +80,27 @@ public class Course
 	{
 		return ID;
 	}
+	
 	public void setID(String iD)
 	{
 		ID = iD;
 	}
+	
 	public String getName()
 	{
 		return Name;
 	}
+	
 	public void setName(String name)
 	{
 		Name = name;
 	}
+	
 	public int getSemester()
 	{
 		return Semester;
 	}
+	
 	public void setSemester(int semester) 
 	{
 		Semester = semester;

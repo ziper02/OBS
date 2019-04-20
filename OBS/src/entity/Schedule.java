@@ -1,8 +1,12 @@
 package entity;
 
 
+import GUI.Main;
+import GUI.ScheduleController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.SingleSelectionModel;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 public class Schedule
@@ -16,10 +20,24 @@ public class Schedule
 	private Days day;
 	private Hours startTime;
 	private Hours endTime;
-	
 	private VBox GridPaneVBox1, GridPaneVBox2;
+	
+	private Boolean twoTimes;
+	private Days dayTwo;
+	private Hours startTimeTwo;
+	private Hours endTimeTwo;
+	private String classlecTwo;
+	private Boolean splitedTwo;
+	private VBox GridPaneVBox3, GridPaneVBox4;
+
+	private Boolean selected;
+	private String GroupID;
+
+	
 	private Boolean splited;
 	
+	
+
 
 	public Schedule()
 	{
@@ -81,6 +99,17 @@ public class Schedule
 		return type;
 	}
 	
+	
+	public Boolean getSplitedTwo() 
+	{
+		return splitedTwo;
+	}
+
+	public void setSplitedTwo(Boolean splitedTwo) 
+	{
+		this.splitedTwo = splitedTwo;
+	}
+
 	public void setType(String type) 
 	{
 		this.type = type;
@@ -135,11 +164,17 @@ public class Schedule
 		if(endTime!=null && startTime!=null && day!=null&&lecturer!=null&&classlec!=null)
 		{
 			setVBox();
+			if(twoTimes==true &&endTimeTwo!=null && startTimeTwo!=null && dayTwo!=null&&lecturer!=null&&classlecTwo!=null )
+			{
+				setVBoxTwo();
+			}
 		}
 		else
 		{
 			GridPaneVBox1=null;
 			GridPaneVBox2=null;
+			GridPaneVBox3=null;
+			GridPaneVBox4=null;
 		}
 	}
 	
@@ -168,6 +203,38 @@ public class Schedule
 		setupCourseName(GridPaneVBox1);
 		setupLecName(GridPaneVBox1);
 		GridPaneVBox1.getChildren().add(new Label(classlec));
+		GridPaneVBox1.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> 
+		{
+			if( e.isPrimaryButtonDown()) 
+			{
+				ScheduleController.controller.course=Course.getCourse(Integer.parseInt(course.getID()));
+				ScheduleController.controller.resultSearchCouse();
+				if(type.equals("הרצאה"))
+				{
+					ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.lectureTAB);
+				}
+				else if(type.equals("תרגיל"))
+				{
+					ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.exerciseTAB);
+				}
+				else if(type.equals("מעבדה"))
+				{
+					ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.labTAB);
+				}	
+            } 
+			else if( e.isSecondaryButtonDown()) 
+            {
+            	Main.scheduleController.getScheduleGrid().getChildren().remove(GridPaneVBox1);
+            	if(splited)
+            		Main.scheduleController.getScheduleGrid().getChildren().remove(GridPaneVBox2);
+            	if(twoTimes)
+            	{
+                	Main.scheduleController.getScheduleGrid().getChildren().remove(GridPaneVBox3);
+                	if(splitedTwo)
+                		Main.scheduleController.getScheduleGrid().getChildren().remove(GridPaneVBox4);
+            	}
+            	selected=false;
+            }});
 		if ((startTime.getIndex() < 5) && (endTime.getIndex() > 5)) 
 		{
 			splited = true;
@@ -177,6 +244,38 @@ public class Schedule
 			setupCourseName(GridPaneVBox2);
 			setupLecName(GridPaneVBox2);
 			GridPaneVBox2.getChildren().add(new Label(classlec));
+			GridPaneVBox2.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> 
+			{
+				if( e.isPrimaryButtonDown()) 
+				{
+					ScheduleController.controller.course=Course.getCourse(Integer.parseInt(course.getID()));
+					ScheduleController.controller.resultSearchCouse();
+					if(type.equals("הרצאה"))
+					{
+						ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.lectureTAB);
+					}
+					else if(type.equals("תרגיל"))
+					{
+						ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.exerciseTAB);
+					}
+					else if(type.equals("מעבדה"))
+					{
+						ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.labTAB);
+					}	
+	            } 
+				else if( e.isSecondaryButtonDown()) 
+	            {
+	            	Main.scheduleController.getScheduleGrid().getChildren().remove(GridPaneVBox1);
+	            	if(splited)
+	            		Main.scheduleController.getScheduleGrid().getChildren().remove(GridPaneVBox2);
+	            	if(twoTimes)
+	            	{
+	                	Main.scheduleController.getScheduleGrid().getChildren().remove(GridPaneVBox3);
+	                	if(splitedTwo)
+	                		Main.scheduleController.getScheduleGrid().getChildren().remove(GridPaneVBox4);
+	            	}
+	            	selected=false;
+	            }});
 		}
 		else 
 			splited = false;
@@ -192,26 +291,21 @@ public class Schedule
 			{
 				GridPaneVBox.getChildren().add(new Label(splitedName[i]));
 			}
-			else if(splitedName.length!=(i+1))
+			if(splitedName.length>(i+2)&&splitedName[i].length()+splitedName[i+1].length()+splitedName[i+2].length()<20)
 			{
-				if(splitedName[i].length()+splitedName[i+1].length()+splitedName[i+2].length()<20)
-				{
-					GridPaneVBox.getChildren().add(new Label(splitedName[i]+" "+splitedName[i+1]+" "+splitedName[i+2]));
-					i++;
-					i++;
-				}
-				else if(splitedName[i].length()+splitedName[i+1].length()<20)
-				{
-					GridPaneVBox.getChildren().add(new Label(splitedName[i]+" "+splitedName[i+1]));
-					i++;
-				}
-				else
-				{
-					GridPaneVBox.getChildren().add(new Label(splitedName[i]));
-				}
+				GridPaneVBox.getChildren().add(new Label(splitedName[i]+" "+splitedName[i+1]+" "+splitedName[i+2]));
+				i++;
+				i++;
+			}
+			else if(splitedName.length>(i+1)&&splitedName[i].length()+splitedName[i+1].length()<20)
+			{
+				GridPaneVBox.getChildren().add(new Label(splitedName[i]+" "+splitedName[i+1]));
+				i++;
 			}
 			else
+			{
 				GridPaneVBox.getChildren().add(new Label(splitedName[i]));
+			}
 		}
 	}
 	
@@ -225,28 +319,227 @@ public class Schedule
 			{
 				GridPaneVBox.getChildren().add(new Label(splitedName[i]));
 			}
-			else if(splitedName.length!=(i+1))
+			if(splitedName.length>(i+2)&&splitedName[i].length()+splitedName[i+1].length()+splitedName[i+2].length()<36)
 			{
-				if(splitedName[i].length()+splitedName[i+1].length()+splitedName[i+2].length()<36)
-				{
-					GridPaneVBox.getChildren().add(new Label(splitedName[i]+" "+splitedName[i+1]+" "+splitedName[i+2]));
-					i++;
-					i++;
-				}
-				else if(splitedName[i].length()+splitedName[i+1].length()<36)
-				{
-					GridPaneVBox.getChildren().add(new Label(splitedName[i]+" "+splitedName[i+1]));
-					i++;
-				}
-				else
-				{
-					GridPaneVBox.getChildren().add(new Label(splitedName[i]));
-				}
+				GridPaneVBox.getChildren().add(new Label(splitedName[i]+" "+splitedName[i+1]+" "+splitedName[i+2]));
+				i++;
+				i++;
+			}
+			else if(splitedName.length>(i+1)&&splitedName[i].length()+splitedName[i+1].length()<36)
+			{
+				GridPaneVBox.getChildren().add(new Label(splitedName[i]+" "+splitedName[i+1]));
+				i++;
 			}
 			else
+			{
 				GridPaneVBox.getChildren().add(new Label(splitedName[i]));
+			}
 		}
 	}
+	
+	private void setVBoxTwo()
+	{
+		GridPaneVBox3 = new VBox(0);
+		Label L1 = new Label(type);
+		String Color;
+		if(type.equals("הרצאה"))
+		{
+			Color="#98fb98";
+		}
+		else if(type.equals("תרגיל"))
+		{
+			Color="#87cefa";
+		}
+		else
+		{
+			Color="#ffebcd";
+		}
+		String cssLayout = "-fx-font-size: 12;\n" + "-fx-border-color: black;\n" + "-fx-border-width: 1;\n" + "-fx-background-color: " + Color + ";\n";
+		GridPaneVBox3.setStyle(cssLayout);
+		GridPaneVBox3.setAlignment(Pos.CENTER);
+		L1.setStyle("-fx-font-weight: bold;\n");
+		GridPaneVBox3.getChildren().add(L1);
+		setupCourseName(GridPaneVBox3);
+		setupLecName(GridPaneVBox3);
+		GridPaneVBox3.getChildren().add(new Label(classlecTwo));
+		GridPaneVBox3.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> 
+		{
+			if( e.isPrimaryButtonDown()) 
+			{
+				ScheduleController.controller.course=Course.getCourse(Integer.parseInt(course.getID()));
+				ScheduleController.controller.resultSearchCouse();
+				if(type.equals("הרצאה"))
+				{
+					ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.lectureTAB);
+				}
+				else if(type.equals("תרגיל"))
+				{
+					ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.exerciseTAB);
+				}
+				else if(type.equals("מעבדה"))
+				{
+					ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.labTAB);
+				}	
+            } 
+			else if( e.isSecondaryButtonDown()) 
+            {
+            	Main.scheduleController.getScheduleGrid().getChildren().remove(GridPaneVBox1);
+            	if(splited)
+            		Main.scheduleController.getScheduleGrid().getChildren().remove(GridPaneVBox2);
+            	if(twoTimes)
+            	{
+                	Main.scheduleController.getScheduleGrid().getChildren().remove(GridPaneVBox3);
+                	if(splitedTwo)
+                		Main.scheduleController.getScheduleGrid().getChildren().remove(GridPaneVBox4);
+            	}
+            	selected=false;
+            }});
+		if ((startTimeTwo.getIndex() < 5) && (endTimeTwo.getIndex() > 5)) 
+		{
+			splitedTwo = true;
+			GridPaneVBox4 = new VBox(0);
+			GridPaneVBox4.setStyle(cssLayout);
+			GridPaneVBox4.setAlignment(Pos.CENTER);
+			setupCourseName(GridPaneVBox4);
+			setupLecName(GridPaneVBox4);
+			GridPaneVBox4.getChildren().add(new Label(classlecTwo));
+			GridPaneVBox4.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> 
+			{
+				if( e.isPrimaryButtonDown()) 
+				{
+					ScheduleController.controller.course=Course.getCourse(Integer.parseInt(course.getID()));
+					ScheduleController.controller.resultSearchCouse();
+					if(type.equals("הרצאה"))
+					{
+						ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.lectureTAB);
+					}
+					else if(type.equals("תרגיל"))
+					{
+						ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.exerciseTAB);
+					}
+					else if(type.equals("מעבדה"))
+					{
+						ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.labTAB);
+					}	
+	            } 
+				else if( e.isSecondaryButtonDown()) 
+	            {
+	            	Main.scheduleController.getScheduleGrid().getChildren().remove(GridPaneVBox1);
+	            	if(splited)
+	            		Main.scheduleController.getScheduleGrid().getChildren().remove(GridPaneVBox2);
+	            	if(twoTimes)
+	            	{
+	                	Main.scheduleController.getScheduleGrid().getChildren().remove(GridPaneVBox3);
+	                	if(splitedTwo)
+	                		Main.scheduleController.getScheduleGrid().getChildren().remove(GridPaneVBox4);
+	            	}
+	            	selected=false;
+	            }});
+		}
+		else 
+			splitedTwo = false;
+	}
+
+	
+	
+		
+	
+	
+	public Boolean getSelected() 
+	{
+		return selected;
+	}
+
+	public void setSelected(Boolean selected) 
+	{
+		this.selected = selected;
+	}
+
+	public String getGroupID() 
+	{
+		return GroupID;
+	}
+
+	public void setGroupID(String groupID) 
+	{
+		GroupID = groupID;
+	}
+
+	public Days getDayTwo()
+	{
+		return dayTwo;
+	}
+
+	public void setDayTwo(Days dayTwo) 
+	{
+		this.dayTwo = dayTwo;
+		checkSetUpAllparamters();
+	}
+
+	public Hours getStartTimeTwo() 
+	{
+		return startTimeTwo;
+	}
+
+	public void setStartTimeTwo(Hours startTimeTwo) 
+	{
+		this.startTimeTwo = startTimeTwo;
+		checkSetUpAllparamters();
+	}
+
+	public Hours getEndTimeTwo() 
+	{
+		return endTimeTwo;
+	}
+
+	public void setEndTimeTwo(Hours endTimeTwo) 
+	{
+		this.endTimeTwo = endTimeTwo;
+		checkSetUpAllparamters();
+	}
+
+	public Boolean getTwoTimes() 
+	{
+		return twoTimes;
+	}
+
+	public void setTwoTimes(Boolean twoTimes) 
+	{
+		this.twoTimes = twoTimes;
+		
+	}
+
+	public String getClasslecTwo() 
+	{
+		return classlecTwo;
+	}
+
+	public void setClasslecTwo(String classlecTwo) 
+	{
+		this.classlecTwo = classlecTwo;
+		checkSetUpAllparamters();
+	}
+
+	public VBox getGridPaneVBox3() 
+	{
+		return GridPaneVBox3;
+	}
+
+	public void setGridPaneVBox3(VBox gridPaneVBox3) 
+	{
+		GridPaneVBox3 = gridPaneVBox3;
+	}
+
+	public VBox getGridPaneVBox4() 
+	{
+		return GridPaneVBox4;
+	}
+
+	public void setGridPaneVBox4(VBox gridPaneVBox4) 
+	{
+		GridPaneVBox4 = gridPaneVBox4;
+	}
+	
 	
 
 }

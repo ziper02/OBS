@@ -75,20 +75,44 @@ public class Scanner extends Thread
 	 		}
 	 		course.setName(tempName);
 	 		List<WebElement> elements=driver.findElements(By.className("odd"));
+	 		List<WebElement> elementsEven=driver.findElements(By.className("even"));
 	 	    List<WebElement> typeOfelement = driver.findElements(By.xpath(".//div[@class='text'][contains(@style,'text-align:right')]"));
+	 	    Boolean haveEven;
 	 	    for(int i=0;i<elements.size();i++)
 	 	    {
+	 	    	Schedule schedule=new Schedule();
 	 	    	String tempNameCourse=elements.get(i).getText();
 	 	    	String[] splitedNameCourse = tempNameCourse.split("\\s+");
+	 	    	
 	 	    	String tempTypeCourse=typeOfelement.get(i).getText();
 	 	    	String[] splitedTypeCourse = tempTypeCourse.split("\\s+");
+	 	    	
+	 	    	String tempEvenNameCourse=null;
+	 	    	String[] splitedEvenNameCourse=null;
+	 	    	try 
+	 	    	{
+	 	    		 tempEvenNameCourse=elementsEven.get(i).getText();
+	 	    		 splitedEvenNameCourse= tempEvenNameCourse.split("\\s+");
+	 	    		 haveEven=true;
+	 	    		 schedule.setTwoTimes(true);
+	 	    	}
+	 	    	catch(Exception e)
+	 	    	{
+	 	    		haveEven=false;
+	 	    		schedule.setTwoTimes(false);
+	 	    	}
+	 	    	
+	 	    	
 	 	    	Boolean stopThisSet=true;
-	 	    	Schedule schedule=new Schedule();
 	 	    	schedule.setCourse(course);
+	 	    	schedule.setSelected(false);
 	 	    	schedule.setType(splitedTypeCourse[2]);
+	 	    	schedule.setGroupID(splitedTypeCourse[5]+splitedTypeCourse[6]);
 	 	    	try
 	 	    	{
 	 	    		schedule.setDay(new Days(splitedNameCourse[2]));
+	 	    		if(haveEven)
+	 	    			schedule.setDayTwo(new Days(splitedEvenNameCourse[2]));
 	 	    	}
 	 	    	catch(Exception e)
 	 	        {
@@ -98,6 +122,11 @@ public class Scanner extends Thread
 	 	    	{
 		 	        schedule.setStartTime(new Hours(splitedNameCourse[3]));
 		 	        schedule.setEndTime(new Hours(splitedNameCourse[4]));
+		 	        if(haveEven)
+		 	        {
+			 	        schedule.setStartTimeTwo(new Hours(splitedEvenNameCourse[3]));
+			 	        schedule.setEndTimeTwo(new Hours(splitedEvenNameCourse[4]));
+		 	        }
 		 	        boolean check=false;
 		 	        try
 		 	        {
@@ -108,6 +137,16 @@ public class Scanner extends Thread
 		 	        		schedule.setClasslec(splitedNameCourse[10]+" "+splitedNameCourse[9]+" "+splitedNameCourse[8]);
 		 	        		schedule.setLecturer(splitedNameCourse[5]+" "+splitedNameCourse[6]+" "+splitedNameCourse[7]);
 		 	        	}
+		 	        	
+		 	        	if(haveEven)
+		 	        	{
+			 	        	schedule.setClasslecTwo(splitedEvenNameCourse[10]+" "+splitedEvenNameCourse[9]);		 	    
+			 	        	if(schedule.getLecturer().matches(".*\\d.*") || schedule.getLecturer().contains("(עזר)")|| schedule.getLecturer().contains("מע'") )
+			 	        	{
+			 	        		schedule.setClasslecTwo(splitedEvenNameCourse[10]+" "+splitedEvenNameCourse[9]+" "+splitedEvenNameCourse[8]);
+			 	        	}
+		 	        	}
+		 	        	
 		 	        	check=true;
 		 	        }
 		 	        catch(Exception e)
@@ -118,12 +157,20 @@ public class Scanner extends Thread
 			 	        	{
 			 	        		schedule.setClasslec(splitedNameCourse[9]+" "+splitedNameCourse[8]);
 			 	        		schedule.setLecturer(splitedNameCourse[5]+" "+splitedNameCourse[6]+" "+splitedNameCourse[7]);
+			 	        		if(haveEven)
+			 	        		{
+			 	        			schedule.setClasslecTwo(splitedEvenNameCourse[9]+" "+splitedEvenNameCourse[8]);
+			 	        		}
 				 	        	check=true;
 			 	        	}
 			 	        }
 			 	        catch(Exception ex)
 			 	        {
 			 	        	schedule.setClasslec(splitedNameCourse[8]);
+			 	        	if(haveEven)
+			 	        	{
+			 	        		schedule.setClasslecTwo(splitedEvenNameCourse[8]);
+			 	        	}
 			 	        	schedule.setLecturer(splitedNameCourse[5]+" "+splitedNameCourse[6]+" "+splitedNameCourse[7]);
 			 	        }
 		 	        }

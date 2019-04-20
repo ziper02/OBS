@@ -1,5 +1,7 @@
 package GUI;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -13,6 +15,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
@@ -21,8 +24,11 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import util.GUI;
 import util.Scanner;
 
 public class NewCustomCourseController {
@@ -37,22 +43,22 @@ public class NewCustomCourseController {
     private JFXButton SearchBTN;
 
     @FXML
-    private TabPane SelectPane;
+    public TabPane SelectPane;
 
     @FXML
-    private Tab lectureTAB;
+    public Tab lectureTAB;
 
     @FXML
     private FlowPane lecturePane;
 
     @FXML
-    private Tab exerciseTAB;
+    public Tab exerciseTAB;
 
     @FXML
     private FlowPane exercisePane;
 
     @FXML
-    private Tab labTAB;
+    public Tab labTAB;
 
     @FXML
     private FlowPane labPane;
@@ -66,7 +72,7 @@ public class NewCustomCourseController {
     
     private Scanner st ;
     
-    private Course course;
+    public Course course;
     
     private Boolean byThread;
     
@@ -153,13 +159,30 @@ public class NewCustomCourseController {
     		{
     			Schedule schedule=course.get(i);
     			JFXButton button=new JFXButton();
-    			button.setText("שם המרצה: "+schedule.getLecturer()+"\r\n" + 
-    					"יום: "+schedule.getDay()+"\r\n" + 
-    					"שעת התחלה: "+schedule.getStartTime()+"\r\n" + 
-    					"שעת סיום: "+schedule.getEndTime()+"\r\n" + 
-    					"כיתה: "+schedule.getClasslec());
+    			if(schedule.getTwoTimes())
+    			{
+        			button.setText("שם המרצה: "+schedule.getLecturer()+"\r\n" + 
+        					"יום: "+schedule.getDay()+"\r\n" + 
+        					"שעת התחלה: "+schedule.getStartTime()+"\r\n" + 
+        					"שעת סיום: "+schedule.getEndTime()+"\r\n" + 
+        					"כיתה: "+schedule.getClasslec()+"\r\n" +
+        					"מפגש נוסף:\r\n"+
+        					"יום: "+schedule.getDayTwo()+"\r\n" +
+        					"שעת התחלה: "+schedule.getStartTimeTwo()+"\r\n" + 
+        					"שעת סיום: "+schedule.getEndTimeTwo()+"\r\n" + 
+        					"כיתה: "+schedule.getClasslecTwo());
+        					button.setPrefHeight(180);
+    			}
+    			else
+    			{
+    				button.setText("שם המרצה: "+schedule.getLecturer()+"\r\n" + 
+							"יום: "+schedule.getDay()+"\r\n" + 
+							"שעת התחלה: "+schedule.getStartTime()+"\r\n" + 
+							"שעת סיום: "+schedule.getEndTime()+"\r\n" + 
+							"כיתה: "+schedule.getClasslec());
+    						button.setPrefHeight(90);
+    			}					
     			button.setPrefWidth(250);
-    			button.setPrefHeight(90);
     			button.setAlignment(Pos.CENTER_LEFT);
     			button.setStyle("-fx-font-size:12px;-fx-background-color:#66cdaa;-fx-text-fill:#fff8f8;");
     			button.setUserData(schedule);
@@ -216,29 +239,119 @@ public class NewCustomCourseController {
 
 	private void addToGrid(Object userData) 
 	{
+			Schedule schedule=(Schedule)userData;
+			replaceCourse(schedule);
+			ArrayList<Schedule> list = Course.getSchduledCourses();
+			for(int i=0;i<list.size();i++)
+			{
+				if((schedule.getStartTime().getIndex()>=list.get(i).getStartTime().getIndex() &&schedule.getEndTime().getIndex()<=list.get(i).getEndTime().getIndex() &&schedule.getDay().getIndex()==list.get(i).getDay().getIndex())||
+						(schedule.getStartTime().getIndex()<list.get(i).getStartTime().getIndex() &&schedule.getEndTime().getIndex()>list.get(i).getStartTime().getIndex() &&schedule.getDay().getIndex()==list.get(i).getDay().getIndex())||
+				(schedule.getStartTime().getIndex()>list.get(i).getStartTime().getIndex() &&schedule.getStartTime().getIndex()<list.get(i).getEndTime().getIndex() &&schedule.getDay().getIndex()==list.get(i).getDay().getIndex()))
+				{
+					GUI.infoAlert("קיימת התנגשות במערכת", "התנגשות", "חזור");
+					return ;
+				}
+				if(list.get(i).getTwoTimes())
+				{
+					if((schedule.getStartTime().getIndex()>=list.get(i).getStartTimeTwo().getIndex() &&schedule.getEndTime().getIndex()<=list.get(i).getEndTimeTwo().getIndex() &&schedule.getDay().getIndex()==list.get(i).getDayTwo().getIndex())||
+							(schedule.getStartTime().getIndex()<list.get(i).getStartTimeTwo().getIndex() &&schedule.getEndTime().getIndex()>list.get(i).getStartTimeTwo().getIndex() &&schedule.getDay().getIndex()==list.get(i).getDayTwo().getIndex())||
+					(schedule.getStartTime().getIndex()>list.get(i).getStartTimeTwo().getIndex() &&schedule.getStartTime().getIndex()<list.get(i).getEndTimeTwo().getIndex() &&schedule.getDay().getIndex()==list.get(i).getDayTwo().getIndex()))
+					{
+						GUI.infoAlert("קיימת התנגשות במערכת", "התנגשות", "חזור");
+						return ;
+					}
+				}
+				if(schedule.getTwoTimes())
+				{
+					if((schedule.getStartTimeTwo().getIndex()>=list.get(i).getStartTime().getIndex() &&schedule.getEndTimeTwo().getIndex()<=list.get(i).getEndTime().getIndex() &&schedule.getDayTwo().getIndex()==list.get(i).getDay().getIndex())||
+							(schedule.getStartTimeTwo().getIndex()<list.get(i).getStartTime().getIndex() &&schedule.getEndTimeTwo().getIndex()>list.get(i).getStartTime().getIndex() &&schedule.getDayTwo().getIndex()==list.get(i).getDay().getIndex())||
+					(schedule.getStartTimeTwo().getIndex()>list.get(i).getStartTime().getIndex() &&schedule.getStartTimeTwo().getIndex()<list.get(i).getEndTime().getIndex() &&schedule.getDayTwo().getIndex()==list.get(i).getDay().getIndex()))
+					{
+						GUI.infoAlert("קיימת התנגשות במערכת", "התנגשות", "חזור");
+						return ;
+					}
+					if(list.get(i).getTwoTimes())
+					{
+						if((schedule.getStartTimeTwo().getIndex()>=list.get(i).getStartTimeTwo().getIndex() &&schedule.getEndTimeTwo().getIndex()<=list.get(i).getEndTimeTwo().getIndex() &&schedule.getDayTwo().getIndex()==list.get(i).getDayTwo().getIndex())||
+								(schedule.getStartTimeTwo().getIndex()<list.get(i).getStartTimeTwo().getIndex() &&schedule.getEndTimeTwo().getIndex()>list.get(i).getStartTimeTwo().getIndex() &&schedule.getDayTwo().getIndex()==list.get(i).getDayTwo().getIndex())||
+						(schedule.getStartTimeTwo().getIndex()>list.get(i).getStartTimeTwo().getIndex() &&schedule.getStartTimeTwo().getIndex()<list.get(i).getEndTimeTwo().getIndex() &&schedule.getDayTwo().getIndex()==list.get(i).getDayTwo().getIndex()))
+						{
+							GUI.infoAlert("קיימת התנגשות במערכת", "התנגשות", "חזור");
+							return ;
+						}
+					}
+				}
+			}
 		Platform.runLater(()->
 		{ 
-			Schedule schedule=(Schedule)userData;
-			if (schedule.getSplited() == true) { //If there is a break
+			if (schedule.getSplited()) 
+			{ //If there is a break
 				Main.scheduleController.getScheduleGrid().add(schedule.getGridPaneVBox1(), schedule.getDay().getIndex(), schedule.getStartTime().getIndex(), 1, 5 - schedule.getStartTime().getIndex());
 				if (schedule.getDay().getIndex() == 4)
 				{//if tuesday 
 					Main.scheduleController.getScheduleGrid().add(schedule.getGridPaneVBox2(), schedule.getDay().getIndex(), 8, 1, schedule.getEndTime().getIndex() - 8);
-					schedule.getGridPaneVBox2().setPrefHeight(30);
-					schedule.getGridPaneVBox2().setPrefWidth(105);
 				}
 				else 
 				{
-					schedule.getGridPaneVBox2().setPrefHeight(30);
-					schedule.getGridPaneVBox2().setPrefWidth(105);
 					Main.scheduleController.getScheduleGrid().add(schedule.getGridPaneVBox2(), schedule.getDay().getIndex(), 6, 1, schedule.getEndTime().getIndex() - 6);
 				}
 			}
 			else 
 				Main.scheduleController.getScheduleGrid().add(schedule.getGridPaneVBox1(), schedule.getDay().getIndex(), schedule.getStartTime().getIndex(), 1, schedule.getEndTime().getIndex() - schedule.getStartTime().getIndex());
+			if(schedule.getTwoTimes())
+			{
+				if (schedule.getSplitedTwo()) 
+				{ //If there is a break
+					Main.scheduleController.getScheduleGrid().add(schedule.getGridPaneVBox3(), schedule.getDayTwo().getIndex(), schedule.getStartTimeTwo().getIndex(), 1, 5 - schedule.getStartTimeTwo().getIndex());
+					if (schedule.getDay().getIndex() == 4)
+					{//if tuesday 
+						Main.scheduleController.getScheduleGrid().add(schedule.getGridPaneVBox4(), schedule.getDayTwo().getIndex(), 8, 1, schedule.getEndTimeTwo().getIndex() - 8);
+					}
+					else 
+					{
+						Main.scheduleController.getScheduleGrid().add(schedule.getGridPaneVBox4(), schedule.getDayTwo().getIndex(), 6, 1, schedule.getEndTimeTwo().getIndex() - 6);
+					}
+				}
+				else 
+					Main.scheduleController.getScheduleGrid().add(schedule.getGridPaneVBox3(), schedule.getDayTwo().getIndex(), schedule.getStartTimeTwo().getIndex(), 1, schedule.getEndTimeTwo().getIndex() - schedule.getStartTimeTwo().getIndex());
+			}
+			
+			schedule.setSelected(true);
+			
 		});
+		
 	}
+
 	
+	
+	private void replaceCourse(Schedule schedule)
+	{
+		ArrayList<Schedule> list = Course.getSchduledCourses();
+		for(int i=0;i<list.size();i++)
+		{
+			if(list.get(i).getCourse().getID()==schedule.getCourse().getID())
+			{
+				if(list.get(i).getType().equals(schedule.getType()))
+				{
+					Main.scheduleController.getScheduleGrid().getChildren().remove(list.get(i).getGridPaneVBox1());
+					if(list.get(i).getSplited())
+					{
+						Main.scheduleController.getScheduleGrid().getChildren().remove(list.get(i).getGridPaneVBox2());
+					}
+					if(list.get(i).getTwoTimes())
+					{
+						Main.scheduleController.getScheduleGrid().getChildren().remove(list.get(i).getGridPaneVBox3());
+						if(list.get(i).getSplitedTwo())
+						{
+							Main.scheduleController.getScheduleGrid().getChildren().remove(list.get(i).getGridPaneVBox4());
+						}
+					}
+					list.get(i).setSelected(false);
+					return;
+				}
+			}
+		}
+	}
 	@FXML
     void makeSearchWithEnterBtn(KeyEvent event)
     {
