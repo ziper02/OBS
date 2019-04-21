@@ -11,12 +11,14 @@ import javafx.scene.layout.VBox;
 
 public class Schedule
 {
-
 	private Course course;
 	private String lecturer;
 	private String type;
 	private String classlec;
+	private Boolean selected;
+	private String GroupID;
 	
+	private Boolean splited;
 	private Days day;
 	private Hours startTime;
 	private Hours endTime;
@@ -29,14 +31,6 @@ public class Schedule
 	private String classlecTwo;
 	private Boolean splitedTwo;
 	private VBox GridPaneVBox3, GridPaneVBox4;
-
-	private Boolean selected;
-	private String GroupID;
-
-	
-	private Boolean splited;
-	
-	
 
 
 	public Schedule()
@@ -183,7 +177,7 @@ public class Schedule
 		GridPaneVBox1 = new VBox(0);
 		Label L1 = new Label(type);
 		String Color;
-		if(type.equals("הרצאה"))
+		if(type.equals("הרצאה") || type.equals("שו\"ת"))
 		{
 			Color="#98fb98";
 		}
@@ -209,7 +203,7 @@ public class Schedule
 			{
 				ScheduleController.controller.course=Course.getCourse(Integer.parseInt(course.getID()));
 				ScheduleController.controller.resultSearchCouse();
-				if(type.equals("הרצאה"))
+				if(type.equals("הרצאה")||type.equals("שו\"ת"))
 				{
 					ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.lectureTAB);
 				}
@@ -250,7 +244,7 @@ public class Schedule
 				{
 					ScheduleController.controller.course=Course.getCourse(Integer.parseInt(course.getID()));
 					ScheduleController.controller.resultSearchCouse();
-					if(type.equals("הרצאה"))
+					if(type.equals("הרצאה") ||type.equals("שו\"ת"))
 					{
 						ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.lectureTAB);
 					}
@@ -342,7 +336,7 @@ public class Schedule
 		GridPaneVBox3 = new VBox(0);
 		Label L1 = new Label(type);
 		String Color;
-		if(type.equals("הרצאה"))
+		if(type.equals("הרצאה")||type.equals("שו\"ת"))
 		{
 			Color="#98fb98";
 		}
@@ -368,7 +362,7 @@ public class Schedule
 			{
 				ScheduleController.controller.course=Course.getCourse(Integer.parseInt(course.getID()));
 				ScheduleController.controller.resultSearchCouse();
-				if(type.equals("הרצאה"))
+				if(type.equals("הרצאה")||type.equals("שו\"ת"))
 				{
 					ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.lectureTAB);
 				}
@@ -409,7 +403,7 @@ public class Schedule
 				{
 					ScheduleController.controller.course=Course.getCourse(Integer.parseInt(course.getID()));
 					ScheduleController.controller.resultSearchCouse();
-					if(type.equals("הרצאה"))
+					if(type.equals("הרצאה")||type.equals("שו\"ת"))
 					{
 						ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.lectureTAB);
 					}
@@ -439,12 +433,7 @@ public class Schedule
 		else 
 			splitedTwo = false;
 	}
-
-	
-	
 		
-	
-	
 	public Boolean getSelected() 
 	{
 		return selected;

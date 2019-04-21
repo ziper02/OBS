@@ -17,10 +17,10 @@ public class ScheduleController {
     private Pane RightPane;
 
     @FXML
-    private JFXButton CreateCustomSchedule;
+    public JFXButton CreateCustomSchedule;
 
     @FXML
-    private JFXButton CreateAutomaticSchedule;
+    public JFXButton CreateAutomaticSchedule;
 
     @FXML
     private Pane MiddlePane;
@@ -31,9 +31,10 @@ public class ScheduleController {
     @FXML
     private GridPane ScheduleGrid;
 
-	private int selection;
+	public static int selection;
 	
-	public static NewCustomCourseController controller;
+	public static NewCustomCourseController controller=null;
+	public static AutoCourseController controllerAuto=null;
 	
     @FXML
     void LoadNewCusomCourseController(ActionEvent event) 
@@ -43,11 +44,10 @@ public class ScheduleController {
 		{
 			if(selection!=1)
 			{
-				/*newLoadedPane = FXMLLoader.load(getClass().getResource("/gui/NewCustomCourse.fxml"));
-				MiddlePane.getChildren().add(newLoadedPane);
-				selection=1;*/
 				FXMLLoader loader=new FXMLLoader(getClass().getResource("/gui/NewCustomCourse.fxml"));
 				newLoadedPane = loader.load();
+				if(controllerAuto!=null)
+					MiddlePane.getChildren().remove(0);
 				MiddlePane.getChildren().add(newLoadedPane);
 				controller=loader.getController();
 				selection=1;
@@ -58,6 +58,29 @@ public class ScheduleController {
 			e.printStackTrace();
 		}
     	
+    }
+    
+    @FXML
+    void LoadAutoSchedulePane(ActionEvent event) 
+    {
+    	Pane newLoadedPane;
+		try 
+		{
+			if(selection!=2)
+			{
+				FXMLLoader loader=new FXMLLoader(getClass().getResource("/gui/AutoCourse.fxml"));
+				newLoadedPane = loader.load();
+				if(controller!=null)
+					MiddlePane.getChildren().remove(0);
+				MiddlePane.getChildren().add(newLoadedPane);
+				controllerAuto=loader.getController();
+				selection=2;
+			}
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
     }
     
     public GridPane getScheduleGrid() 

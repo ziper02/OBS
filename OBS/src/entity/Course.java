@@ -110,6 +110,9 @@ public class Course
 	{
 		return Schedule;
 	}
-
-
+	
+	public String toString()
+	{
+		return Name;
+	}
 }

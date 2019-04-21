@@ -9,32 +9,29 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import util.Scanner;
 
 public class Main extends Application
 {
 	public static  ScheduleController scheduleController;
-	
+	public static Stage primaryStage;
 	  public void start(Stage primaryStage) throws IOException 
 	  {
-		    // constructing our scene
-		  	FXMLLoader loader=new FXMLLoader(getClass().getResource("ScheduleController.fxml")); // load the FXML file
+		  	this.primaryStage=primaryStage;
+		  	FXMLLoader loader=new FXMLLoader(getClass().getResource("LoadingPanel.fxml")); // load the FXML file
 	        Parent root = (Parent) loader.load();
-		    //AnchorPane pane = FXMLLoader.load( url );
-		    scheduleController=loader.getController();
-		    //Scene scene = new Scene( pane );
-		    Scene scene=new Scene(root, 1639, 1016);
+		    Scene scene=new Scene(root, 282, 341);
 		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/icons/date_and_time_clock-512.png")));
-		    // setting the stage
 		    primaryStage.setScene( scene );
 		    primaryStage.setTitle( "Schedule" );
+		    primaryStage.initStyle(StageStyle.UNDECORATED);
 		    primaryStage.setOnCloseRequest(e->{ System.exit(0);});
 		    primaryStage.show();
 	  }
 
 	public static void main(String[] args) 
 	{
-		Scanner.setScanner();
 		launch(args);
 	}
 

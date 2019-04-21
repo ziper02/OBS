@@ -114,22 +114,28 @@ public class NewCustomCourseController {
     @FXML
     void searchCourse(ActionEvent event) 
     {
-    	if(Course.couseExist(Integer.parseInt(IDcourseTF.getText())))
-    	{
-    		course=Course.getCourse(Integer.parseInt(IDcourseTF.getText()));
-    		resultSearchCouse(); 
-    	}
-    	else
-    	{
-             st = new Scanner(IDcourseTF.getText());
-             PBar.setVisible(true);
-             SearchBTN.setDisable(true);
-     		 CourseName.setVisible(false);
-     		 SelectPane.setVisible(false);
-             st.start();
-             byThread=true;
-            
-    	}
+		if(IDcourseTF.getText().length()==5)
+		{
+	    	if(Course.couseExist(Integer.parseInt(IDcourseTF.getText())))
+	    	{
+	    		course=Course.getCourse(Integer.parseInt(IDcourseTF.getText()));
+	    		resultSearchCouse(); 
+	    	}
+	    	else
+	    	{
+	             st = new Scanner(IDcourseTF.getText());
+	             PBar.setVisible(true);
+	             SearchBTN.setDisable(true);
+	     		 CourseName.setVisible(false);
+	     		 SelectPane.setVisible(false);
+	     		 IDcourseTF.setDisable(true);
+	             st.start();
+	             byThread=true;
+	            
+	    	}
+		}
+		else
+			util.GUI.infoAlert("לצערנו הקורס אינו זמין במערכת שעות,"+"\n"+"בדוק כי הקלדת נכון את קוד הקורס.", "הקורס לא קיים", "המשך");
     }
     
     public void resultSearchCouse()
@@ -144,6 +150,10 @@ public class NewCustomCourseController {
     		SelectPane.setVisible(false);
     		util.GUI.infoAlert("לצערנו הקורס אינו זמין במערכת שעות,"+"\n"+"בדוק כי הקלדת נכון את קוד הקורס.", "הקורס לא קיים", "המשך");
     		CourseName.setVisible(false);
+    		SearchBTN.setDisable(false);
+    		PBar.setVisible(false);
+    		SelectPane.setVisible(false);
+    		IDcourseTF.setDisable(false);
     	}
     	else
     	{
@@ -187,7 +197,7 @@ public class NewCustomCourseController {
     			button.setStyle("-fx-font-size:12px;-fx-background-color:#66cdaa;-fx-text-fill:#fff8f8;");
     			button.setUserData(schedule);
     			button.setOnAction(e -> addToGrid(button.getUserData()));
-    			if(schedule.getType().equals("הרצאה"))
+    			if(schedule.getType().equals("הרצאה")||schedule.getType().equals("שו\"ת"))
     			{
     				countLec=true;
     				lecturePane.getChildren().add(button);
@@ -231,6 +241,7 @@ public class NewCustomCourseController {
     		PBar.setVisible(false);
     		CourseName.setVisible(true);
     		SelectPane.setVisible(true);
+    		IDcourseTF.setDisable(false);
  			});
     	}
     }
