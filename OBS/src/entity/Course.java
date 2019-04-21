@@ -28,7 +28,6 @@ public class Course
 		Schedule=new ArrayList<Schedule>();
 	}
 	
-
 	public void add(Schedule schedule)
 	{
 		Schedule.add(schedule);
@@ -54,6 +53,45 @@ public class Course
 			}
 		}
 		return result;
+	}
+	
+	public static Boolean VaildSchedule()
+	{
+		ArrayList<Schedule> list=getSchduledCourses();
+		ArrayList <String> CourseID=new ArrayList<String>();
+		Boolean lec,exc,lab;
+		lec=exc=lab=false;
+		for(int i=0;i<list.size();i++)
+		{
+			if(CourseID.contains(list.get(i).getCourse().getID())==false)
+				CourseID.add(list.get(i).getCourse().getID());
+		}
+		for(int i=0;i<CourseID.size();i++)
+		{
+			lec=exc=lab=false;
+			Course tempCourse=map.get(CourseID.get(i));
+			for(int j=0;j<tempCourse.getSchedule().size();j++)
+			{
+				if(tempCourse.getSchedule().get(j).getType().equals("הרצאה")||tempCourse.getSchedule().get(j).getType().equals("שו\"ת"))
+					lec=true;
+				else if(tempCourse.getSchedule().get(j).getType().equals("תרגיל"))
+					exc=true;
+				else
+					lab=true;
+			}
+			for(int j=0;j<list.size();j++)
+			{
+				if((list.get(i).getType().equals("הרצאה") &&list.get(i).getCourse().getID().equals(tempCourse.getID()))||(list.get(i).getType().equals("שו\"ת")&&list.get(i).getCourse().getID().equals(tempCourse.getID())))
+					lec=false;
+				else if(list.get(i).getType().equals("תרגיל") &&list.get(i).getCourse().getID().equals(tempCourse.getID()))
+					exc=false;
+				else if(list.get(i).getType().equals("מעבדה") &&list.get(i).getCourse().getID().equals(tempCourse.getID()))
+					lab=false;		
+			}
+			if(lab==true || lec==true || exc ==true)
+				return false;
+		}
+		return true;	
 	}
 	
 	public static Course getCourse(Integer ID)
@@ -115,4 +153,6 @@ public class Course
 	{
 		return Name;
 	}
+
+
 }

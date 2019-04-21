@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/GUI/AutoCourseController.java=UTF-8
 encoding//src/GUI/NewCustomCourseController.java=UTF-8
+encoding//src/entity/Course.java=UTF-8
 encoding//src/entity/Days.java=UTF-8
 encoding//src/entity/Schedule.java=UTF-8
 encoding//src/util/Scanner.java=UTF-8
