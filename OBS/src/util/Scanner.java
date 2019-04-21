@@ -1,5 +1,6 @@
 package util;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -39,9 +40,9 @@ public class Scanner extends Thread
 	{
 		
 	}
-	public static void setScanner()
+	public static void setScanner(String st)
 	{
-		String exePath = "chromedriver.exe";
+		String exePath = st;
 		System.setProperty("webdriver.chrome.driver", exePath);
 	    ChromeOptions chromeOptions = new ChromeOptions();
 	    chromeOptions.setBinary("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
@@ -56,7 +57,15 @@ public class Scanner extends Thread
 	{
 		if(init==false)
 		{
-			setScanner();
+			try
+			{
+				setScanner("src/chromedriver.exe");
+			}
+			catch(Exception e)
+			{
+				setScanner("chromedriver.exe");
+			}
+			
 			LoadingPanelController.LoadMainPanel();
 		}
 		else

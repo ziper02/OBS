@@ -24,7 +24,7 @@ public class LoadingPanelController
     @FXML
     void initialize()
     {
-    	loader=new FXMLLoader(getClass().getResource("ScheduleController.fxml")); // load the FXML file
+    	loader=new FXMLLoader(getClass().getResource("/GUI/ScheduleController.fxml")); // load the FXML file
     	PBar.setVisible(true);
     	Scanner init=new Scanner();
     	init.start();

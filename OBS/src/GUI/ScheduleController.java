@@ -57,7 +57,7 @@ public class ScheduleController
 		{
 			if(selection!=1)
 			{
-				FXMLLoader loader=new FXMLLoader(getClass().getResource("/gui/NewCustomCourse.fxml"));
+				FXMLLoader loader=new FXMLLoader(getClass().getResource("/GUI/NewCustomCourse.fxml"));
 				newLoadedPane = loader.load();
 				if(controllerAuto!=null)
 					MiddlePane.getChildren().remove(0);
@@ -81,7 +81,7 @@ public class ScheduleController
 		{
 			if(selection!=2)
 			{
-				FXMLLoader loader=new FXMLLoader(getClass().getResource("/gui/AutoCourse.fxml"));
+				FXMLLoader loader=new FXMLLoader(getClass().getResource("/GUI/AutoCourse.fxml"));
 				newLoadedPane = loader.load();
 				if(controller!=null)
 					MiddlePane.getChildren().remove(0);

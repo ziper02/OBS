@@ -19,10 +19,10 @@ public class Main extends Application
 	  public void start(Stage primaryStage) throws IOException 
 	  {
 		  	this.primaryStage=primaryStage;
-		  	FXMLLoader loader=new FXMLLoader(getClass().getResource("LoadingPanel.fxml")); // load the FXML file
+		  	FXMLLoader loader=new FXMLLoader(getClass().getResource("/GUI/LoadingPanel.fxml")); // load the FXML file
 	        Parent root = (Parent) loader.load();
 		    Scene scene=new Scene(root, 282, 341);
-		    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/icons/date_and_time_clock-512.png")));
+		    primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/icons/date_and_time_clock-512.png")));
 		    primaryStage.setScene( scene );
 		    primaryStage.setTitle( "Schedule" );
 		    primaryStage.initStyle(StageStyle.UNDECORATED);

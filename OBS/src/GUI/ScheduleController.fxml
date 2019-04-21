@@ -28,7 +28,7 @@
                   </JFXButton>
                   <ImageView fitHeight="166.0" fitWidth="208.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="\@..\..\icons\OBS_logo.png" />
+                        <Image url="@../../icons/OBS_logo.png" />
                      </image>
                   </ImageView>
                   <JFXButton fx:id="CreateCustomSchedule" layoutY="185.0" onAction="#LoadNewCusomCourseController" prefHeight="61.0" prefWidth="208.0" style="-fx-background-color: #6495ed;" text="מערכת מותאמת אישית" textFill="#fff8f8">

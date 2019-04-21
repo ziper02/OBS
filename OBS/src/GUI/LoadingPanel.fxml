@@ -12,7 +12,7 @@
       <ProgressIndicator fx:id="PBar" layoutX="118.0" layoutY="251.0" prefHeight="63.0" prefWidth="51.0" />
       <ImageView fitHeight="226.0" fitWidth="181.0" layoutX="53.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="\@..\..\icons\OBS_logo.png" />
+            <Image url="@../../icons/OBS_logo.png" />
          </image>
       </ImageView>
       <Label layoutX="206.0" layoutY="322.0" prefHeight="27.0" prefWidth="72.0" text=" © Ziv Perez">
