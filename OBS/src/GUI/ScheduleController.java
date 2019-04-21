@@ -5,31 +5,44 @@ import java.net.URL;
 
 import com.jfoenix.controls.JFXButton;
 
+import entity.Course;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
-public class ScheduleController {
+public class ScheduleController 
+{
 
-    @FXML
-    private Pane RightPane;
+	@FXML
+	private Pane RightPane;
 
-    @FXML
-    public JFXButton CreateCustomSchedule;
+	@FXML
+	public JFXButton VaildSchedule;
 
-    @FXML
-    public JFXButton CreateAutomaticSchedule;
+	@FXML
+	public JFXButton CreateCustomSchedule;
 
-    @FXML
-    private Pane MiddlePane;
+	@FXML
+	public JFXButton SaveSchedule;
 
-    @FXML
-    private Pane LeftPane;
+	@FXML
+	public JFXButton CreateAutomaticSchedule;
 
-    @FXML
-    private GridPane ScheduleGrid;
+	@FXML
+	public JFXButton LoadSchedule;
+
+	@FXML
+	private Pane MiddlePane;
+
+	@FXML
+	private Pane LeftPane;
+
+	@FXML
+	private GridPane ScheduleGrid;
+
 
 	public static int selection;
 	
@@ -93,4 +106,23 @@ public class ScheduleController {
 		ScheduleGrid = scheduleGrid;
 	}
 
+	@FXML
+	void LoadSchedulePressed(ActionEvent event) 
+	{
+
+	}
+
+	@FXML
+	void SaveSchedulePressed(ActionEvent event) 
+	{
+
+	}
+
+	@FXML
+	void VaildSchedulePressed(ActionEvent event) 
+	{
+		Course.VaildSchedule();
+	}
+
+	
 }

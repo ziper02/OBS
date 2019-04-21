@@ -55,11 +55,12 @@ public class Course
 		return result;
 	}
 	
-	public static Boolean VaildSchedule()
+	public static void VaildSchedule()
 	{
 		ArrayList<Schedule> list=getSchduledCourses();
 		ArrayList <String> CourseID=new ArrayList<String>();
 		Boolean lec,exc,lab;
+		String errorlist="";
 		lec=exc=lab=false;
 		for(int i=0;i<list.size();i++)
 		{
@@ -69,7 +70,7 @@ public class Course
 		for(int i=0;i<CourseID.size();i++)
 		{
 			lec=exc=lab=false;
-			Course tempCourse=map.get(CourseID.get(i));
+			Course tempCourse=map.get(Integer.parseInt(CourseID.get(i)));
 			for(int j=0;j<tempCourse.getSchedule().size();j++)
 			{
 				if(tempCourse.getSchedule().get(j).getType().equals("הרצאה")||tempCourse.getSchedule().get(j).getType().equals("שו\"ת"))
@@ -81,17 +82,31 @@ public class Course
 			}
 			for(int j=0;j<list.size();j++)
 			{
-				if((list.get(i).getType().equals("הרצאה") &&list.get(i).getCourse().getID().equals(tempCourse.getID()))||(list.get(i).getType().equals("שו\"ת")&&list.get(i).getCourse().getID().equals(tempCourse.getID())))
+				if((list.get(j).getType().equals("הרצאה") &&list.get(j).getCourse().getID().equals(tempCourse.getID()))||(list.get(j).getType().equals("שו\"ת")&&list.get(j).getCourse().getID().equals(tempCourse.getID())))
 					lec=false;
-				else if(list.get(i).getType().equals("תרגיל") &&list.get(i).getCourse().getID().equals(tempCourse.getID()))
+				else if(list.get(j).getType().equals("תרגיל") &&list.get(j).getCourse().getID().equals(tempCourse.getID()))
 					exc=false;
-				else if(list.get(i).getType().equals("מעבדה") &&list.get(i).getCourse().getID().equals(tempCourse.getID()))
+				else if(list.get(j).getType().equals("מעבדה") &&list.get(j).getCourse().getID().equals(tempCourse.getID()))
 					lab=false;		
 			}
 			if(lab==true || lec==true || exc ==true)
-				return false;
+			{
+				if(lab==true)
+				{
+					errorlist=errorlist+"\n"+"חסר מעבדה ב"+tempCourse.getName();
+				}
+				else if(lec==true)
+				{
+					errorlist=errorlist+"\n"+"חסר הרצאה ב"+tempCourse.getName();
+				}
+				else
+					errorlist=errorlist+"\n"+"חסר תרגול ב"+tempCourse.getName();
+			}
 		}
-		return true;	
+		if(errorlist.length()==0)
+			util.GUI.infoAlert("המערכת תקינה", "המערכת תקינה", "אישור");
+		else
+			util.GUI.alertErrorWithOption("המערכת לא תקינה"+errorlist, "המערכת לא תקינה", "חזור");	
 	}
 	
 	public static Course getCourse(Integer ID)

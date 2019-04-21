@@ -21,6 +21,11 @@
          <children>
             <Pane fx:id="RightPane" layoutX="1423.0" layoutY="-1.0" prefHeight="1019.0" prefWidth="206.0">
                <children>
+                  <JFXButton fx:id="VaildSchedule" layoutY="353.0" onAction="#VaildSchedulePressed" prefHeight="61.0" prefWidth="208.0" style="-fx-background-color: #6495ed;" text="בדיקת תקינות מערכת" textFill="#fff8f8">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </JFXButton>
                   <ImageView fitHeight="166.0" fitWidth="208.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="\@..\..\icons\OBS_logo.png" />
@@ -31,7 +36,17 @@
                         <Font size="15.0" />
                      </font>
                   </JFXButton>
+                  <JFXButton fx:id="SaveSchedule" layoutY="439.0" onAction="#SaveSchedulePressed" prefHeight="61.0" prefWidth="208.0" style="-fx-background-color: #6495ed;" text="שמור מערכת" textFill="#fff8f8">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </JFXButton>
                   <JFXButton fx:id="CreateAutomaticSchedule" layoutY="268.0" onAction="#LoadAutoSchedulePane" prefHeight="61.0" prefWidth="208.0" style="-fx-background-color: #6495ed;" text="מערכת מותאמת אוטומטית" textFill="#fff8f8">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="LoadSchedule" layoutY="527.0" onAction="#LoadSchedulePressed" prefHeight="61.0" prefWidth="208.0" style="-fx-background-color: #6495ed;" text="טעינת מערכת" textFill="#fff8f8">
                      <font>
                         <Font size="15.0" />
                      </font>

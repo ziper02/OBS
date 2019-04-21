@@ -65,6 +65,9 @@ public class Scanner extends Thread
 			course.setID(ID);
 			Main.scheduleController.CreateCustomSchedule.setDisable(true);
 			Main.scheduleController.CreateAutomaticSchedule.setDisable(true);
+			Main.scheduleController.SaveSchedule.setDisable(true);
+			Main.scheduleController.LoadSchedule.setDisable(true);
+			Main.scheduleController.VaildSchedule.setDisable(true);
 			DisableVBox(true);
 			driver.findElement(By.id("SubjectCode")).clear();
 			driver.findElement(By.id("SubjectCode")).sendKeys(ID); //insert the id of course in to text field of searchID
@@ -200,6 +203,9 @@ public class Scanner extends Thread
 			value=course;
 			Main.scheduleController.CreateCustomSchedule.setDisable(false);
 			Main.scheduleController.CreateAutomaticSchedule.setDisable(false);
+			Main.scheduleController.SaveSchedule.setDisable(false);
+			Main.scheduleController.LoadSchedule.setDisable(false);
+			Main.scheduleController.VaildSchedule.setDisable(false);
 			DisableVBox(false);
 			if(ScheduleController.selection==1)
 				ScheduleController.controller.resultSearchCouse();
