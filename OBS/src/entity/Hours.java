@@ -5,7 +5,7 @@ public class Hours
 
 	private int index;
 	private String Hour;
-	
+	public static int countShabat=1;
 	public Hours(String Hour)
 	{
 		this.Hour=Hour;
@@ -90,5 +90,129 @@ public class Hours
 	public String toString() 
 	{
 		return Hour;
+	}
+	
+	public static Hours Shabat(Boolean bool)
+	{
+		if(countShabat==1)
+		{
+			if(bool)
+			{
+				countShabat++;
+				return new Hours("09:30");
+			}
+			return new Hours("08:30");
+		}
+		else if(countShabat==2)
+		{
+			if(bool)
+			{
+				countShabat++;
+				return new Hours("10:30");
+			}
+			return new Hours("09:30");
+		}
+		else if(countShabat==3)
+		{
+			if(bool)
+			{
+				countShabat++;
+				return new Hours("11:30");
+			}
+			return new Hours("10:30");
+		}
+		else if(countShabat==4)
+		{
+			if(bool)
+				countShabat++;
+			return new Hours("11:30");
+		}
+		else if(countShabat==5)
+		{
+			if(bool)
+				countShabat++;
+			return new Hours("12:20");
+		}
+		else if(countShabat==6)
+		{
+			if(bool)
+			{
+				countShabat++;
+				return new Hours("13:50");
+			}
+			return new Hours("12:50");
+		}
+		else if(countShabat==7)
+		{
+			if(bool)
+			{
+				countShabat++;
+				return new Hours("14:50");
+			}
+			return new Hours("13:50");
+		}
+		else if(countShabat==8)
+		{
+			if(bool)
+			{
+				countShabat++;
+				return new Hours("15:50");
+			}
+			return new Hours("14:50");
+		}
+		else if(countShabat==9)
+		{
+			if(bool)
+			{
+				countShabat++;
+				return new Hours("16:50");
+			}
+			return new Hours("15:50");
+		}
+		else if(countShabat==10)
+		{
+			if(bool)
+			{
+				countShabat++;
+				return new Hours("17:50");
+			}
+			return new Hours("16:50");
+		}
+		else if(countShabat==11)
+		{
+			if(bool)
+			{
+				countShabat++;
+				return new Hours("18:50");
+			}
+			return new Hours("17:50");
+		}
+		else if(countShabat==12)
+		{
+			if(bool)
+			{
+				countShabat++;
+				return new Hours("19:50");
+			}
+			return new Hours("18:50");
+		}
+		else if(countShabat==13)
+		{
+			if(bool)
+			{
+				countShabat++;
+				return new Hours("20:50");
+			}
+			return new Hours("19:50");
+		}
+		else 
+		{
+			if(bool)
+			{
+				countShabat++;
+				return new Hours("21:50");
+			}
+			return new Hours("20:50");
+		}
 	}
 }

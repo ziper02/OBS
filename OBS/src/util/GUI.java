@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
@@ -22,6 +23,7 @@ public abstract class GUI
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			ButtonType bttexit = new ButtonType(btnName, ButtonBar.ButtonData.CANCEL_CLOSE);
 			alert.getButtonTypes().clear();
+			alert.getDialogPane().setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
 			alert.setHeaderText(headerText);
 			alert.setTitle(title);
 			alert.getButtonTypes().addAll(bttexit);
@@ -37,6 +39,7 @@ public abstract class GUI
 			ButtonType bttCountiue = new ButtonType(btnName, ButtonBar.ButtonData.FINISH);
 			alert.getButtonTypes().clear();
 			alert.setHeaderText(headerText);
+			alert.getDialogPane().setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
 			alert.setTitle(title);
 			alert.getButtonTypes().addAll(bttCountiue);
 			Optional<ButtonType> result = alert.showAndWait();

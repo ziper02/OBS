@@ -153,7 +153,7 @@ public class Schedule
 		checkSetUpAllparamters();
 	}
 	
-	private void checkSetUpAllparamters()
+	public void checkSetUpAllparamters()
 	{
 		if(endTime!=null && startTime!=null && day!=null&&lecturer!=null&&classlec!=null)
 		{

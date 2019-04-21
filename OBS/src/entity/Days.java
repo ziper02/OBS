@@ -5,7 +5,7 @@ public class Days
 	private String realName;
 	private String name;
 	private int index;
-
+	
 	public Days(String realName) 
 	{
 		this.realName=realName;

@@ -200,6 +200,7 @@ public class Scanner extends Thread
 		 	    }
 		 	}
 			driver.navigate().back();
+			fixNull(course);
 			value=course;
 			Main.scheduleController.CreateCustomSchedule.setDisable(false);
 			Main.scheduleController.CreateAutomaticSchedule.setDisable(false);
@@ -237,8 +238,26 @@ public class Scanner extends Thread
 	public Course getValue() {
 		return value;
 	}
-	public void setValue(Course value) {
+	public void setValue(Course value) 
+	{
 		this.value = value;
+	}
+	
+	
+	private void fixNull(Course course)
+	{
+		for(int i=0;i<course.getSchedule().size();i++)
+		{
+			if(course.getSchedule().get(i).getDay()==null)
+			{
+				course.getSchedule().get(i).setDay(new Days("ש"));
+				course.getSchedule().get(i).setStartTime(Hours.Shabat(false));
+				course.getSchedule().get(i).setEndTime(Hours.Shabat(true));
+				course.getSchedule().get(i).setLecturer("");
+				course.getSchedule().get(i).setClasslec("");
+				course.getSchedule().get(i).checkSetUpAllparamters();
+			}
+		}
 	}
 }
 	 	    

@@ -55,13 +55,18 @@ public class Course
 		return result;
 	}
 	
-	public static void VaildSchedule()
+	public static Boolean VaildSchedule()
 	{
 		ArrayList<Schedule> list=getSchduledCourses();
 		ArrayList <String> CourseID=new ArrayList<String>();
 		Boolean lec,exc,lab;
 		String errorlist="";
 		lec=exc=lab=false;
+		if(list.size()==0)
+		{
+			util.GUI.alertErrorWithOption("המערכת ריקה", "המערכת לא תקינה", "חזור");
+			return false;
+		}
 		for(int i=0;i<list.size();i++)
 		{
 			if(CourseID.contains(list.get(i).getCourse().getID())==false)
@@ -93,20 +98,26 @@ public class Course
 			{
 				if(lab==true)
 				{
-					errorlist=errorlist+"\n"+"חסר מעבדה ב"+tempCourse.getName();
+					errorlist=errorlist+"\n"+"חסר מעבדה ב"+tempCourse.getName().substring(1);
 				}
-				else if(lec==true)
+				if(lec==true)
 				{
-					errorlist=errorlist+"\n"+"חסר הרצאה ב"+tempCourse.getName();
+					errorlist=errorlist+"\n"+"חסר הרצאה ב"+tempCourse.getName().substring(1);
 				}
-				else
-					errorlist=errorlist+"\n"+"חסר תרגול ב"+tempCourse.getName();
+				if(exc==true)
+					errorlist=errorlist+"\n"+"חסר תרגול ב"+tempCourse.getName().substring(1);
 			}
 		}
 		if(errorlist.length()==0)
+		{
 			util.GUI.infoAlert("המערכת תקינה", "המערכת תקינה", "אישור");
+			return true;
+		}
 		else
-			util.GUI.alertErrorWithOption("המערכת לא תקינה"+errorlist, "המערכת לא תקינה", "חזור");	
+		{
+			util.GUI.alertErrorWithOption("המערכת לא תקינה"+errorlist, "המערכת לא תקינה", "חזור");
+			return false;
+		}
 	}
 	
 	public static Course getCourse(Integer ID)
