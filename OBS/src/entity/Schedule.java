@@ -1,6 +1,9 @@
 package entity;
 
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 import GUI.Main;
 import GUI.ScheduleController;
 import javafx.geometry.Pos;
@@ -9,7 +12,7 @@ import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
-public class Schedule
+public class Schedule implements Serializable
 {
 	private Course course;
 	private String lecturer;
@@ -22,7 +25,7 @@ public class Schedule
 	private Days day;
 	private Hours startTime;
 	private Hours endTime;
-	private VBox GridPaneVBox1, GridPaneVBox2;
+	private transient VBox GridPaneVBox1, GridPaneVBox2;
 	
 	private Boolean twoTimes;
 	private Days dayTwo;
@@ -30,7 +33,7 @@ public class Schedule
 	private Hours endTimeTwo;
 	private String classlecTwo;
 	private Boolean splitedTwo;
-	private VBox GridPaneVBox3, GridPaneVBox4;
+	private transient VBox GridPaneVBox3, GridPaneVBox4;
 
 
 	public Schedule()
@@ -529,6 +532,41 @@ public class Schedule
 		GridPaneVBox4 = gridPaneVBox4;
 	}
 	
+	public static Boolean checkIfAvailable(Schedule sc)
+	{
+		Course course=Course.getCourse(Integer.parseInt(sc.getCourse().getID()));
+		ArrayList<Schedule> list=course.getSchedule();
+		for(int i=0;i<list.size();i++)
+		{
+			if(sc.equals(list.get(i)))
+				return true;
+		}
+		return false;	
+	}
 	
+	@Override
+	public boolean equals(Object obj) 
+	{ 
+		Schedule sc=(Schedule)obj;
+		if(sc.getCourse().equals(this.course))
+		{
+			if(sc.getLecturer().equals(this.lecturer) && sc.getType().equals(this.type)&& sc.getClasslec().equals(this.classlec))
+			{
+				if(sc.getDay().equals(this.day) && sc.getStartTime().equals(this.startTime) && sc.getEndTime().equals(this.endTime))
+				{
+					if(sc.getTwoTimes()==true)
+					{
+						if(sc.getDayTwo().equals(this.dayTwo) && sc.getStartTimeTwo().equals(this.startTimeTwo) && sc.getEndTimeTwo().equals(this.endTimeTwo))
+						{
+							return true;
+						}
+					}
+					else
+						return true;
+				}
+			}
+		}
+		return false;
+	}
 
 }

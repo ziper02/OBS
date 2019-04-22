@@ -1,11 +1,12 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 
-public class Course
+public class Course implements Serializable
 {
 
 	private String ID;
@@ -180,5 +181,15 @@ public class Course
 		return Name;
 	}
 
+
+	@Override
+	public boolean equals(Object obj) 
+	{ 
+		Course course=(Course)obj;
+		if(course.getID().equals(this.ID))
+			return true;
+		else
+			return false;
+	}
 
 }

@@ -1,6 +1,8 @@
 package entity;
 
-public class Hours 
+import java.io.Serializable;
+
+public class Hours implements Serializable
 {
 
 	private int index;
@@ -214,5 +216,14 @@ public class Hours
 			}
 			return new Hours("20:50");
 		}
+	}
+	
+	public boolean equals(Object obj) 
+	{ 
+		  Hours hour=(Hours)obj;
+		  if(hour.getIndex()==this.index && (hour.getHour()).equals(this.Hour))
+			  return true;
+		  else
+			  return false;
 	}
 }

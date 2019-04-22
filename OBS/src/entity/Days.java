@@ -1,6 +1,8 @@
 package entity;
 
-public class Days 
+import java.io.Serializable;
+
+public class Days implements Serializable
 {
 	private String realName;
 	private String name;
@@ -80,4 +82,16 @@ public class Days
 	{
 		return name;
 	}
+
+
+	@Override
+	public boolean equals(Object obj) 
+	{ 
+		  Days day=(Days)obj;
+		  if(day.getIndex()==this.index)
+			  return true;
+		  else
+			  return false;
+	}
+
 }

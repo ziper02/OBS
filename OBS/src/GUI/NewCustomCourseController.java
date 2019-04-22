@@ -157,7 +157,10 @@ public class NewCustomCourseController {
     	}
     	else
     	{
-    		Course.addCourse(course);
+    		if(Course.couseExist(Integer.parseInt(course.getID()))==false)
+    		{
+    			Course.addCourse(course);
+    		}
  			Platform.runLater(()->
  			{ 
  				boolean countLec=false,countEx=false,countLab=false;
@@ -248,7 +251,7 @@ public class NewCustomCourseController {
 
 
 
-	private void addToGrid(Object userData) 
+	public static void addToGrid(Object userData) 
 	{
 			Schedule schedule=(Schedule)userData;
 			replaceCourse(schedule);
@@ -335,7 +338,7 @@ public class NewCustomCourseController {
 
 	
 	
-	private void replaceCourse(Schedule schedule)
+	private static void replaceCourse(Schedule schedule)
 	{
 		ArrayList<Schedule> list = Course.getSchduledCourses();
 		for(int i=0;i<list.size();i++)
@@ -364,7 +367,8 @@ public class NewCustomCourseController {
 		}
 	}
 	@FXML
-    void makeSearchWithEnterBtn(KeyEvent event)
+    
+	void makeSearchWithEnterBtn(KeyEvent event)
     {
     	if(event.getCode().equals(KeyCode.ENTER))
     	{
