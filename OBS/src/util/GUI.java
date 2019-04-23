@@ -1,7 +1,5 @@
 package util;
 
-import java.util.Optional;
-
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.geometry.NodeOrientation;
@@ -27,7 +25,7 @@ public abstract class GUI
 			alert.setHeaderText(headerText);
 			alert.setTitle(title);
 			alert.getButtonTypes().addAll(bttexit);
-			Optional<ButtonType> result = alert.showAndWait();
+			alert.showAndWait();
 		}); 
     }
 	
@@ -42,7 +40,7 @@ public abstract class GUI
 			alert.getDialogPane().setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
 			alert.setTitle(title);
 			alert.getButtonTypes().addAll(bttCountiue);
-			Optional<ButtonType> result = alert.showAndWait();
+			alert.showAndWait();
 		});
 	}
 	
@@ -51,7 +49,7 @@ public abstract class GUI
 	    ObservableList<Node> childrens = gridPane.getChildren();
 
 	    for (Node node : childrens) {
-	        if(gridPane.getRowIndex(node) == row && gridPane.getColumnIndex(node) == column) {
+	        if(GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == column) { // gridPane->GridPane
 	            result = node;
 	            break;
 	        }

@@ -5,6 +5,10 @@ import java.io.Serializable;
 public class Hours implements Serializable
 {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int index;
 	private String Hour;
 	public static int countShabat=1;

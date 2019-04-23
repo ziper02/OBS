@@ -1,16 +1,13 @@
 package GUI;
 
 import java.io.IOException;
-import java.net.URL;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import util.Scanner;
 
 public class Main extends Application
 {
@@ -18,7 +15,7 @@ public class Main extends Application
 	public static Stage primaryStage;
 	  public void start(Stage primaryStage) throws IOException 
 	  {
-		  	this.primaryStage=primaryStage;
+		  	Main.primaryStage=primaryStage;
 		  	FXMLLoader loader=new FXMLLoader(getClass().getResource("/GUI/LoadingPanel.fxml")); // load the FXML file
 	        Parent root = (Parent) loader.load();
 		    Scene scene=new Scene(root, 282, 341);

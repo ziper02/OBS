@@ -3,12 +3,10 @@ package GUI;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -151,6 +149,7 @@ public class ScheduleController
 				{
 					FileInputStream fis = new FileInputStream(f);
 					ObjectInputStream ois = new ObjectInputStream(fis);
+					@SuppressWarnings("unchecked")
 					List<Schedule> list2 = (List<Schedule>) ois.readObject();
 					ArrayList<Schedule> list=new ArrayList<Schedule>(list2);
 					ois.close();
@@ -218,7 +217,6 @@ public class ScheduleController
     			File file =fc.showSaveDialog(Main.primaryStage);
     			if(file!=null)
     			{
-    				String str = file.getAbsolutePath();
     				try 
     				{
     					RenderedImage renderedImage = SwingFXUtils.fromFXImage(image, null);
@@ -233,7 +231,7 @@ public class ScheduleController
     		}
     	    catch (Exception e) 
     	    {
-    	        // TODO: handle exception here
+    	    	e.printStackTrace();
     	    }
     }
 
@@ -241,7 +239,6 @@ public class ScheduleController
 	{
 		st=new ArrayList<Scanner>();
 		schedule=list;
-		ArrayList<String> req=new ArrayList<String>();
 		LoadSchedule.setVisible(false);
 		PBar.setVisible(true);
 		for(int i=0;i<list.size();i++)

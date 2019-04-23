@@ -8,12 +8,15 @@ import GUI.Main;
 import GUI.ScheduleController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 public class Schedule implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Course course;
 	private String lecturer;
 	private String type;

@@ -1,13 +1,7 @@
 package util;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -20,7 +14,6 @@ import GUI.LoadingPanelController;
 import GUI.Main;
 import GUI.ScheduleController;
 import entity.Schedule;
-import javafx.application.Platform;
 import entity.Course;
 import entity.Days;
 import entity.Hours;

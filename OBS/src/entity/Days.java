@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 public class Days implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String realName;
 	private String name;
 	private int index;
