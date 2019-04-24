@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
+
 public class Schedule implements Serializable
 {
 	/**
@@ -547,6 +548,44 @@ public class Schedule implements Serializable
 		return false;	
 	}
 	
+	public boolean conflict(Schedule schedule)
+	{
+		if((schedule.getStartTime().getIndex()>=this.getStartTime().getIndex() &&schedule.getEndTime().getIndex()<=this.getEndTime().getIndex() &&schedule.getDay().getIndex()==this.getDay().getIndex())||
+				(schedule.getStartTime().getIndex()<this.getStartTime().getIndex() &&schedule.getEndTime().getIndex()>this.getStartTime().getIndex() &&schedule.getDay().getIndex()==this.getDay().getIndex())||
+		(schedule.getStartTime().getIndex()>this.getStartTime().getIndex() &&schedule.getStartTime().getIndex()<this.getEndTime().getIndex() &&schedule.getDay().getIndex()==this.getDay().getIndex()))
+		{
+			return true;
+		}
+		if(this.getTwoTimes())
+		{
+			if((schedule.getStartTime().getIndex()>=this.getStartTimeTwo().getIndex() &&schedule.getEndTime().getIndex()<=this.getEndTimeTwo().getIndex() &&schedule.getDay().getIndex()==this.getDayTwo().getIndex())||
+					(schedule.getStartTime().getIndex()<this.getStartTimeTwo().getIndex() &&schedule.getEndTime().getIndex()>this.getStartTimeTwo().getIndex() &&schedule.getDay().getIndex()==this.getDayTwo().getIndex())||
+			(schedule.getStartTime().getIndex()>this.getStartTimeTwo().getIndex() &&schedule.getStartTime().getIndex()<this.getEndTimeTwo().getIndex() &&schedule.getDay().getIndex()==this.getDayTwo().getIndex()))
+			{
+				return true;
+			}
+		}
+		if(schedule.getTwoTimes())
+		{
+			if((schedule.getStartTimeTwo().getIndex()>=this.getStartTime().getIndex() &&schedule.getEndTimeTwo().getIndex()<=this.getEndTime().getIndex() &&schedule.getDayTwo().getIndex()==this.getDay().getIndex())||
+					(schedule.getStartTimeTwo().getIndex()<this.getStartTime().getIndex() &&schedule.getEndTimeTwo().getIndex()>this.getStartTime().getIndex() &&schedule.getDayTwo().getIndex()==this.getDay().getIndex())||
+			(schedule.getStartTimeTwo().getIndex()>this.getStartTime().getIndex() &&schedule.getStartTimeTwo().getIndex()<this.getEndTime().getIndex() &&schedule.getDayTwo().getIndex()==this.getDay().getIndex()))
+			{
+				return true;
+			}
+			if(this.getTwoTimes())
+			{
+				if((schedule.getStartTimeTwo().getIndex()>=this.getStartTimeTwo().getIndex() &&schedule.getEndTimeTwo().getIndex()<=this.getEndTimeTwo().getIndex() &&schedule.getDayTwo().getIndex()==this.getDayTwo().getIndex())||
+						(schedule.getStartTimeTwo().getIndex()<this.getStartTimeTwo().getIndex() &&schedule.getEndTimeTwo().getIndex()>this.getStartTimeTwo().getIndex() &&schedule.getDayTwo().getIndex()==this.getDayTwo().getIndex())||
+				(schedule.getStartTimeTwo().getIndex()>this.getStartTimeTwo().getIndex() &&schedule.getStartTimeTwo().getIndex()<this.getEndTimeTwo().getIndex() &&schedule.getDayTwo().getIndex()==this.getDayTwo().getIndex()))
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	@Override
 	public boolean equals(Object obj) 
 	{ 
@@ -572,4 +611,5 @@ public class Schedule implements Serializable
 		return false;
 	}
 
+	
 }

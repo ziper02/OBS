@@ -296,7 +296,7 @@ public class ScheduleController
 		
 	}
 
-	private static void removeAllSchedule() 
+	public static void removeAllSchedule() 
 	{
 		ArrayList<Schedule> list=Course.getSchduledCourses();
 		Platform.runLater(()->{

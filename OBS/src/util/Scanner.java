@@ -234,6 +234,16 @@ public class Scanner extends Thread
 						ScheduleController.checkForUpdateResult();
 					}
 				}
+				if(ScheduleController.selection==4)
+				{
+					System.out.println(tempCount);
+					tempCount++;
+					if(tempCount==6)
+					{
+						tempCount=0;
+						ScheduleController.controllerAuto.StartAlgoritamTEST();
+					}
+				}
 				
 			}	
 		}

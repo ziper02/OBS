@@ -3,6 +3,7 @@ package entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 
 public class Course implements Serializable
@@ -16,25 +17,46 @@ public class Course implements Serializable
 	private String Name;
 	private int Semester;
 	private ArrayList<Schedule> Schedule;
-	
 	private static HashMap<Integer, Course> map = new HashMap<>(); 
 
+	private ArrayList<Schedule> lecture;
+	private ArrayList<Schedule> exercise;
+	private ArrayList<Schedule> lab;
+	
 	public Course(String iD, String name, int semester) 
 	{
 		ID = iD;
 		Name = name;
 		Semester = semester;
 		Schedule=new ArrayList<Schedule>();
+		lecture=new ArrayList<Schedule>();
+		exercise=new ArrayList<Schedule>();
+		lab=new ArrayList<Schedule>();
 	}
 	
 	public Course()
 	{
 		Schedule=new ArrayList<Schedule>();
+		lecture=new ArrayList<Schedule>();
+		exercise=new ArrayList<Schedule>();
+		lab=new ArrayList<Schedule>();
 	}
 	
 	public void add(Schedule schedule)
 	{
 		Schedule.add(schedule);
+		if(schedule.getType().equals("הרצאה")||schedule.getType().equals("שו\"ת"))
+		{
+			lecture.add(schedule);
+		}
+		else if(schedule.getType().equals("תרגיל"))
+		{
+			exercise.add(schedule);
+		}
+		else
+		{
+			lab.add(schedule);
+		} 
 	}
 	
 	public static void addCourse(Course course)
@@ -184,7 +206,6 @@ public class Course implements Serializable
 		return Name;
 	}
 
-
 	@Override
 	public boolean equals(Object obj) 
 	{ 
@@ -195,4 +216,51 @@ public class Course implements Serializable
 			return false;
 	}
 
+	public ArrayList<Schedule> getLecture() 
+	{
+		return lecture;
+	}
+
+	public ArrayList<Schedule> getExercise() 
+	{
+		return exercise;
+	}
+
+	public ArrayList<Schedule> getLab() 
+	{
+		return lab;
+	}
+
+	public Schedule randomReplaceSchdule(Schedule sc)
+	{
+		Random rand = new Random();
+		
+		if(sc.getType().equals("הרצאה")||sc.getType().equals("שו\"ת"))
+		{
+			int n = rand.nextInt(this.getLecture().size());
+			while(sc.equals(this.getLecture().get(n)) && this.getLecture().size()!=1)
+			{
+				n = rand.nextInt(this.getLecture().size());
+			}
+			return this.getLecture().get(n);
+		}
+		else if(sc.getType().equals("תרגיל"))
+		{
+			int n = rand.nextInt(this.getExercise().size());
+			while(sc.equals(this.getExercise().get(n)) && this.getExercise().size()!=1)
+			{
+				n = rand.nextInt(this.getExercise().size());
+			}
+			return this.getExercise().get(n);
+		}
+		else
+		{
+			int n = rand.nextInt(this.getLab().size());
+			while((sc.equals(this.getLab().get(n)) || this.getLab().get(n).getDay().getIndex()==0)&& this.getExercise().size()!=1)
+			{
+				n = rand.nextInt(this.getLab().size());
+			}
+			return this.getLab().get(n);
+		} 
+	}
 }
