@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import GUI.Main;
 import GUI.ScheduleController;
+import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -186,15 +187,15 @@ public class Schedule implements Serializable
 		String Color;
 		if(type.equals("הרצאה") || type.equals("שו\"ת"))
 		{
-			Color="#98fb98";
+			Color="#87cefa";
 		}
 		else if(type.equals("תרגיל"))
 		{
-			Color="#87cefa";
+			Color="#98fb98";
 		}
 		else
 		{
-			Color="#ffebcd";
+			Color="#ffdab9";
 		}
 		String cssLayout = "-fx-font-size: 12;\n" + "-fx-border-color: black;\n" + "-fx-border-width: 1;\n" + "-fx-background-color: " + Color + ";\n";
 		GridPaneVBox1.setStyle(cssLayout);
@@ -253,14 +254,17 @@ public class Schedule implements Serializable
 					ScheduleController.controller.resultSearchCouse();
 					if(type.equals("הרצאה") ||type.equals("שו\"ת"))
 					{
+						Main.scheduleController.LoadNewCusomCourseController(new ActionEvent());
 						ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.lectureTAB);
 					}
 					else if(type.equals("תרגיל"))
 					{
+						Main.scheduleController.LoadNewCusomCourseController(new ActionEvent());
 						ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.exerciseTAB);
 					}
 					else if(type.equals("מעבדה"))
 					{
+						Main.scheduleController.LoadNewCusomCourseController(new ActionEvent());
 						ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.labTAB);
 					}	
 	            } 
@@ -345,15 +349,15 @@ public class Schedule implements Serializable
 		String Color;
 		if(type.equals("הרצאה")||type.equals("שו\"ת"))
 		{
-			Color="#98fb98";
+			Color="#87cefa";
 		}
 		else if(type.equals("תרגיל"))
 		{
-			Color="#87cefa";
+			Color="#98fb98";
 		}
 		else
 		{
-			Color="#ffebcd";
+			Color="#ffdab9";
 		}
 		String cssLayout = "-fx-font-size: 12;\n" + "-fx-border-color: black;\n" + "-fx-border-width: 1;\n" + "-fx-background-color: " + Color + ";\n";
 		GridPaneVBox3.setStyle(cssLayout);
@@ -586,6 +590,25 @@ public class Schedule implements Serializable
 		return false;
 	}
 	
+	public static Boolean sameScheduleListSameOrder(ArrayList <Schedule> sc,ArrayList <Schedule> sc1)
+	{
+		for(int i=0;i<sc.size();i++)
+		{
+			if(sc.get(i).equals(sc1.get(i))==false)
+				return false;
+		}
+		return true;
+	}
+	
+	public static Boolean contaninsSameScheduleListSameOrder(ArrayList <ArrayList<Schedule>> sc,ArrayList <Schedule> sc1)
+	{
+		for(int i=0;i<sc.size();i++)
+		{
+			if(sameScheduleListSameOrder(sc.get(i),sc1))
+				return true;
+		}
+		return false;
+	}
 	@Override
 	public boolean equals(Object obj) 
 	{ 

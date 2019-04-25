@@ -8,16 +8,18 @@ import com.jfoenix.controls.JFXButton;
 import entity.Course;
 import entity.Schedule;
 import geneticAlgorithm.GA;
-import geneticAlgorithm.Population;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.FlowPane;
 import util.Scanner;
 
 public class AutoCourseController {
@@ -38,6 +40,9 @@ public class AutoCourseController {
     private ProgressIndicator PBar;
 
     @FXML
+    private ProgressIndicator PBar2;
+    
+    @FXML
     private ListView<Course> SelectedCourses;
 
     @FXML
@@ -46,47 +51,147 @@ public class AutoCourseController {
     private Scanner st;
     
     public Course course;
-    Scanner st4;
-    Scanner st1;
-    Scanner st2;
-    Scanner st3;
-    Scanner st5;
-    Scanner st6;
+    
+    @FXML
+    private FlowPane FPResult;
+
+    @FXML
+    private JFXButton Back;
+    
+    private ArrayList<ArrayList<Schedule>> sc;
+    private double value;
+    
+    @FXML
+    private Label ResultLabel;
+    
+    @FXML
+    private ScrollPane SPResult;
+    
+
+    
+    
+	public void initialize() 
+	{
+		FPResult.setVgap(8);
+		FPResult.setHgap(4);
+		FPResult.setPrefWrapLength(300); // preferred width = 300
+		FPResult.setAlignment(Pos.TOP_RIGHT);
+		
+	}
+    
+    
+
+    
+    @FXML
+    void GoBack(ActionEvent event)
+    {
+    	IDcourseTF.setVisible(true);
+    	SearchBTN.setVisible(true);
+    	IDcourseLBL.setVisible(true);
+    	SelectedCourses.setVisible(true);
+    	StartAuto.setVisible(true);
+    	FPResult.setVisible(false);
+    	Back.setVisible(false);
+    	SPResult.setVisible(false);
+    	ResultLabel.setVisible(false);
+    	PBar2.setVisible(false);
+    	
+    }
     @FXML
     void StartAlgoritam(ActionEvent event) 
     {
-    	ScheduleController.selection=4;
-    	st4=new Scanner(Integer.toString(61761));
-    	st4.start();
-    	st1=new Scanner(Integer.toString(11158));
-    	st1.start();
-    	st2=new Scanner(Integer.toString(61764));
-    	st2.start();
-    	st3=new Scanner(Integer.toString(61763));
-    	st3.start();
-    	st5=new Scanner(Integer.toString(11069));
-    	st5.start();
-    	st6=new Scanner(Integer.toString(61758));
-    	st6.start();
-    	System.out.println("here");
-    	
+    	if(sc!=null)
+    		if(sc.isEmpty()==false)
+    			sc.clear();
+    	PBar2.setVisible(true);
+    	SelectedCourses.setVisible(false);
+    	StartAuto.setVisible(false);
+    	IDcourseTF.setVisible(false);
+    	SearchBTN.setVisible(false);
+    	IDcourseLBL.setVisible(false);
+    	GA ga=new GA(100);
+    	ga.selection();
+    	calculateByValue(0.9,ga,200000);
+    	if(sc.isEmpty())
+    	{
+    		calculateByValue(0.8,ga,200000);
+    		if(sc.isEmpty())
+    		{
+    			calculateByValue(0.7,ga,200000);
+        		if(sc.isEmpty())
+        		{
+        			calculateByValue(0.6,ga,200000);
+            		if(sc.isEmpty())
+            		{
+            			calculateByValue(0.5,ga,200000);
+            		}
+            		if(sc.isEmpty())
+            		{
+            			util.GUI.alertErrorWithOption("לא נמצאה מערכת מתאימה\n נסה קורסים אחרים או הרכבת ידנית.", "לא נמצא", "אישור");
+            			GoBack(new ActionEvent());
+            		}
+        		}
+    		}
+    	}
+    	if(sc.isEmpty()==false)
+    	{
+    		for(int i=0;i<10;i++)
+    		{
+    			if(value==0.9 || value==0.8 || value==0.7)
+    			{
+    				ga=new GA(100);
+    				calculateByValue(value,ga,100000);
+    			}
+    			else
+    			{
+    				ga=new GA(100);
+    				calculateByValue(value,ga,75000);
+    			}
+    		}
+    		Platform.runLater(()->
+ 			{ 
+ 				FPResult.getChildren().clear();
+ 				for(int i=0;i<sc.size();i++)
+ 	    		{
+ 					JFXButton button=new JFXButton();
+ 					button.setText("אפשרות מספר "+(i+1));
+ 					button.setPrefHeight(40);
+ 					button.setPrefWidth(114);
+ 	    			button.setAlignment(Pos.CENTER_LEFT);
+ 	    			button.setStyle("-fx-font-size:12px;-fx-background-color:#66cdaa;-fx-text-fill:#fff8f8;");
+ 	    			button.setUserData(sc.get(i));
+ 	    			button.setOnAction(e -> addToGrid(button.getUserData()));	    			
+ 	    			FPResult.getChildren().add(button);
+ 	    		}
+ 			});
+    		FPResult.setVisible(true);
+    		SPResult.setVisible(true);
+        	Back.setVisible(true);
+        	ResultLabel.setVisible(true);
+        	PBar2.setVisible(false);
+    	}
     }
     
-    public void StartAlgoritamTEST() 
+    public void addToGrid(Object userData)
     {
-    	GA.addCourse(st4.getValue());
-    	GA.addCourse(st5.getValue());
-    	GA.addCourse(st6.getValue());
-    	GA.addCourse(st2.getValue());
-    	GA.addCourse(st3.getValue());
-    	GA.addCourse(st1.getValue());
-    	ScheduleController.removeAllSchedule();   	
-    	GA ga=new GA(100);
+    	@SuppressWarnings("unchecked")
+		ArrayList<Schedule> schedule=(ArrayList<Schedule>)userData;
+    	ScheduleController.removeAllSchedule();
+    	for(int i=0;i<schedule.size();i++)
+        	NewCustomCourseController.addToGrid(schedule.get(i));
+    }
+    
+    
+    
+    public void calculateByValue(double num, GA ga,int generations)
+    {
     	Random rn = new Random();
+    	if(sc==null)
+    		sc=new ArrayList<ArrayList<Schedule>>();
     	System.out.println("Generation: " + ga.generationCount + " Fittest: " + (Math.floor(ga.fittest.getFitness() * 100) / 100)+" Conflicts: "+ga.fittest.getConflicts());
     	double max=(Math.floor(ga.population.getFittest().getFitness() * 100) / 100);
-    	ga.selection();
-    	while(ga.fittest.getFitness()<0.8 && ga.generationCount<300000 )
+    	int CountGeneration=ga.generationCount;
+    	while( ga.fittest.getFitness()<num && ga.generationCount<(generations+CountGeneration) ) //
     	{
     		  ++ga.generationCount;
               ga.crossover();
@@ -103,89 +208,22 @@ public class AutoCourseController {
             	  System.out.println(ga.generationCount);
               }
     	}
-    	
-    	ArrayList<Schedule> sc;
-    	if(ga.fittest.getFitness()>=0.8)
+    	if(ga.fittest.getFitness()>=num)
     	{
-    		sc=ga.fittest.getGenes();
-        	for(int i=0;i<sc.size();i++)
-        		NewCustomCourseController.addToGrid(sc.get(i));
-        	return;
+    		
+    		for(int i=0;i<ga.population.getChromosomes().size();i++)
+    		{
+    			if(ga.population.getChromosomes().get(i).getFitness()>=num)
+    			{
+    				if(Schedule.contaninsSameScheduleListSameOrder(sc,ga.population.getChromosomes().get(i).getGenes())==false)
+    						sc.add(ga.population.getChromosomes().get(i).getGenes());
+    			}
+    		}
+    		value=num;
     	}
-    	ga.generationCount=0;
-    	while(ga.fittest.getFitness()<0.7 && ga.generationCount<300000 )
-    	{
-    		  ++ga.generationCount;
-              ga.crossover();
-              if (rn.nextInt()%7 < 5) 
-                  ga.mutation();
-              ga.addFittestOffspring();
-              if(max<(Math.floor(ga.population.getFittest().getFitness() * 100) / 100))
-              {
-            	  max=Math.floor(ga.population.getFittest().getFitness() * 100) / 100;
-            	  System.out.println("Generation: " + ga.generationCount + " Fittest: " + (Math.floor(ga.fittest.getFitness() * 100) / 100)+" Conflicts: "+ga.fittest.getConflicts());
-              }
-              if(ga.generationCount%100000==0)
-            	  System.out.println(ga.generationCount);
-    	}
-    	if(ga.fittest.getFitness()>=0.7)
-    	{
-    		sc=ga.fittest.getGenes();
-        	for(int i=0;i<sc.size();i++)
-        		NewCustomCourseController.addToGrid(sc.get(i));
-        	return;
-    	}
-    	ga.generationCount=0;
-    	while(ga.fittest.getFitness()<0.6 && ga.generationCount<200000 )
-    	{
-    		  ++ga.generationCount;
-              ga.crossover();
-              if (rn.nextInt()%7 < 5) 
-                  ga.mutation();
-              ga.addFittestOffspring();
-              if(max<(Math.floor(ga.population.getFittest().getFitness() * 100) / 100))
-              {
-            	  max=Math.floor(ga.population.getFittest().getFitness() * 100) / 100;
-            	  System.out.println("Generation: " + ga.generationCount + " Fittest: " + (Math.floor(ga.fittest.getFitness() * 100) / 100)+" Conflicts: "+ga.fittest.getConflicts());
-              }
-              if(ga.generationCount%100000==0)
-            	  System.out.println(ga.generationCount);
-    	}
-    	if(ga.fittest.getFitness()>=0.6)
-    	{
-    		sc=ga.fittest.getGenes();
-        	for(int i=0;i<sc.size();i++)
-        		NewCustomCourseController.addToGrid(sc.get(i));
-        	return;
-    	}
-    	ga.generationCount=0;
-    	while(ga.fittest.getFitness()<0.5 && ga.generationCount<100000 )
-    	{
-    		  ++ga.generationCount;
-              ga.crossover();
-              if (rn.nextInt()%7 < 5) 
-                  ga.mutation();
-              ga.addFittestOffspring();
-              if(max<(Math.floor(ga.population.getFittest().getFitness() * 100) / 100))
-              {
-            	  max=Math.floor(ga.population.getFittest().getFitness() * 100) / 100;
-            	  System.out.println("Generation: " + ga.generationCount + " Fittest: " + (Math.floor(ga.fittest.getFitness() * 100) / 100)+" Conflicts: "+ga.fittest.getConflicts());
-              }
-              if(ga.generationCount%100000==0)
-            	  System.out.println(ga.generationCount);
-    	}
-    	if(ga.fittest.getFitness()>=0.5)
-    	{
-    		sc=ga.fittest.getGenes();
-        	for(int i=0;i<sc.size();i++)
-        		NewCustomCourseController.addToGrid(sc.get(i));
-        	return;
-    	}
-    	
     }
     
-    
-    
+
 
     @FXML
     void keyTypedCourseTF(KeyEvent event) 

@@ -75,7 +75,7 @@ public class ScheduleController
 	public static AutoCourseController controllerAuto=null;
 	
     @FXML
-    void LoadNewCusomCourseController(ActionEvent event) 
+    public void LoadNewCusomCourseController(ActionEvent event) 
     {
     	Pane newLoadedPane;
 		try 
@@ -299,7 +299,8 @@ public class ScheduleController
 	public static void removeAllSchedule() 
 	{
 		ArrayList<Schedule> list=Course.getSchduledCourses();
-		Platform.runLater(()->{
+		try
+		{
 			for(int i=0;i<list.size();i++)
 			{
 				Schedule sc=list.get(i);
@@ -312,9 +313,29 @@ public class ScheduleController
 	            	if(sc.getSplitedTwo())
 	            		Main.scheduleController.getScheduleGrid().getChildren().remove(sc.getGridPaneVBox4());
 	        	}
+	        	sc.setSelected(false);
 			}
 			list.clear();
-		});
+		}
+		catch(Exception e)
+		{
+			Platform.runLater(()->{
+				for(int i=0;i<list.size();i++)
+				{
+					Schedule sc=list.get(i);
+					Main.scheduleController.getScheduleGrid().getChildren().remove(sc.getGridPaneVBox1());
+		        	if(sc.getSplited())
+		        		Main.scheduleController.getScheduleGrid().getChildren().remove(sc.getGridPaneVBox2());
+		        	if(sc.getTwoTimes())
+		        	{
+		            	Main.scheduleController.getScheduleGrid().getChildren().remove(sc.getGridPaneVBox3());
+		            	if(sc.getSplitedTwo())
+		            		Main.scheduleController.getScheduleGrid().getChildren().remove(sc.getGridPaneVBox4());
+		        	}
+				}
+				list.clear();
+			});
+		}
 		
 	}
 	

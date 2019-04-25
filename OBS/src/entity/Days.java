@@ -1,6 +1,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Days implements Serializable
 {
@@ -87,7 +88,65 @@ public class Days implements Serializable
 		return name;
 	}
 
-
+	public static String DayListOfSchedule(ArrayList<Schedule> sc)
+	{
+		String DayList="";
+		int[] counter=new int[7];
+		for(int i=0;i<sc.size();i++)
+		{
+			if(counter[sc.get(i).getDay().getIndex()]==0)
+				counter[sc.get(i).getDay().getIndex()]++;
+			if(sc.get(i).getTwoTimes())
+				if(counter[sc.get(i).getDayTwo().getIndex()]==0)
+					counter[sc.get(i).getDayTwo().getIndex()]++;
+		}
+		for(int i=1;i<7;i++)
+		{
+			if(counter[i]==1)
+			{
+				if(DayList.length()==0)
+					DayList="יום "+indexToName(i);
+				else
+					DayList=DayList+"יום "+indexToName(i)+",";
+			}
+		}
+		DayList.substring(0, DayList.length() - 1);
+		return DayList;
+	}
+	
+	private static String indexToName(int x)
+	{
+		if(x==0)
+		{
+			return "שבת";
+		}
+		else if(x==1)
+		{
+			return "שישי";
+		}
+		else if(x==2)
+		{
+			return "חמישי";
+		}
+		else if(x==3)
+		{
+			return "רביעי";
+		}
+		else if(x==4)
+		{
+			return "שלישי";
+		}
+		else if(x==5)
+		{
+			return "שני";
+		}
+		else
+		{
+			return "ראשון";
+		}
+	}
+	
+	
 	@Override
 	public boolean equals(Object obj) 
 	{ 
