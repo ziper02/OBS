@@ -3,11 +3,11 @@ package geneticAlgorithm;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-
+import GUI.ScheduleController;
 import entity.Course;
 import entity.Schedule;
 
-public class GA 
+public class GA extends Thread
 {
 	private static HashMap<Integer, Course> map = new HashMap<>(); 
 	private static ArrayList<Course> list=new ArrayList<Course>();
@@ -16,12 +16,25 @@ public class GA
     public Chromosome fittest;
     public Chromosome secondFittest;
     public int generationCount = 0;
-	
-    public GA(int size)
+    
+    private int mode;
+    public int generations;
+    public double value;
+    private ArrayList<ArrayList<Schedule>> sc;
+    public static ArrayList<ArrayList<Schedule>> Finalsc=new ArrayList<ArrayList<Schedule>>();
+    private static ArrayList<GA> threads=new ArrayList<GA>();
+    public static double choosenValue=0;
+    public static int countValues=0;
+    
+    public GA(int size,double value,int generations,int mode)
     {
     	population=new Population(size);
     	fittest=population.getFittest();
     	secondFittest=population.getSecondFittest();
+    	this.value=value;
+    	this.generations=generations;
+    	sc=new ArrayList<ArrayList<Schedule>>();
+    	this.mode=mode;
     }
     
     public void selection() 
@@ -145,5 +158,211 @@ public class GA
 		return population.getChromosomes().get(maxFitIndex);
 	}
 	
+	public void run()
+	{
+		if(this.mode==1)
+		{
+			Random rn = new Random();
+	    	System.out.println("Generation: " + generationCount + " Fittest: " + (Math.floor(fittest.getFitness() * 100) / 100)+" Conflicts: "+fittest.getConflicts());
+	    	double max=(Math.floor(population.getFittest().getFitness() * 100) / 100);
+	    	while(fittest.getFitness()<value && generationCount<generations && value>choosenValue ) //
+	    	{
+	    		  ++generationCount;
+	              crossover();
+	              if (rn.nextInt()%7 < 5) 
+	                  mutation();
+	              addFittestOffspring();
+	              if(max<(Math.floor(population.getFittest().getFitness() * 100) / 100))
+	              {
+	            	  max=Math.floor(population.getFittest().getFitness() * 100) / 100;
+	            	  System.out.println("Generation: " + generationCount + " Fittest: " + (Math.floor(fittest.getFitness() * 100) / 100)+" Conflicts: "+fittest.getConflicts());
+	              }
+	              if(generationCount%100000==0)
+	              {
+	            	  System.out.println(generationCount);
+	              }
+	    	}
+	    	if(fittest.getFitness()>=value)
+	    	{
+	    		
+	    		for(int i=0;i<population.getChromosomes().size();i++)
+	    		{
+	    			if(population.getChromosomes().get(i).getFitness()>=value)
+	    			{
+	    				if(Schedule.contaninsSameScheduleListSameOrder(sc,population.getChromosomes().get(i).getGenes())==false)
+	    						sc.add(population.getChromosomes().get(i).getGenes());
+	    			}
+	    		}
+	    		choosenValue=value;
+	    	}
+	    	
+	    	countValues++;
+	    	if(ScheduleController.controllerAuto.NumberOfGA==countValues)
+	    	{
+	    		ScheduleController.controllerAuto.resultOfGAFirst();
+	    	}
+		}
+		else if(mode==2)
+		{
+			startManuelAlgo();
+		}
+    	
+	}
+
 	
+	public void startManuelAlgo()
+	{
+		Random rn = new Random();
+    	System.out.println("Generation: " + generationCount + " Fittest: " + (Math.floor(fittest.getFitness() * 100) / 100)+" Conflicts: "+fittest.getConflicts());
+    	double max=(Math.floor(population.getFittest().getFitness() * 100) / 100);
+    	while(fittest.getFitness()<value && generationCount<generations) //
+    	{
+    		  ++generationCount;
+              crossover();
+              if (rn.nextInt()%7 < 5) 
+                  mutation();
+              addFittestOffspring();
+              if(max<(Math.floor(population.getFittest().getFitness() * 100) / 100))
+              {
+            	  max=Math.floor(population.getFittest().getFitness() * 100) / 100;
+            	  System.out.println("Generation: " + generationCount + " Fittest: " + (Math.floor(fittest.getFitness() * 100) / 100)+" Conflicts: "+fittest.getConflicts());
+              }
+              if(generationCount%100000==0)
+              {
+            	  System.out.println(generationCount);
+              }
+    	}
+    	if(fittest.getFitness()>=value)
+    	{
+    		
+    		for(int i=0;i<population.getChromosomes().size();i++)
+    		{
+    			if(population.getChromosomes().get(i).getFitness()>=value)
+    			{
+    				if(Schedule.contaninsSameScheduleListSameOrder(Finalsc,population.getChromosomes().get(i).getGenes())==false)
+    					Finalsc.add(population.getChromosomes().get(i).getGenes());
+    			}
+    		}
+    	}
+    	countValues++;
+    	if(ScheduleController.controllerAuto.SecoundNumberOfGA==countValues)
+    	{
+    		ScheduleController.controllerAuto.resultOfGASecound();
+    	}
+	}
+	
+	public static HashMap<Integer, Course> getMap() 
+	{
+		return map;
+	}
+
+	public static void setMap(HashMap<Integer, Course> map) 
+	{
+		GA.map = map;
+	}
+
+	public Population getPopulation() 
+	{
+		return population;
+	}
+
+	public void setPopulation(Population population) 
+	{
+		this.population = population;
+	}
+
+	public Chromosome getFittest() 
+	{
+		return fittest;
+	}
+
+	public void setFittest(Chromosome fittest) 
+	{
+		this.fittest = fittest;
+	}
+
+	public Chromosome getSecondFittest() 
+	{
+		return secondFittest;
+	}
+
+	public void setSecondFittest(Chromosome secondFittest) 
+	{
+		this.secondFittest = secondFittest;
+	}
+
+	public int getGenerationCount() 
+	{
+		return generationCount;
+	}
+
+	public void setGenerationCount(int generationCount) 
+	{
+		this.generationCount = generationCount;
+	}
+
+	public int getGenerations() 
+	{
+		return generations;
+	}
+
+	public void setGenerations(int generations) 
+	{
+		this.generations = generations;
+	}
+
+	public double getValue() 
+	{
+		return value;
+	}
+
+	public void setValue(double value) 
+	{
+		this.value = value;
+	}
+
+	public ArrayList<ArrayList<Schedule>> getSc() 
+	{
+		return sc;
+	}
+
+	public void setSc(ArrayList<ArrayList<Schedule>> sc) 
+	{
+		this.sc = sc;
+	}
+
+	public static ArrayList<GA> getThreads() 
+	{
+		return threads;
+	}
+
+	public static void setThreads(ArrayList<GA> threads) 
+	{
+		GA.threads = threads;
+	}
+
+	public static double getChoosenValue() 
+	{
+		return choosenValue;
+	}
+
+	public static void setChoosenValue(double choosenValue) 
+	{
+		GA.choosenValue = choosenValue;
+	}
+
+	public static int getCountValues() 
+	{
+		return countValues;
+	}
+
+	public static void setCountValues(int countValues) 
+	{
+		GA.countValues = countValues;
+	}
+
+	public static void setList(ArrayList<Course> list) 
+	{
+		GA.list = list;
+	}
 }

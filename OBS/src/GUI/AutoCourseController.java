@@ -1,7 +1,6 @@
 package GUI;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import com.jfoenix.controls.JFXButton;
 
@@ -25,50 +24,50 @@ import util.Scanner;
 public class AutoCourseController {
 
     @FXML
-    private Label IDcourseLBL;
+    private  Label IDcourseLBL;
 
     @FXML
-    private TextField IDcourseTF;
+    private   TextField IDcourseTF;
 
     @FXML
-    private JFXButton SearchBTN;
+    private  JFXButton SearchBTN;
 
     @FXML
-    private Label CourseName;
+    private  Label CourseName;
 
     @FXML
     private ProgressIndicator PBar;
 
     @FXML
-    private ProgressIndicator PBar2;
+    private  ProgressIndicator PBar2;
     
     @FXML
-    private ListView<Course> SelectedCourses;
+    private  ListView<Course> SelectedCourses;
 
     @FXML
-    private JFXButton StartAuto;
+    private  JFXButton StartAuto;
     
     private Scanner st;
     
     public Course course;
     
     @FXML
-    private FlowPane FPResult;
+    public FlowPane FPResult;
 
     @FXML
-    private JFXButton Back;
+    private  JFXButton Back;
     
-    private ArrayList<ArrayList<Schedule>> sc;
-    private double value;
     
     @FXML
-    private Label ResultLabel;
+    private  Label ResultLabel;
     
     @FXML
-    private ScrollPane SPResult;
+    private  ScrollPane SPResult;
     
-
+    public int NumberOfGA=5;
+    public int SecoundNumberOfGA=10;
     
+    ArrayList<GA> ga=new ArrayList<GA>();
     
 	public void initialize() 
 	{
@@ -83,7 +82,22 @@ public class AutoCourseController {
 
     
     @FXML
-    void GoBack(ActionEvent event)
+    public void GoBack(ActionEvent event)
+    {
+    	IDcourseTF.setVisible(true);
+    	SearchBTN.setVisible(true);
+    	IDcourseLBL.setVisible(true);
+    	SelectedCourses.setVisible(true);
+    	StartAuto.setVisible(true);
+    	FPResult.setVisible(false);
+    	Back.setVisible(false);
+    	SPResult.setVisible(false);
+    	ResultLabel.setVisible(false);
+    	PBar2.setVisible(false);    	
+    }
+    
+    
+    public void GoBack()
     {
     	IDcourseTF.setVisible(true);
     	SearchBTN.setVisible(true);
@@ -95,83 +109,32 @@ public class AutoCourseController {
     	SPResult.setVisible(false);
     	ResultLabel.setVisible(false);
     	PBar2.setVisible(false);
-    	
     }
+    
     @FXML
     void StartAlgoritam(ActionEvent event) 
     {
-    	if(sc!=null)
-    		if(sc.isEmpty()==false)
-    			sc.clear();
+		GA.countValues=0;
+		GA.choosenValue=0;
+		if(GA.isEmpty()==false)
+			GA.Finalsc.clear();
+		if(ga.isEmpty()==false)
+			ga.clear();
     	PBar2.setVisible(true);
     	SelectedCourses.setVisible(false);
     	StartAuto.setVisible(false);
     	IDcourseTF.setVisible(false);
     	SearchBTN.setVisible(false);
     	IDcourseLBL.setVisible(false);
-    	GA ga=new GA(100);
-    	ga.selection();
-    	calculateByValue(0.9,ga,200000);
-    	if(sc.isEmpty())
+    	
+    	for(int i=0;i<NumberOfGA;i++)
     	{
-    		calculateByValue(0.8,ga,200000);
-    		if(sc.isEmpty())
-    		{
-    			calculateByValue(0.7,ga,200000);
-        		if(sc.isEmpty())
-        		{
-        			calculateByValue(0.6,ga,200000);
-            		if(sc.isEmpty())
-            		{
-            			calculateByValue(0.5,ga,200000);
-            		}
-            		if(sc.isEmpty())
-            		{
-            			util.GUI.alertErrorWithOption("לא נמצאה מערכת מתאימה\n נסה קורסים אחרים או הרכבת ידנית.", "לא נמצא", "אישור");
-            			GoBack(new ActionEvent());
-            		}
-        		}
-    		}
-    	}
-    	if(sc.isEmpty()==false)
-    	{
-    		for(int i=0;i<10;i++)
-    		{
-    			if(value==0.9 || value==0.8 || value==0.7)
-    			{
-    				ga=new GA(100);
-    				calculateByValue(value,ga,100000);
-    			}
-    			else
-    			{
-    				ga=new GA(100);
-    				calculateByValue(value,ga,75000);
-    			}
-    		}
-    		Platform.runLater(()->
- 			{ 
- 				FPResult.getChildren().clear();
- 				for(int i=0;i<sc.size();i++)
- 	    		{
- 					JFXButton button=new JFXButton();
- 					button.setText("אפשרות מספר "+(i+1));
- 					button.setPrefHeight(40);
- 					button.setPrefWidth(114);
- 	    			button.setAlignment(Pos.CENTER_LEFT);
- 	    			button.setStyle("-fx-font-size:12px;-fx-background-color:#66cdaa;-fx-text-fill:#fff8f8;");
- 	    			button.setUserData(sc.get(i));
- 	    			button.setOnAction(e -> addToGrid(button.getUserData()));	    			
- 	    			FPResult.getChildren().add(button);
- 	    		}
- 			});
-    		FPResult.setVisible(true);
-    		SPResult.setVisible(true);
-        	Back.setVisible(true);
-        	ResultLabel.setVisible(true);
-        	PBar2.setVisible(false);
+    		ga.add(new GA(100,0.9-(0.100000000*i),200000,1));
+    		ga.get(i).selection();
+    		ga.get(i).start();
     	}
     }
-    
+
     public void addToGrid(Object userData)
     {
     	@SuppressWarnings("unchecked")
@@ -183,47 +146,51 @@ public class AutoCourseController {
     
     
     
-    public void calculateByValue(double num, GA ga,int generations)
+    public void resultOfGAFirst()
     {
-    	Random rn = new Random();
-    	if(sc==null)
-    		sc=new ArrayList<ArrayList<Schedule>>();
-    	System.out.println("Generation: " + ga.generationCount + " Fittest: " + (Math.floor(ga.fittest.getFitness() * 100) / 100)+" Conflicts: "+ga.fittest.getConflicts());
-    	double max=(Math.floor(ga.population.getFittest().getFitness() * 100) / 100);
-    	int CountGeneration=ga.generationCount;
-    	while( ga.fittest.getFitness()<num && ga.generationCount<(generations+CountGeneration) ) //
+    	int maxi=0;
+    	GA.choosenValue=0;
+    	for(int i=0;i<ga.size();i++)
     	{
-    		  ++ga.generationCount;
-              ga.crossover();
-              if (rn.nextInt()%7 < 5) 
-                  ga.mutation();
-              ga.addFittestOffspring();
-              if(max<(Math.floor(ga.population.getFittest().getFitness() * 100) / 100))
-              {
-            	  max=Math.floor(ga.population.getFittest().getFitness() * 100) / 100;
-            	  System.out.println("Generation: " + ga.generationCount + " Fittest: " + (Math.floor(ga.fittest.getFitness() * 100) / 100)+" Conflicts: "+ga.fittest.getConflicts());
-              }
-              if(ga.generationCount%100000==0)
-              {
-            	  System.out.println(ga.generationCount);
-              }
-    	}
-    	if(ga.fittest.getFitness()>=num)
-    	{
-    		
-    		for(int i=0;i<ga.population.getChromosomes().size();i++)
+    		if(ga.get(i).getSc().isEmpty()==false && ga.get(i).getValue()>GA.choosenValue)
     		{
-    			if(ga.population.getChromosomes().get(i).getFitness()>=num)
-    			{
-    				if(Schedule.contaninsSameScheduleListSameOrder(sc,ga.population.getChromosomes().get(i).getGenes())==false)
-    						sc.add(ga.population.getChromosomes().get(i).getGenes());
-    			}
+    			GA.choosenValue=ga.get(i).getValue();
+    			maxi=i;
     		}
-    		value=num;
     	}
+		GA.countValues=0;
+		GA.choosenValue=0;
+		for(int i=0;i<SecoundNumberOfGA;i++)
+		{
+			GA ga1=new GA(100,ga.get(maxi).getValue(),75000,2);
+			ga1.start();
+		}
     }
     
-
+    public void resultOfGASecound()
+    {
+    	Platform.runLater(()->
+			{ 
+				FPResult.getChildren().clear();
+				for(int i=0;i<GA.Finalsc.size();i++)
+	    		{
+					JFXButton button=new JFXButton();
+					button.setText("אפשרות מספר "+(i+1));
+					button.setPrefHeight(40);
+					button.setPrefWidth(114);
+	    			button.setAlignment(Pos.CENTER_LEFT);
+	    			button.setStyle("-fx-font-size:12px;-fx-background-color:#66cdaa;-fx-text-fill:#fff8f8;");
+	    			button.setUserData(GA.Finalsc.get(i));
+	    			button.setOnAction(e -> addToGrid(button.getUserData()));	    			
+	    			FPResult.getChildren().add(button);
+	    		}
+			});
+		FPResult.setVisible(true);
+		SPResult.setVisible(true);
+    	Back.setVisible(true);
+    	ResultLabel.setVisible(true);
+    	PBar2.setVisible(false);
+	}
 
     @FXML
     void keyTypedCourseTF(KeyEvent event) 
