@@ -209,6 +209,8 @@ public class Course implements Serializable
 	@Override
 	public boolean equals(Object obj) 
 	{ 
+		if(obj==null)
+			return false;
 		Course course=(Course)obj;
 		if(course.getID().equals(this.ID))
 			return true;

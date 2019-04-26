@@ -100,6 +100,12 @@ public class GA extends Thread
 		list.add(course);
 	}
 	
+	
+	public static void removeCourse(Course course)
+	{
+		map.remove(Integer.valueOf(course.getID()));
+		list.remove(course);
+	}
 	public static Course getCourse(Integer ID)
 	{
 		return map.get(ID);  
@@ -163,8 +169,6 @@ public class GA extends Thread
 		if(this.mode==1)
 		{
 			Random rn = new Random();
-	    	System.out.println("Generation: " + generationCount + " Fittest: " + (Math.floor(fittest.getFitness() * 100) / 100)+" Conflicts: "+fittest.getConflicts());
-	    	double max=(Math.floor(population.getFittest().getFitness() * 100) / 100);
 	    	while(fittest.getFitness()<value && generationCount<generations && value>choosenValue ) //
 	    	{
 	    		  ++generationCount;
@@ -172,15 +176,6 @@ public class GA extends Thread
 	              if (rn.nextInt()%7 < 5) 
 	                  mutation();
 	              addFittestOffspring();
-	              if(max<(Math.floor(population.getFittest().getFitness() * 100) / 100))
-	              {
-	            	  max=Math.floor(population.getFittest().getFitness() * 100) / 100;
-	            	  System.out.println("Generation: " + generationCount + " Fittest: " + (Math.floor(fittest.getFitness() * 100) / 100)+" Conflicts: "+fittest.getConflicts());
-	              }
-	              if(generationCount%100000==0)
-	              {
-	            	  System.out.println(generationCount);
-	              }
 	    	}
 	    	if(fittest.getFitness()>=value)
 	    	{
@@ -213,24 +208,13 @@ public class GA extends Thread
 	public void startManuelAlgo()
 	{
 		Random rn = new Random();
-    	System.out.println("Generation: " + generationCount + " Fittest: " + (Math.floor(fittest.getFitness() * 100) / 100)+" Conflicts: "+fittest.getConflicts());
-    	double max=(Math.floor(population.getFittest().getFitness() * 100) / 100);
-    	while(fittest.getFitness()<value && generationCount<generations) //
+    	while(fittest.getFitness()<value && generationCount<generations) 
     	{
     		  ++generationCount;
               crossover();
               if (rn.nextInt()%7 < 5) 
                   mutation();
               addFittestOffspring();
-              if(max<(Math.floor(population.getFittest().getFitness() * 100) / 100))
-              {
-            	  max=Math.floor(population.getFittest().getFitness() * 100) / 100;
-            	  System.out.println("Generation: " + generationCount + " Fittest: " + (Math.floor(fittest.getFitness() * 100) / 100)+" Conflicts: "+fittest.getConflicts());
-              }
-              if(generationCount%100000==0)
-              {
-            	  System.out.println(generationCount);
-              }
     	}
     	if(fittest.getFitness()>=value)
     	{

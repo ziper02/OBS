@@ -9,6 +9,7 @@ import entity.Schedule;
 import geneticAlgorithm.GA;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -18,6 +19,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import util.Scanner;
 
@@ -75,7 +77,24 @@ public class AutoCourseController {
 		FPResult.setHgap(4);
 		FPResult.setPrefWrapLength(300); // preferred width = 300
 		FPResult.setAlignment(Pos.TOP_RIGHT);
-		
+		SelectedCourses.setOnMouseClicked(new EventHandler<MouseEvent>() 
+		{
+			@Override
+			public void handle(MouseEvent arg0) 
+			{
+				Platform.runLater(()->
+				{
+					int index = SelectedCourses.getSelectionModel().getSelectedIndex();
+					Course course=SelectedCourses.getSelectionModel().getSelectedItem();
+					if (index >= 0) 
+					{
+						SelectedCourses.getItems().remove(index);
+						GA.removeCourse(course);
+					}
+				});
+			}
+			
+	    });
 	}
     
     
