@@ -19,7 +19,7 @@
          </font>
       </Label>
       <Label fx:id="IDcourseLBL" layoutX="210.0" layoutY="63.0" nodeOrientation="RIGHT_TO_LEFT" text="קוד קורס:" />
-      <TextField fx:id="IDcourseTF" layoutX="115.0" layoutY="89.0" nodeOrientation="RIGHT_TO_LEFT" onKeyPressed="#makeSearchWithEnterBtn" onKeyTyped="#keyTypedCourseTF" prefHeight="27.0" prefWidth="146.0" promptText="קוד הקורס" />
+      <TextField fx:id="IDcourseTF" layoutX="115.0" layoutY="89.0" nodeOrientation="RIGHT_TO_LEFT" onInputMethodTextChanged="#ValidTextSearchChanged" onKeyPressed="#makeSearchWithEnterBtn" onKeyTyped="#keyTypedCourseTF" prefHeight="27.0" prefWidth="146.0" promptText="קוד הקורס" />
       <JFXButton fx:id="SearchBTN" layoutX="30.0" layoutY="90.0" onAction="#searchCourse" prefHeight="25.0" prefWidth="59.0" style="-fx-background-color: #6495ed;" text="הוסף" />
       <Label fx:id="CourseName" alignment="CENTER" layoutY="131.0" prefHeight="41.0" prefWidth="275.0" visible="false">
          <font>

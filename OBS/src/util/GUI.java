@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 public abstract class GUI 
@@ -57,4 +58,16 @@ public abstract class GUI
 
 	    return result;
 	}
+
+	public static void IDcourseTFChanged(TextField IDcourseTF)
+	{
+		if(IDcourseTF.getLength()>5 || IDcourseTF.getText().matches("[0-9]+"))
+		{
+			IDcourseTF.setText("");
+			return;
+		}
+		
+			
+	}
+
 }

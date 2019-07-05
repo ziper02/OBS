@@ -45,6 +45,10 @@ public class ScheduleController
 	@FXML
 	public JFXButton SaveSchedule;
 
+
+    @FXML
+    public JFXButton MultiLoad;
+	
 	@FXML
 	public JFXButton CreateAutomaticSchedule;
 
@@ -340,6 +344,14 @@ public class ScheduleController
 	}
 	
 	
+
+    @FXML
+    void MultiLoadAction(ActionEvent event) 
+    {
+    	
+
+    }
+
 
 	
 	

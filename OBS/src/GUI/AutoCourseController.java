@@ -17,6 +17,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -98,6 +99,12 @@ public class AutoCourseController {
 	}
     
     
+	
+    @FXML
+    void ValidTextSearchChanged(InputMethodEvent event) 
+    {
+    	util.GUI.IDcourseTFChanged(IDcourseTF);
+    }
 
     
     @FXML

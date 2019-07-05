@@ -1,5 +1,6 @@
 package GUI;
 
+
 import java.util.ArrayList;
 
 
@@ -16,6 +17,7 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
@@ -84,6 +86,13 @@ public class NewCustomCourseController {
 	}
     
     
+    @FXML
+    void ValidTextSearchChanged(InputMethodEvent event) 
+    {
+    	util.GUI.IDcourseTFChanged(IDcourseTF);
+    }
+	
+	
     @FXML
     void keyTypedCourseTF(KeyEvent event) 
     {
