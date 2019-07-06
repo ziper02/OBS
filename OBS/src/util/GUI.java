@@ -10,6 +10,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
+import java.util.Optional;
+
 public abstract class GUI 
 {
 
@@ -68,6 +70,25 @@ public abstract class GUI
 		}
 		
 			
+	}
+
+	public static void alertErrorWithOptionWithExit(String headerText,String title,String btnName)
+	{
+		Platform.runLater(()->
+		{
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			ButtonType bttexit = new ButtonType(btnName, ButtonBar.ButtonData.CANCEL_CLOSE);
+			alert.getButtonTypes().clear();
+			alert.getDialogPane().setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
+			alert.setHeaderText(headerText);
+			alert.setTitle(title);
+			alert.getButtonTypes().addAll(bttexit);
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get().getButtonData() == ButtonBar.ButtonData.CANCEL_CLOSE)
+			{
+				System.exit(0);
+			}
+		});
 	}
 
 }

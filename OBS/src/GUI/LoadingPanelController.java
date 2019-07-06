@@ -9,12 +9,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import util.Scanner;
 
+
+
 public class LoadingPanelController 
 {
+
+	@FXML
+	private ImageView IV1;
     @FXML
     private ProgressIndicator PBar;
     static FXMLLoader loader;

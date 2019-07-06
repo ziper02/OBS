@@ -1,10 +1,12 @@
 package util;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -51,6 +53,27 @@ public class Scanner extends Thread
 	
 	public void run()
 	{
+		InputStream ddlStream = Scanner.class.getClassLoader().getResourceAsStream("chromedriver.exe");
+
+		try (FileOutputStream fos = new FileOutputStream("chromedriver.exe",false);)
+		{
+			byte[] buf = new byte[2048];
+			int r;
+			while(-1 != (r = ddlStream.read(buf)))
+			{
+				fos.write(buf, 0, r);
+			}
+		}
+		catch (FileNotFoundException e)
+		{
+
+		}
+		catch (IOException e)
+		{
+			util.GUI.alertErrorWithOptionWithExit("Failed to start the application.\nReason:IOException.","Scanner IOException error","exit");
+			e.printStackTrace();
+			return;
+		}
 		synchronized (lock)
 		{
 			if(init==false)
@@ -61,9 +84,24 @@ public class Scanner extends Thread
 				}
 				catch(Exception e)
 				{
-					setScanner("chromedriver.exe");
+					try
+					{
+						setScanner("chromedriver.exe");
+					}
+					catch(Exception ex)
+					{
+						try
+						{
+							setScanner("OBS/src/chromedriver.exe");
+						}
+						catch(Exception exr)
+						{
+							util.GUI.alertErrorWithOptionWithExit("Failed to start the application.\nReason:Scanner not found.","Scanner error","exit");
+							return;
+						}
+					}
 				}
-				
+
 				LoadingPanelController.LoadMainPanel();
 			}
 			else

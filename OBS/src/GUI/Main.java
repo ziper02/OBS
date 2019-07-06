@@ -23,7 +23,19 @@ public class Main extends Application
 		    primaryStage.setScene( scene );
 		    primaryStage.setTitle( "Schedule" );
 		    primaryStage.initStyle(StageStyle.UNDECORATED);
-		    primaryStage.setOnCloseRequest(e->{ System.exit(0);});
+		    primaryStage.setOnCloseRequest(e->
+			{
+				try
+				{
+					Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
+				}
+				catch (IOException ex)
+				{
+					util.GUI.alertErrorWithOptionWithExit("Failed to kill chromedriver.\nReason:not windows.","kill chromedriver error","exit");
+					ex.printStackTrace();
+				}
+				System.exit(0);
+			});
 		    primaryStage.show();
 	  }
 
