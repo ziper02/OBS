@@ -62,7 +62,7 @@ public class ScheduleController
 	private Pane MiddlePane;
 
 	@FXML
-	private Pane LeftPane;
+	public Pane LeftPane;
 
 	@FXML
 	private GridPane ScheduleGrid;
@@ -77,7 +77,7 @@ public class ScheduleController
 	private static int lastSelection;
 	public static NewCustomCourseController controller=null;
 	public static AutoCourseController controllerAuto=null;
-	
+	public static  Pane saveSchedule;
     @FXML
     public void LoadNewCusomCourseController(ActionEvent event) 
     {
@@ -300,6 +300,7 @@ public class ScheduleController
 		
 	}
 
+
 	public static void removeAllSchedule() 
 	{
 		ArrayList<Schedule> list=Course.getSchduledCourses();
@@ -348,7 +349,23 @@ public class ScheduleController
     @FXML
     void MultiLoadAction(ActionEvent event) 
     {
-    	
+		Pane newLoadedPane;
+		try
+		{
+			if(selection!=3)
+			{
+				FXMLLoader loader=new FXMLLoader(getClass().getResource("/GUI/MultiSelection.fxml"));
+				newLoadedPane = loader.load();
+				saveSchedule= (Pane) LeftPane.getChildren().get(0);
+				LeftPane.getChildren().remove(0);
+				LeftPane.getChildren().add(newLoadedPane);
+				selection=3;
+			}
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 
     }
 

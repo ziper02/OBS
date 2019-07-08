@@ -53,31 +53,31 @@ public class Scanner extends Thread
 	
 	public void run()
 	{
-		InputStream ddlStream = Scanner.class.getClassLoader().getResourceAsStream("chromedriver.exe");
-
-		try (FileOutputStream fos = new FileOutputStream("chromedriver.exe",false);)
-		{
-			byte[] buf = new byte[2048];
-			int r;
-			while(-1 != (r = ddlStream.read(buf)))
-			{
-				fos.write(buf, 0, r);
-			}
-		}
-		catch (FileNotFoundException e)
-		{
-
-		}
-		catch (IOException e)
-		{
-			util.GUI.alertErrorWithOptionWithExit("Failed to start the application.\nReason:IOException.","Scanner IOException error","exit");
-			e.printStackTrace();
-			return;
-		}
 		synchronized (lock)
 		{
 			if(init==false)
 			{
+				InputStream ddlStream = Scanner.class.getClassLoader().getResourceAsStream("chromedriver.exe");
+
+				try (FileOutputStream fos = new FileOutputStream("chromedriver.exe",false);)
+				{
+					byte[] buf = new byte[2048];
+					int r;
+					while(-1 != (r = ddlStream.read(buf)))
+					{
+						fos.write(buf, 0, r);
+					}
+				}
+				catch (FileNotFoundException e)
+				{
+
+				}
+				catch (IOException e)
+				{
+					util.GUI.alertErrorWithOptionWithExit("Failed to start the application.\nReason:IOException.","Scanner IOException error","exit");
+					e.printStackTrace();
+					return;
+				}
 				try
 				{
 					setScanner("src/chromedriver.exe");
