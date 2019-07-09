@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="OBS:jar">
+    <output-path>$USER_HOME$/Desktop</output-path>
+    <root id="archive" name="OBS.jar">
+      <element id="module-output" name="OBS" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/OBS/src/jfoenix-9.0.8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/OBS/src/selenium-server-standalone-3.141.59.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/OBS/bin/jfoenix-9.0.8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/OBS/bin/selenium-server-standalone-3.141.59.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

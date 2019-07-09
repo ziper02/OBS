@@ -9,7 +9,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
 
@@ -146,6 +148,8 @@ public class MultiSelectionController
         BackButton.setVisible(true);
         AccepetButton.setVisible(false);
         TitleButton.setVisible(false);
+        for(FlowPane f: FlowPanes)
+            f.setVisible(false);
     }
 
 
@@ -227,6 +231,14 @@ public class MultiSelectionController
     private void loadUI(Department d)
     {
         int i=0;
+        for(FlowPane f: FlowPanes)
+        {
+            f.getChildren().clear();
+            Titles.get(i).setVisible(true);
+            f.getChildren().add(Titles.get(i));
+            i++;
+        }
+        i=0;
         BackButton.setVisible(true);
         AccepetButton.setVisible(true);
         TitleButton.setVisible(true);
@@ -240,12 +252,16 @@ public class MultiSelectionController
             for(Course course: courses)
             {
                 JFXCheckBox cb=new JFXCheckBox();
-                cb.setText(course.getName());
-                cb.setAccessibleHelp(course.getID());
-                cb.setAlignment(Pos.CENTER_RIGHT);
-                cb.setPrefWidth(185);
-                cb.setPrefHeight(20);
-                FlowPanes.get(i).getChildren().add(cb);
+                HBox hBox = new HBox();
+                hBox.setAlignment(Pos.CENTER_RIGHT);
+                Label label= new Label(course.getName());
+                label.setAlignment(Pos.CENTER_RIGHT);
+                hBox.getChildren().addAll(label, cb);
+                hBox.setSpacing(10);
+                hBox.setPrefWidth(185);
+                hBox.setPrefHeight(20);
+                hBox.setAccessibleHelp(course.getID());
+                FlowPanes.get(i).getChildren().add(hBox);
             }
             i++;
         }
