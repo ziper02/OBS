@@ -59,7 +59,7 @@ public class ScheduleController
 	public  ProgressIndicator PBar;
 	
 	@FXML
-	private Pane MiddlePane;
+	public Pane MiddlePane;
 
 	@FXML
 	public Pane LeftPane;
@@ -84,7 +84,7 @@ public class ScheduleController
     	Pane newLoadedPane;
 		try 
 		{
-			if(selection!=1)
+			if(selection!=1 && selection!=3)
 			{
 				FXMLLoader loader=new FXMLLoader(getClass().getResource("/GUI/NewCustomCourse.fxml"));
 				newLoadedPane = loader.load();
@@ -108,7 +108,7 @@ public class ScheduleController
     	Pane newLoadedPane;
 		try 
 		{
-			if(selection!=2)
+			if(selection!=2 && selection!=3)
 			{
 				FXMLLoader loader=new FXMLLoader(getClass().getResource("/GUI/AutoCourse.fxml"));
 				newLoadedPane = loader.load();
@@ -359,6 +359,13 @@ public class ScheduleController
 				saveSchedule= (Pane) LeftPane.getChildren().get(0);
 				LeftPane.getChildren().remove(0);
 				LeftPane.getChildren().add(newLoadedPane);
+				Main.mutliSelectionController=loader.getController();
+
+				loader=new FXMLLoader(getClass().getResource("/GUI/DepSelection.fxml"));
+				newLoadedPane = loader.load();
+				if(MiddlePane.getChildren().size()!=0)
+					MiddlePane.getChildren().remove(0);
+				MiddlePane.getChildren().add(newLoadedPane);
 				selection=3;
 			}
 		}

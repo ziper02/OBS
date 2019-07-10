@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="1016.0" prefWidth="275.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.DepSelectionController">
+   <children>
+      <Button fx:id="SoftButton" contentDisplay="TOP" layoutX="47.0" layoutY="57.0" mnemonicParsing="false" onAction="#SoftButtonPressed" prefHeight="87.0" prefWidth="182.0" text="הנדסת תוכנה">
+         <graphic>
+            <ImageView fitHeight="51.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/softicon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="MechButton" contentDisplay="TOP" layoutX="47.0" layoutY="179.0" mnemonicParsing="false" onAction="#MechButtonPress" prefHeight="87.0" prefWidth="182.0" text="הנדסת מכונות">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="51.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/mechicon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="IndusButton" contentDisplay="TOP" layoutX="47.0" layoutY="301.0" mnemonicParsing="false" onAction="#IndusButtonPress" prefHeight="87.0" prefWidth="182.0" text="הנדסת תעשיה וניהול">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="51.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/indicon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="BioButton" contentDisplay="TOP" layoutX="47.0" layoutY="545.0" mnemonicParsing="false" onAction="#BioButtonPressed" prefHeight="87.0" prefWidth="182.0" text="הנדסת ביוטכנולוגיה">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="51.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/bioicon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="MathButton" contentDisplay="TOP" layoutX="47.0" layoutY="667.0" mnemonicParsing="false" onAction="#MathButtonPressed" prefHeight="87.0" prefWidth="182.0" text="מתמטיקה יישומית">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="51.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/mathicon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="PhyButton" contentDisplay="TOP" layoutX="47.0" layoutY="789.0" mnemonicParsing="false" onAction="#PhyButtonPressed" prefHeight="87.0" prefWidth="182.0" text="הנדסה אופטית">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="51.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/phyicon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="InformButton" contentDisplay="TOP" layoutX="47.0" layoutY="423.0" mnemonicParsing="false" onAction="#InformButtonPressed" prefHeight="87.0" prefWidth="182.0" text="הנדסת מערכות מידע">
+         <graphic>
+            <ImageView fitHeight="51.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/server.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

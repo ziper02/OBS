@@ -8,99 +8,10 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
-
 <FlowPane columnHalignment="RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1016.0" prefWidth="1138.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MultiSelectionController">
    <children>
-      <AnchorPane prefHeight="90.0" prefWidth="1139.0">
-         <children>
-            <Button fx:id="SoftButton" contentDisplay="TOP" layoutX="974.0" mnemonicParsing="false" onAction="#SoftButtonPressed" prefHeight="90.0" prefWidth="151.0" text="הנדסת תוכנה">
-               <graphic>
-                  <ImageView fitHeight="51.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../icons/softicon.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Button>
-            <Button fx:id="MechButton" contentDisplay="TOP" layoutX="797.0" mnemonicParsing="false" onAction="#MechButtonPress" prefHeight="90.0" prefWidth="151.0" text="הנדסת מכונות">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="51.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../icons/mechicon.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="IndusButton" contentDisplay="TOP" layoutX="596.0" mnemonicParsing="false" onAction="#IndusButtonPress" prefHeight="90.0" prefWidth="166.0" text="הנדסת תעשיה וניהול">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="51.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../icons/indicon.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="BioButton" contentDisplay="TOP" layoutX="404.0" mnemonicParsing="false" onAction="#BioButtonPressed" prefHeight="90.0" prefWidth="166.0" text="הנדסת ביוטכנולוגיה">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="51.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../icons/bioicon.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="MathButton" contentDisplay="TOP" layoutX="213.0" mnemonicParsing="false" onAction="#MathButtonPressed" prefHeight="90.0" prefWidth="166.0" text="מתמטיקה יישומית">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="51.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../icons/mathicon.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="PhyButton" contentDisplay="TOP" layoutX="26.0" mnemonicParsing="false" onAction="#PhyButtonPressed" prefHeight="90.0" prefWidth="166.0" text="הנדסה אופטית">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="51.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../icons/phyicon.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-         </children>
-      </AnchorPane>
       <FlowPane fx:id="TitleSelected" hgap="9.0" prefHeight="92.0" prefWidth="1140.0" vgap="5.0">
          <children>
-            <Button fx:id="BackButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#BackButtonPressed" prefHeight="90.0" prefWidth="166.0" text="חזור למערכת">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="52.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../icons/return.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
             <Button fx:id="AccepetButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#AccepetButtonPressed" prefHeight="90.0" prefWidth="238.0" text="הוסף את המבוקשים למערכת">
                <font>
                   <Font name="System Bold" size="15.0" />
@@ -113,7 +24,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <JFXButton fx:id="TitleButton" prefHeight="81.0" prefWidth="714.0" text="Button">
+            <JFXButton fx:id="TitleButton" prefHeight="86.0" prefWidth="885.0">
                <font>
                   <Font size="40.0" />
                </font>
@@ -259,5 +170,21 @@
             </FlowPane>
          </children>
       </FlowPane>
+      <AnchorPane prefHeight="96.0" prefWidth="1139.0">
+         <children>
+            <Button fx:id="BackButton" contentDisplay="TOP" layoutX="434.0" layoutY="-8.0" mnemonicParsing="false" onAction="#BackButtonPressed" prefHeight="96.0" prefWidth="234.0" text="חזור למערכת">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="52.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/return.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </AnchorPane>
    </children>
 </FlowPane>

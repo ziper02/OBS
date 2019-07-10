@@ -18,23 +18,6 @@ import java.util.ArrayList;
 public class MultiSelectionController
 {
 
-    @FXML
-    private Button SoftButton;
-
-    @FXML
-    private Button MechButton;
-
-    @FXML
-    private Button IndusButton;
-
-    @FXML
-    private Button BioButton;
-
-    @FXML
-    private Button MathButton;
-
-    @FXML
-    private Button PhyButton;
 
     @FXML
     private FlowPane TitleSelected;
@@ -136,10 +119,10 @@ public class MultiSelectionController
     private Button AccepetButton;
 
     @FXML
-    private JFXButton TitleButton;
+    public JFXButton TitleButton;
 
-    ArrayList<JFXButton> Titles=new ArrayList<JFXButton>();
-    ArrayList<FlowPane> FlowPanes=new ArrayList<FlowPane>();
+    public ArrayList<JFXButton> Titles=new ArrayList<JFXButton>();
+    public ArrayList<FlowPane> FlowPanes=new ArrayList<FlowPane>();
 
     @FXML
     void initialize()
@@ -190,45 +173,7 @@ public class MultiSelectionController
 
 
 
-    @FXML
-    void BioButtonPressed(ActionEvent event)
-    {
-
-    }
-
-    @FXML
-    void IndusButtonPress(ActionEvent event)
-    {
-
-    }
-
-    @FXML
-    void MathButtonPressed(ActionEvent event)
-    {
-
-    }
-
-    @FXML
-    void MechButtonPress(ActionEvent event)
-    {
-
-    }
-
-    @FXML
-    void PhyButtonPressed(ActionEvent event)
-    {
-
-    }
-
-    @FXML
-    void SoftButtonPressed(ActionEvent event)
-    {
-        TitleButton.setText(Department.department.get(0).getName());
-        TitleButton.setStyle("-fx-background-color: #87cefa");
-        loadUI(Department.department.get(0));
-    }
-
-    private void loadUI(Department d)
+    public void loadUI(Department d)
     {
         int i=0;
         for(FlowPane f: FlowPanes)
@@ -279,9 +224,10 @@ public class MultiSelectionController
     @FXML
     void BackButtonPressed(ActionEvent event)
     {
+
         Main.scheduleController.LeftPane.getChildren().remove(0);
+        Main.scheduleController.MiddlePane.getChildren().remove(0);
         Main.scheduleController.LeftPane.getChildren().add(Main.scheduleController.saveSchedule);
-        if(Main.scheduleController.selection==3)
-            Main.scheduleController.selection=(-1);
+        Main.scheduleController.selection=(-1);
     }
 }
