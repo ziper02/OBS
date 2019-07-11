@@ -58,7 +58,13 @@ public class Course implements Serializable
 			lab.add(schedule);
 		} 
 	}
-	
+
+	@Override
+	public int hashCode()
+	{
+		return Integer.parseInt(ID);
+	}
+
 	public static void addCourse(Course course)
 	{
 		map.put( Integer.valueOf(course.getID()), course);

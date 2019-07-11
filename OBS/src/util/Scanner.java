@@ -114,6 +114,7 @@ public class Scanner extends Thread
 				Main.scheduleController.SaveSchedule.setDisable(true);
 				Main.scheduleController.LoadSchedule.setDisable(true);
 				Main.scheduleController.VaildSchedule.setDisable(true);
+				Main.scheduleController.MultiLoad.setDisable(true);
 				DisableVBox(true);
 				driver.findElement(By.id("SubjectCode")).clear();
 				driver.findElement(By.id("SubjectCode")).sendKeys(ID); //insert the id of course in to text field of searchID
@@ -254,6 +255,7 @@ public class Scanner extends Thread
 				Main.scheduleController.SaveSchedulePNG.setDisable(false);
 				Main.scheduleController.LoadSchedule.setDisable(false);
 				Main.scheduleController.VaildSchedule.setDisable(false);
+				Main.scheduleController.MultiLoad.setDisable(false);
 				DisableVBox(false);
 				if(ScheduleController.selection==1)
 					ScheduleController.controller.resultSearchCouse();

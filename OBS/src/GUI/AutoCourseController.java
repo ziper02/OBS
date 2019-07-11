@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.jfoenix.controls.JFXButton;
 
 import entity.Course;
+import entity.Department;
 import entity.Schedule;
 import geneticAlgorithm.GA;
 import javafx.application.Platform;
@@ -22,6 +23,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
+import org.controlsfx.control.textfield.AutoCompletionBinding;
+import org.controlsfx.control.textfield.TextFields;
 import util.Scanner;
 
 public class AutoCourseController {
@@ -71,7 +74,11 @@ public class AutoCourseController {
     public int SecoundNumberOfGA=10;
     
     ArrayList<GA> ga=new ArrayList<GA>();
-    
+
+
+	AutoCompletionBinding<Course> autoCompletionBinding = TextFields.bindAutoCompletion(IDcourseTF, Department.Courselist);
+
+
 	public void initialize() 
 	{
 		FPResult.setVgap(8);

@@ -1,12 +1,15 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Department
 {
     private String name;
     private ArrayList<Semester> Semesters;
     public static ArrayList<Department> department=new ArrayList<Department>();
+    public static Set<Course> Courselist=new HashSet<Course>();
 
     public Department(String name)
     {

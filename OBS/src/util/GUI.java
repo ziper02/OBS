@@ -63,13 +63,11 @@ public abstract class GUI
 
 	public static void IDcourseTFChanged(TextField IDcourseTF)
 	{
-		if(IDcourseTF.getLength()>5 || IDcourseTF.getText().matches("[0-9]+"))
-		{
-			IDcourseTF.setText("");
-			return;
-		}
-		
-			
+
+			if (IDcourseTF.getLength() > 5 || IDcourseTF.getText().matches("[0-9]+")) {
+				IDcourseTF.setText("");
+				return;
+			}
 	}
 
 	public static void alertErrorWithOptionWithExit(String headerText,String title,String btnName)

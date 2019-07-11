@@ -7,9 +7,11 @@ import java.util.ArrayList;
 import com.jfoenix.controls.JFXButton;
 
 import entity.Course;
+import entity.Department;
 import entity.Schedule;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -21,6 +23,8 @@ import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
+import org.controlsfx.control.textfield.AutoCompletionBinding;
+import org.controlsfx.control.textfield.TextFields;
 import util.GUI;
 import util.Scanner;
 
@@ -68,7 +72,9 @@ public class NewCustomCourseController {
     public Course course;
     
     private Boolean byThread;
-    
+
+	AutoCompletionBinding<Course> autoCompletionBinding ;
+
 	@FXML 
 	public void initialize() 
 	{
@@ -83,32 +89,54 @@ public class NewCustomCourseController {
 		labPane.setHgap(4);
 		labPane.setPrefWrapLength(300); // preferred width = 300
 		SelectPane.setVisible(false);
+		autoCompletionBinding = TextFields.bindAutoCompletion(IDcourseTF, Department.Courselist);
+		autoCompletionBinding.setOnAutoCompleted(new EventHandler<AutoCompletionBinding.AutoCompletionEvent<Course>>()
+		{
+			@Override
+			public void handle(AutoCompletionBinding.AutoCompletionEvent<Course> event)
+			{
+				IDcourseTF.setText(event.getCompletion().getID());
+			}
+		});
 	}
-    
-    
+
+	void onAutoCompletedProperty()
+	{
+
+	}
+
+
+
     @FXML
     void ValidTextSearchChanged(InputMethodEvent event) 
     {
-    	util.GUI.IDcourseTFChanged(IDcourseTF);
+    	//util.GUI.IDcourseTFChanged(IDcourseTF);
     }
 	
 	
     @FXML
     void keyTypedCourseTF(KeyEvent event) 
     {
-		for(int i=0;i<IDcourseTF.getText().length();i++) 
+    	/*if(IDcourseTF.getText().length()>=1)
 		{
-	    	if(IDcourseTF.getText().charAt(i)<'0' ||IDcourseTF.getText().charAt(i)>'9')
-	    	{
-	    		StringBuilder sb = new StringBuilder(IDcourseTF.getText());
-	    		sb.deleteCharAt(i);
-	    		IDcourseTF.setText(sb.toString());
-	    	}
-		}
-		if(IDcourseTF.getText().length()>6)
-		{
-			IDcourseTF.setText(IDcourseTF.getText().substring(0, IDcourseTF.getText().length() - 1));
-		}
+			if(IDcourseTF.getText().charAt(0)>'0' ||IDcourseTF.getText().charAt(0)<'9')
+			{
+				for(int i=0;i<IDcourseTF.getText().length();i++)
+				{
+					if(IDcourseTF.getText().charAt(i)<'0' ||IDcourseTF.getText().charAt(i)>'9')
+					{
+						StringBuilder sb = new StringBuilder(IDcourseTF.getText());
+						sb.deleteCharAt(i);
+						IDcourseTF.setText(sb.toString());
+					}
+				}
+				if(IDcourseTF.getText().length()>6)
+				{
+					IDcourseTF.setText(IDcourseTF.getText().substring(0, IDcourseTF.getText().length() - 1));
+				}
+			}
+		}*/
+
     }
 
     @FXML

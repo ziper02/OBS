@@ -31,25 +31,33 @@ public class DepSelectionController {
     @FXML
     void BioButtonPressed(ActionEvent event)
     {
-
+        Main.mutliSelectionController.TitleButton.setText(Department.department.get(4).getName());
+        Main.mutliSelectionController.TitleButton.setStyle("-fx-background-color: #87cefa");
+        Main.mutliSelectionController.loadUI(Department.department.get(4));
     }
 
     @FXML
     void IndusButtonPress(ActionEvent event)
     {
-
+        Main.mutliSelectionController.TitleButton.setText(Department.department.get(2).getName());
+        Main.mutliSelectionController.TitleButton.setStyle("-fx-background-color: #87cefa");
+        Main.mutliSelectionController.loadUI(Department.department.get(2));
     }
 
     @FXML
     void InformButtonPressed(ActionEvent event)
     {
-
+        Main.mutliSelectionController.TitleButton.setText(Department.department.get(3).getName());
+        Main.mutliSelectionController.TitleButton.setStyle("-fx-background-color: #87cefa");
+        Main.mutliSelectionController.loadUI(Department.department.get(3));
     }
 
     @FXML
     void MathButtonPressed(ActionEvent event)
     {
-
+        Main.mutliSelectionController.TitleButton.setText(Department.department.get(5).getName());
+        Main.mutliSelectionController.TitleButton.setStyle("-fx-background-color: #87cefa");
+        Main.mutliSelectionController.loadUI(Department.department.get(5));
     }
 
     @FXML
@@ -63,7 +71,9 @@ public class DepSelectionController {
     @FXML
     void PhyButtonPressed(ActionEvent event)
     {
-
+        Main.mutliSelectionController.TitleButton.setText(Department.department.get(6).getName());
+        Main.mutliSelectionController.TitleButton.setStyle("-fx-background-color: #87cefa");
+        Main.mutliSelectionController.loadUI(Department.department.get(6));
     }
 
     @FXML
