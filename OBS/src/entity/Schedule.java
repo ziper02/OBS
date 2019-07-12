@@ -46,6 +46,17 @@ public class Schedule implements Serializable
 		
 	}
 
+	public void removeTwoTimes()
+	{
+		twoTimes=false;
+		dayTwo=null;
+		startTimeTwo=null;
+		endTimeTwo=null;
+		classlecTwo=null;
+		splitedTwo=null;
+		GridPaneVBox3=null;
+		GridPaneVBox4=null;
+	}
 	public VBox getGridPaneVBox1() 
 	{
 		return GridPaneVBox1;

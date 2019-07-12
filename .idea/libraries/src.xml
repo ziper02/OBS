@@ -3,7 +3,7 @@
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/OBS/src/jfoenix-9.0.8.jar!/" />
       <root url="jar://$PROJECT_DIR$/OBS/src/selenium-server-standalone-3.141.59.jar!/" />
-      <root url="jar://$PROJECT_DIR$/OBS/controlsfx-8.40.15.jar!/" />
+      <root url="jar://$PROJECT_DIR$/OBS/src/controlsfx-8.40.15.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

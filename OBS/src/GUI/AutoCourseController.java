@@ -76,7 +76,7 @@ public class AutoCourseController {
     ArrayList<GA> ga=new ArrayList<GA>();
 
 
-	AutoCompletionBinding<Course> autoCompletionBinding = TextFields.bindAutoCompletion(IDcourseTF, Department.Courselist);
+	AutoCompletionBinding<Course> autoCompletionBinding;
 
 
 	public void initialize() 
@@ -103,6 +103,15 @@ public class AutoCourseController {
 			}
 			
 	    });
+		autoCompletionBinding = TextFields.bindAutoCompletion(IDcourseTF, Department.Courselist);
+		autoCompletionBinding.setOnAutoCompleted(new EventHandler<AutoCompletionBinding.AutoCompletionEvent<Course>>()
+		{
+			@Override
+			public void handle(AutoCompletionBinding.AutoCompletionEvent<Course> event)
+			{
+				IDcourseTF.setText(event.getCompletion().getID());
+			}
+		});
 	}
     
     
@@ -110,7 +119,7 @@ public class AutoCourseController {
     @FXML
     void ValidTextSearchChanged(InputMethodEvent event) 
     {
-    	util.GUI.IDcourseTFChanged(IDcourseTF);
+    	//util.GUI.IDcourseTFChanged(IDcourseTF);
     }
 
     
@@ -228,7 +237,7 @@ public class AutoCourseController {
     @FXML
     void keyTypedCourseTF(KeyEvent event) 
     {
-    	for(int i=0;i<IDcourseTF.getText().length();i++) 
+    	/*for(int i=0;i<IDcourseTF.getText().length();i++)
 		{
 	    	if(IDcourseTF.getText().charAt(i)<'0' ||IDcourseTF.getText().charAt(i)>'9')
 	    	{
@@ -240,7 +249,7 @@ public class AutoCourseController {
 		if(IDcourseTF.getText().length()>6)
 		{
 			IDcourseTF.setText(IDcourseTF.getText().substring(0, IDcourseTF.getText().length() - 1));
-		}
+		}*/
     }
 
     @FXML

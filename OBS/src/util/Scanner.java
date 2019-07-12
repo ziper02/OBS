@@ -1,6 +1,7 @@
 package util;
 
 import java.io.*;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -115,6 +116,7 @@ public class Scanner extends Thread
 				Main.scheduleController.LoadSchedule.setDisable(true);
 				Main.scheduleController.VaildSchedule.setDisable(true);
 				Main.scheduleController.MultiLoad.setDisable(true);
+				driver.manage().timeouts().implicitlyWait(0,TimeUnit.SECONDS);
 				DisableVBox(true);
 				driver.findElement(By.id("SubjectCode")).clear();
 				driver.findElement(By.id("SubjectCode")).sendKeys(ID); //insert the id of course in to text field of searchID
@@ -146,6 +148,8 @@ public class Scanner extends Thread
 			 		List<WebElement> elementsEven=driver.findElements(By.className("even"));
 			 	    List<WebElement> typeOfelement = driver.findElements(By.xpath(".//div[@class='text'][contains(@style,'text-align:right')]"));
 			 	    Boolean haveEven;
+			 	    int j=0;
+			 	    String tempEven=null;
 			 	    for(int i=0;i<elements.size();i++)
 			 	    {
 			 	    	Schedule schedule=new Schedule();
@@ -159,7 +163,7 @@ public class Scanner extends Thread
 			 	    	String[] splitedEvenNameCourse=null;
 			 	    	try 
 			 	    	{
-			 	    		 tempEvenNameCourse=elementsEven.get(i).getText();
+			 	    		 tempEvenNameCourse=elementsEven.get(j).getText();
 			 	    		 splitedEvenNameCourse= tempEvenNameCourse.split("\\s+");
 			 	    		 haveEven=true;
 			 	    		 schedule.setTwoTimes(true);
@@ -200,10 +204,12 @@ public class Scanner extends Thread
 				 	        {
 				 	        	schedule.setClasslec(splitedNameCourse[10]+" "+splitedNameCourse[9]);
 				 	        	schedule.setLecturer(splitedNameCourse[5]+" "+splitedNameCourse[6]+" "+splitedNameCourse[7]+" "+splitedNameCourse[8]);
+								tempEven=splitedEvenNameCourse[5]+" "+splitedEvenNameCourse[6]+" "+splitedEvenNameCourse[7]+" "+splitedEvenNameCourse[8];
 				 	        	if(schedule.getLecturer().matches(".*\\d.*") || schedule.getLecturer().contains("(עזר)")|| schedule.getLecturer().contains("מע'") )
 				 	        	{
 				 	        		schedule.setClasslec(splitedNameCourse[10]+" "+splitedNameCourse[9]+" "+splitedNameCourse[8]);
 				 	        		schedule.setLecturer(splitedNameCourse[5]+" "+splitedNameCourse[6]+" "+splitedNameCourse[7]);
+									tempEven=splitedEvenNameCourse[5]+" "+splitedEvenNameCourse[6]+" "+splitedEvenNameCourse[7];
 				 	        	}
 				 	        	
 				 	        	if(haveEven)
@@ -225,6 +231,7 @@ public class Scanner extends Thread
 					 	        	{
 					 	        		schedule.setClasslec(splitedNameCourse[9]+" "+splitedNameCourse[8]);
 					 	        		schedule.setLecturer(splitedNameCourse[5]+" "+splitedNameCourse[6]+" "+splitedNameCourse[7]);
+										tempEven=splitedEvenNameCourse[5]+" "+splitedEvenNameCourse[6]+" "+splitedEvenNameCourse[7];
 					 	        		if(haveEven)
 					 	        		{
 					 	        			schedule.setClasslecTwo(splitedEvenNameCourse[9]+" "+splitedEvenNameCourse[8]);
@@ -240,9 +247,18 @@ public class Scanner extends Thread
 					 	        		schedule.setClasslecTwo(splitedEvenNameCourse[8]);
 					 	        	}
 					 	        	schedule.setLecturer(splitedNameCourse[5]+" "+splitedNameCourse[6]+" "+splitedNameCourse[7]);
+									tempEven=splitedEvenNameCourse[5]+" "+splitedEvenNameCourse[6]+" "+splitedEvenNameCourse[7];
 					 	        }
 				 	        }
 			 	    	}
+			 	    	if(tempEven!=null)
+						{
+							if(tempEven.equals(schedule.getLecturer()))
+								j++;
+							else
+								schedule.removeTwoTimes();
+						}
+						tempEven=null;
 			 	    	course.add(schedule);
 			 	    }
 			 	}
@@ -326,6 +342,7 @@ public class Scanner extends Thread
 				course.getSchedule().get(i).setEndTime(Hours.Shabat(true));
 				course.getSchedule().get(i).setLecturer("");
 				course.getSchedule().get(i).setClasslec("");
+				course.getSchedule().get(i).removeTwoTimes();
 				course.getSchedule().get(i).checkSetUpAllparamters();
 			}
 		}

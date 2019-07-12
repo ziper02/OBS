@@ -100,12 +100,6 @@ public class NewCustomCourseController {
 		});
 	}
 
-	void onAutoCompletedProperty()
-	{
-
-	}
-
-
 
     @FXML
     void ValidTextSearchChanged(InputMethodEvent event) 

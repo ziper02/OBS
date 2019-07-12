@@ -8,5 +8,6 @@
 	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="src/jfoenix-9.0.8.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/selenium-server-standalone-3.141.59.jar"/>
+	<classpathentry exported="true" kind="lib" path="src/controlsfx-8.40.15.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
