@@ -19,13 +19,14 @@ import javafx.stage.StageStyle;
 public class Main extends Application
 {
 	public static  ScheduleController scheduleController;
-	public static  MultiSelectionController mutliSelectionController;
-	public static Stage primaryStage;
+	static  MultiSelectionController multiSelectionController;
+	static Stage primaryStage;
 	  public void start(Stage primaryStage) throws IOException 
 	  {
+
 		  	Main.primaryStage=primaryStage;
 		  	FXMLLoader loader=new FXMLLoader(getClass().getResource("/GUI/LoadingPanel.fxml")); // load the FXML file
-	        Parent root = (Parent) loader.load();
+	        Parent root = loader.load();
 		    Scene scene=new Scene(root, 282, 341);
 		    primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/icons/date_and_time_clock-512.png")));
 		    primaryStage.setScene( scene );
@@ -57,25 +58,25 @@ public class Main extends Application
 	{
 
         ExecutorService pool = Executors.newFixedThreadPool(15);
-        pool.execute(()->loadSoftware());
-        pool.execute(()->loadMech());
-        pool.execute(()->loadInus());
-        pool.execute(()->loadInfor());
-        pool.execute(()->loadBio());
-        pool.execute(()->loadMath());
-        pool.execute(()->loadPhy());
+        pool.execute(Main::loadSoftware);
+        pool.execute(Main::loadMech);
+        pool.execute(Main::loadInus);
+        pool.execute(Main::loadInfor);
+        pool.execute(Main::loadBio);
+        pool.execute(Main::loadMath);
+        pool.execute(Main::loadPhy);
         pool.shutdown();
         try
         {
             pool.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
         }
-        catch (InterruptedException e)
-        {
-        }
+        catch (InterruptedException ignored)
+		{
+
+		}
         for(Department d: Department.department)
             for(Semester s: d.getSemesters())
-                for(Course c: s.getCourses())
-                    Department.Courselist.add(c);
+				Department.Courselist.addAll(s.getCourses());
 	}
 
 
@@ -666,7 +667,6 @@ public class Main extends Application
 
 
 		s=new Semester("מסלול תכן ייצור 1",false);
-		c=new Course();
 		c=new Course();
 		c.setName("תכן רכיבים מכניים");
 		c.setID("22720");
@@ -1304,7 +1304,6 @@ public class Main extends Application
 
 		s=new Semester("אשכול מדעים 1",true);
 		c=new Course();
-		c=new Course();
 		c.setName("טורים,התמרות ומשוואת דיפרנציאליות");
 		c.setID("11129");
 		s.add(c);
@@ -1486,7 +1485,7 @@ public class Main extends Application
 		Department d = new Department("מתמטיקה יישומית");
 		Department.department.add(d);
 		Semester s = new Semester("סמסטר א'", false);
-		Course c = new Course();
+		Course c ;
 		c = new Course();
 		c.setName("אלגברה מ");
 		c.setID("11002");
@@ -1551,7 +1550,6 @@ public class Main extends Application
 		c = new Course();
 		c.setName("פיזיקה IE2");
 		c.setID("11210");
-		c = new Course();
 		c = new Course();
 		c.setName("תורת ההסתברות מש");
 		c.setID("51900");

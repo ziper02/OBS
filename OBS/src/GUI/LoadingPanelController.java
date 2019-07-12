@@ -19,13 +19,13 @@ import util.Scanner;
 public class LoadingPanelController 
 {
 
-	@FXML
-	private ImageView IV1;
+
     @FXML
     private ProgressIndicator PBar;
-    static FXMLLoader loader;
-	static Parent root;
-	static Scene scene;
+
+    private static FXMLLoader loader;
+	private static Parent root;
+	private static Scene scene;
 	
     @FXML
     void initialize()
@@ -43,7 +43,7 @@ public class LoadingPanelController
 		{  
 			try 
 			{
-				root = (Parent) loader.load();
+				root = loader.load();
 				
 			} 
 			catch (IOException e1) 
@@ -51,13 +51,14 @@ public class LoadingPanelController
 					e1.printStackTrace();
 			}
 			Main.scheduleController=loader.getController();
+
 			scene=new Scene(root, 1639, 1016);
 			Stage stage=new Stage(StageStyle.DECORATED);
 			stage.setScene( scene );
 			stage.getIcons().add(new Image(Main.class.getResourceAsStream("/icons/date_and_time_clock-512.png")));
 			stage.setTitle( "Schedule" );
 			Main.primaryStage.close();
-			stage.setOnCloseRequest(e->{ System.exit(0);});
+			stage.setOnCloseRequest(e-> System.exit(0));
 			Main.primaryStage=stage;
 			Main.primaryStage.show();	
 		});

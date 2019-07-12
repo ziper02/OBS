@@ -15,7 +15,6 @@ public class Course implements Serializable
 	private static final long serialVersionUID = 1L;
 	private String ID;
 	private String Name;
-	private int Semester;
 	private ArrayList<Schedule> Schedule;
 	private static HashMap<Integer, Course> map = new HashMap<>(); 
 
@@ -23,23 +22,22 @@ public class Course implements Serializable
 	private ArrayList<Schedule> exercise;
 	private ArrayList<Schedule> lab;
 	
-	public Course(String iD, String name, int semester) 
+	public Course(String iD, String name)
 	{
 		ID = iD;
 		Name = name;
-		Semester = semester;
-		Schedule=new ArrayList<Schedule>();
-		lecture=new ArrayList<Schedule>();
-		exercise=new ArrayList<Schedule>();
-		lab=new ArrayList<Schedule>();
+		Schedule=new ArrayList<>();
+		lecture=new ArrayList<>();
+		exercise= new ArrayList<>();
+		lab=new ArrayList<>();
 	}
 	
 	public Course()
 	{
-		Schedule=new ArrayList<Schedule>();
-		lecture=new ArrayList<Schedule>();
-		exercise=new ArrayList<Schedule>();
-		lab=new ArrayList<Schedule>();
+		Schedule=new ArrayList<>();
+		lecture=new ArrayList<>();
+		exercise=new ArrayList<>();
+		lab=new ArrayList<>();
 	}
 	
 	public void add(Schedule schedule)
@@ -72,83 +70,71 @@ public class Course implements Serializable
 	
 	public static ArrayList<Schedule> getSchduledCourses()
 	{
-		ArrayList<Course> list = new ArrayList<Course>(map.values());
-		ArrayList<Schedule> result = new ArrayList<Schedule>();
-		for(int i=0;i<list.size();i++)
-		{
-			for(int j=0;j<list.get(i).getSchedule().size();j++)
-			{
-				if(list.get(i).getSchedule().get(j).getSelected()==true)
-				{
-					result.add(list.get(i).getSchedule().get(j));
+		ArrayList<Course> list = new ArrayList<>(map.values());
+		ArrayList<Schedule> result = new ArrayList<>();
+		for (Course course : list) {
+			for (int j = 0; j < course.getSchedule().size(); j++) {
+				if (course.getSchedule().get(j).getSelected()) {
+					result.add(course.getSchedule().get(j));
 				}
 			}
 		}
 		return result;
 	}
 	
-	public static Boolean VaildSchedule()
+	public static void VaildSchedule()
 	{
 		ArrayList<Schedule> list=getSchduledCourses();
-		ArrayList <String> CourseID=new ArrayList<String>();
-		Boolean lec,exc,lab;
-		String errorlist="";
+		ArrayList <String> CourseID=new ArrayList<>();
+		boolean lec,exc,lab;
+		StringBuilder errorlist= new StringBuilder();
 		lec=exc=lab=false;
 		if(list.size()==0)
 		{
 			util.GUI.alertErrorWithOption("המערכת ריקה", "המערכת לא תקינה", "חזור");
-			return false;
+			return;
 		}
-		for(int i=0;i<list.size();i++)
-		{
-			if(CourseID.contains(list.get(i).getCourse().getID())==false)
-				CourseID.add(list.get(i).getCourse().getID());
+		for (entity.Schedule schedule : list) {
+			if (!CourseID.contains(schedule.getCourse().getID()))
+				CourseID.add(schedule.getCourse().getID());
 		}
-		for(int i=0;i<CourseID.size();i++)
-		{
-			lec=exc=lab=false;
-			Course tempCourse=map.get(Integer.parseInt(CourseID.get(i)));
-			for(int j=0;j<tempCourse.getSchedule().size();j++)
-			{
-				if(tempCourse.getSchedule().get(j).getType().equals("הרצאה")||tempCourse.getSchedule().get(j).getType().equals("שו\"ת"))
-					lec=true;
-				else if(tempCourse.getSchedule().get(j).getType().equals("תרגיל"))
-					exc=true;
+		for (String s : CourseID) {
+			lec = exc = lab = false;
+			Course tempCourse = map.get(Integer.parseInt(s));
+			for (int j = 0; j < tempCourse.getSchedule().size(); j++) {
+				if (tempCourse.getSchedule().get(j).getType().equals("הרצאה") || tempCourse.getSchedule().get(j).getType().equals("שו\"ת"))
+					lec = true;
+				else if (tempCourse.getSchedule().get(j).getType().equals("תרגיל"))
+					exc = true;
 				else
-					lab=true;
+					lab = true;
 			}
-			for(int j=0;j<list.size();j++)
-			{
-				if((list.get(j).getType().equals("הרצאה") &&list.get(j).getCourse().getID().equals(tempCourse.getID()))||(list.get(j).getType().equals("שו\"ת")&&list.get(j).getCourse().getID().equals(tempCourse.getID())))
-					lec=false;
-				else if(list.get(j).getType().equals("תרגיל") &&list.get(j).getCourse().getID().equals(tempCourse.getID()))
-					exc=false;
-				else if(list.get(j).getType().equals("מעבדה") &&list.get(j).getCourse().getID().equals(tempCourse.getID()))
-					lab=false;		
+			for (entity.Schedule schedule : list) {
+				if ((schedule.getType().equals("הרצאה") && schedule.getCourse().getID().equals(tempCourse.getID())) || (schedule.getType().equals("שו\"ת") && schedule.getCourse().getID().equals(tempCourse.getID())))
+					lec = false;
+				else if (schedule.getType().equals("תרגיל") && schedule.getCourse().getID().equals(tempCourse.getID()))
+					exc = false;
+				else if (schedule.getType().equals("מעבדה") && schedule.getCourse().getID().equals(tempCourse.getID()))
+					lab = false;
 			}
-			if(lab==true || lec==true || exc ==true)
-			{
-				if(lab==true)
-				{
-					errorlist=errorlist+"\n"+"חסר מעבדה ב"+tempCourse.getName().substring(1);
+			if (lab || lec || exc) {
+				if (lab) {
+					errorlist.append("\n").append("חסר מעבדה ב").append(tempCourse.getName().substring(1));
 				}
-				if(lec==true)
-				{
-					errorlist=errorlist+"\n"+"חסר הרצאה ב"+tempCourse.getName().substring(1);
+				if (lec) {
+					errorlist.append("\n").append("חסר הרצאה ב").append(tempCourse.getName().substring(1));
 				}
-				if(exc==true)
-					errorlist=errorlist+"\n"+"חסר תרגול ב"+tempCourse.getName().substring(1);
+				if (exc)
+					errorlist.append("\n").append("חסר תרגול ב").append(tempCourse.getName().substring(1));
 			}
 		}
 		if(errorlist.length()==0)
 		{
 			util.GUI.infoAlert("המערכת תקינה", "המערכת תקינה", "אישור");
-			return true;
 		}
 		else
 		{
 			util.GUI.alertErrorWithOption("המערכת לא תקינה"+errorlist, "המערכת לא תקינה", "חזור");
-			return false;
 		}
 	}
 	
@@ -161,12 +147,7 @@ public class Course implements Serializable
 	{
 		return map.containsKey(ID);
 	}
-	
-	public static Boolean isEmpty()
-	{
-		return map.isEmpty();
-	}
-	
+
 	public Schedule get(int i)
 	{
 		return Schedule.get(i);
@@ -191,18 +172,8 @@ public class Course implements Serializable
 	{
 		Name = name;
 	}
-	
-	public int getSemester()
-	{
-		return Semester;
-	}
-	
-	public void setSemester(int semester) 
-	{
-		Semester = semester;
-	}
-	
-	public ArrayList<Schedule> getSchedule() 
+
+	public ArrayList<Schedule> getSchedule()
 	{
 		return Schedule;
 	}
@@ -218,10 +189,7 @@ public class Course implements Serializable
 		if(obj==null)
 			return false;
 		Course course=(Course)obj;
-		if(course.getID().equals(this.ID))
-			return true;
-		else
-			return false;
+		return course.getID().equals(this.ID);
 	}
 
 	public ArrayList<Schedule> getLecture() 

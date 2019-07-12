@@ -239,25 +239,22 @@ public class ScheduleController
     	    }
     }
 
-	void checkForUpdate(ArrayList<Schedule> list)
+	private void checkForUpdate(ArrayList<Schedule> list)
 	{
 		st=new ArrayList<Scanner>();
 		schedule=list;
 		LoadSchedule.setVisible(false);
 		PBar.setVisible(true);
-		for(int i=0;i<list.size();i++)
-		{
-			String courseID=list.get(i).getCourse().getID();
-			if(Course.couseExist(Integer.parseInt(courseID))==false)
-			{
-				Scanner temp=new Scanner(courseID);
-				if(st.contains(temp)==false)
+		for (Schedule value : list) {
+			String courseID = value.getCourse().getID();
+			if (Course.couseExist(Integer.parseInt(courseID)) == false) {
+				Scanner temp = new Scanner(courseID);
+				if (st.contains(temp) == false)
 					st.add(temp);
 			}
 		}
-		for(int i=0;i<st.size();i++)
-		{
-			st.get(i).start();
+		for (Scanner scanner : st) {
+			scanner.start();
 		}
 		
 	}
@@ -266,27 +263,24 @@ public class ScheduleController
 	public static void checkForUpdateResult()
 	{
 		removeAllSchedule();
-		String errorlist="";
-		for(int i=0;i<st.size();i++)
+		StringBuilder errorlist= new StringBuilder();
+		for (Scanner scanner : st)
 		{
-			Course course=st.get(i).getValue();
+			Course course = scanner.getValue();
 			Course.addCourse(course);
 		}
-		for(int i=0;i<schedule.size();i++)
+		for (Schedule sc : schedule)
 		{
-			Schedule sc=schedule.get(i);
 			sc.checkSetUpAllparamters();
-			if(Schedule.checkIfAvailable(schedule.get(i))==false)
-			{
-				errorlist=errorlist+"\n"+sc.getCourse().getName().substring(1)+" "+sc.getType()+" "+sc.getLecturer();
-				if(sc.getTwoTimes()==true)
-					errorlist=errorlist+" ביום"+sc.getDay().getName()+" וביום"+sc.getDayTwo().getName();
+			if (!Schedule.checkIfAvailable(sc)) {
+				errorlist.append("\n").append(sc.getCourse().getName().substring(1)).append(" ").append(sc.getType()).append(" ").append(sc.getLecturer());
+				if (sc.getTwoTimes())
+					errorlist.append(" ביום").append(sc.getDay().getName()).append(" וביום").append(sc.getDayTwo().getName());
 				else
-					errorlist=errorlist+" ביום"+sc.getDay().getName();
-			}
-			else
+					errorlist.append(" ביום").append(sc.getDay().getName());
+			} else
 				NewCustomCourseController.addToGrid(sc);
-			
+
 		}
 		if(errorlist.length()==0)
 		{
@@ -301,42 +295,36 @@ public class ScheduleController
 	}
 
 
-	public static void removeAllSchedule() 
+	static void removeAllSchedule()
 	{
 		ArrayList<Schedule> list=Course.getSchduledCourses();
 		try
 		{
-			for(int i=0;i<list.size();i++)
-			{
-				Schedule sc=list.get(i);
+			for (Schedule sc : list) {
 				Main.scheduleController.getScheduleGrid().getChildren().remove(sc.getGridPaneVBox1());
-	        	if(sc.getSplited())
-	        		Main.scheduleController.getScheduleGrid().getChildren().remove(sc.getGridPaneVBox2());
-	        	if(sc.getTwoTimes())
-	        	{
-	            	Main.scheduleController.getScheduleGrid().getChildren().remove(sc.getGridPaneVBox3());
-	            	if(sc.getSplitedTwo())
-	            		Main.scheduleController.getScheduleGrid().getChildren().remove(sc.getGridPaneVBox4());
-	        	}
-	        	sc.setSelected(false);
+				if (sc.getSplited())
+					Main.scheduleController.getScheduleGrid().getChildren().remove(sc.getGridPaneVBox2());
+				if (sc.getTwoTimes()) {
+					Main.scheduleController.getScheduleGrid().getChildren().remove(sc.getGridPaneVBox3());
+					if (sc.getSplitedTwo())
+						Main.scheduleController.getScheduleGrid().getChildren().remove(sc.getGridPaneVBox4());
+				}
+				sc.setSelected(false);
 			}
 			list.clear();
 		}
 		catch(Exception e)
 		{
 			Platform.runLater(()->{
-				for(int i=0;i<list.size();i++)
-				{
-					Schedule sc=list.get(i);
+				for (Schedule sc : list) {
 					Main.scheduleController.getScheduleGrid().getChildren().remove(sc.getGridPaneVBox1());
-		        	if(sc.getSplited())
-		        		Main.scheduleController.getScheduleGrid().getChildren().remove(sc.getGridPaneVBox2());
-		        	if(sc.getTwoTimes())
-		        	{
-		            	Main.scheduleController.getScheduleGrid().getChildren().remove(sc.getGridPaneVBox3());
-		            	if(sc.getSplitedTwo())
-		            		Main.scheduleController.getScheduleGrid().getChildren().remove(sc.getGridPaneVBox4());
-		        	}
+					if (sc.getSplited())
+						Main.scheduleController.getScheduleGrid().getChildren().remove(sc.getGridPaneVBox2());
+					if (sc.getTwoTimes()) {
+						Main.scheduleController.getScheduleGrid().getChildren().remove(sc.getGridPaneVBox3());
+						if (sc.getSplitedTwo())
+							Main.scheduleController.getScheduleGrid().getChildren().remove(sc.getGridPaneVBox4());
+					}
 				}
 				list.clear();
 			});
@@ -359,7 +347,7 @@ public class ScheduleController
 				saveSchedule= (Pane) LeftPane.getChildren().get(0);
 				LeftPane.getChildren().remove(0);
 				LeftPane.getChildren().add(newLoadedPane);
-				Main.mutliSelectionController=loader.getController();
+				Main.multiSelectionController =loader.getController();
 
 				loader=new FXMLLoader(getClass().getResource("/GUI/DepSelection.fxml"));
 				newLoadedPane = loader.load();

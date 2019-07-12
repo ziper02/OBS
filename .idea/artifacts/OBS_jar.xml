@@ -7,6 +7,9 @@
       <element id="extracted-dir" path="$PROJECT_DIR$/OBS/src/selenium-server-standalone-3.141.59.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/OBS/bin/jfoenix-9.0.8.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/OBS/bin/selenium-server-standalone-3.141.59.jar" path-in-jar="/" />
+      <element id="library" level="project" name="src" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/OBS/src/controlsfx-8.40.15.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/OBS/bin/controlsfx-8.40.15.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

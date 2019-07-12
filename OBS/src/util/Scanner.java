@@ -4,6 +4,7 @@ import java.io.*;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -27,7 +28,7 @@ public class Scanner extends Thread
 	private static WebDriver driver;
 	private String ID;
 	private volatile Course value;
-	public static boolean init=false;
+	private static boolean init=false;
 	 private static final Object lock = new Object();
 	private static int tempCount=0;
 	
@@ -39,10 +40,9 @@ public class Scanner extends Thread
 	{
 		
 	}
-	public static void setScanner(String st)
+	private static void setScanner(String st)
 	{
-		String exePath = st;
-		System.setProperty("webdriver.chrome.driver", exePath);
+		System.setProperty("webdriver.chrome.driver", st);
 	    ChromeOptions chromeOptions = new ChromeOptions();
 	    chromeOptions.setBinary("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
 	    chromeOptions.addArguments("--headless");
@@ -56,15 +56,15 @@ public class Scanner extends Thread
 	{
 		synchronized (lock)
 		{
-			if(init==false)
+			if(!init)
 			{
 				InputStream ddlStream = Scanner.class.getClassLoader().getResourceAsStream("chromedriver.exe");
 
-				try (FileOutputStream fos = new FileOutputStream("chromedriver.exe",false);)
+				try (FileOutputStream fos = new FileOutputStream("chromedriver.exe",false))
 				{
 					byte[] buf = new byte[2048];
 					int r;
-					while(-1 != (r = ddlStream.read(buf)))
+					while(-1 != (r = Objects.requireNonNull(ddlStream).read(buf)))
 					{
 						fos.write(buf, 0, r);
 					}
@@ -129,9 +129,9 @@ public class Scanner extends Thread
 			 	else
 			 	{
 			 		WebElement Name=driver.findElement(By.xpath(".//h1[@style='text-align:center']"));
-			 		String tempName=Name.getText();
-			 		String[] splitedName = tempName.split("\\s+");
-			 		tempName="";
+			 		StringBuilder tempName= new StringBuilder(Name.getText());
+			 		String[] splitedName = tempName.toString().split("\\s+");
+			 		tempName = new StringBuilder();
 			 		for(int i=1;i<splitedName.length;i++)
 			 		{
 			 			if(splitedName[i].contains("שנה"))
@@ -140,14 +140,14 @@ public class Scanner extends Thread
 			 			}
 			 			else
 			 			{
-			 				tempName=tempName+" "+splitedName[i];
+			 				tempName.append(" ").append(splitedName[i]);
 			 			}
 			 		}
-			 		course.setName(tempName);
+			 		course.setName(tempName.toString());
 			 		List<WebElement> elements=driver.findElements(By.className("odd"));
 			 		List<WebElement> elementsEven=driver.findElements(By.className("even"));
 			 	    List<WebElement> typeOfelement = driver.findElements(By.xpath(".//div[@class='text'][contains(@style,'text-align:right')]"));
-			 	    Boolean haveEven;
+			 	    boolean haveEven;
 			 	    int j=0;
 			 	    String tempEven=null;
 			 	    for(int i=0;i<elements.size();i++)
@@ -159,7 +159,7 @@ public class Scanner extends Thread
 			 	    	String tempTypeCourse=typeOfelement.get(i).getText();
 			 	    	String[] splitedTypeCourse = tempTypeCourse.split("\\s+");
 			 	    	
-			 	    	String tempEvenNameCourse=null;
+			 	    	String tempEvenNameCourse;
 			 	    	String[] splitedEvenNameCourse=null;
 			 	    	try 
 			 	    	{
@@ -175,7 +175,7 @@ public class Scanner extends Thread
 			 	    	}
 			 	    	
 			 	    	
-			 	    	Boolean stopThisSet=true;
+			 	    	boolean stopThisSet=true;
 			 	    	schedule.setCourse(course);
 			 	    	schedule.setSelected(false);
 			 	    	schedule.setType(splitedTypeCourse[2]);
@@ -204,7 +204,7 @@ public class Scanner extends Thread
 				 	        {
 				 	        	schedule.setClasslec(splitedNameCourse[10]+" "+splitedNameCourse[9]);
 				 	        	schedule.setLecturer(splitedNameCourse[5]+" "+splitedNameCourse[6]+" "+splitedNameCourse[7]+" "+splitedNameCourse[8]);
-								tempEven=splitedEvenNameCourse[5]+" "+splitedEvenNameCourse[6]+" "+splitedEvenNameCourse[7]+" "+splitedEvenNameCourse[8];
+								tempEven= Objects.requireNonNull(splitedEvenNameCourse)[5]+" "+splitedEvenNameCourse[6]+" "+splitedEvenNameCourse[7]+" "+splitedEvenNameCourse[8];
 				 	        	if(schedule.getLecturer().matches(".*\\d.*") || schedule.getLecturer().contains("(עזר)")|| schedule.getLecturer().contains("מע'") )
 				 	        	{
 				 	        		schedule.setClasslec(splitedNameCourse[10]+" "+splitedNameCourse[9]+" "+splitedNameCourse[8]);
@@ -227,11 +227,11 @@ public class Scanner extends Thread
 				 	        {
 				 	 	        try
 					 	        {
-					 	        	if(check==false)
+					 	        	if(!check)
 					 	        	{
 					 	        		schedule.setClasslec(splitedNameCourse[9]+" "+splitedNameCourse[8]);
 					 	        		schedule.setLecturer(splitedNameCourse[5]+" "+splitedNameCourse[6]+" "+splitedNameCourse[7]);
-										tempEven=splitedEvenNameCourse[5]+" "+splitedEvenNameCourse[6]+" "+splitedEvenNameCourse[7];
+										tempEven= Objects.requireNonNull(splitedEvenNameCourse)[5]+" "+splitedEvenNameCourse[6]+" "+splitedEvenNameCourse[7];
 					 	        		if(haveEven)
 					 	        		{
 					 	        			schedule.setClasslecTwo(splitedEvenNameCourse[9]+" "+splitedEvenNameCourse[8]);
@@ -247,7 +247,14 @@ public class Scanner extends Thread
 					 	        		schedule.setClasslecTwo(splitedEvenNameCourse[8]);
 					 	        	}
 					 	        	schedule.setLecturer(splitedNameCourse[5]+" "+splitedNameCourse[6]+" "+splitedNameCourse[7]);
-									tempEven=splitedEvenNameCourse[5]+" "+splitedEvenNameCourse[6]+" "+splitedEvenNameCourse[7];
+					 	        	try
+									{
+										tempEven= Objects.requireNonNull(splitedEvenNameCourse)[5]+" "+splitedEvenNameCourse[6]+" "+splitedEvenNameCourse[7];
+									}
+									catch(Exception eEven)
+									{
+										tempEven=null;
+									}
 					 	        }
 				 	        }
 			 	    	}
@@ -298,16 +305,14 @@ public class Scanner extends Thread
 	private void DisableVBox(boolean b) 
 	{
 		ArrayList<Schedule> list = Course.getSchduledCourses();
-		for(int i=0;i<list.size();i++)
-		{
-			list.get(i).getGridPaneVBox1().setDisable(b);
-			if(list.get(i).getSplited())
-				list.get(i).getGridPaneVBox2().setDisable(b);
-			if(list.get(i).getTwoTimes())
-			{
-				list.get(i).getGridPaneVBox3().setDisable(b);
-				if(list.get(i).getSplitedTwo())
-					list.get(i).getGridPaneVBox4().setDisable(b);
+		for (Schedule schedule : list) {
+			schedule.getGridPaneVBox1().setDisable(b);
+			if (schedule.getSplited())
+				schedule.getGridPaneVBox2().setDisable(b);
+			if (schedule.getTwoTimes()) {
+				schedule.getGridPaneVBox3().setDisable(b);
+				if (schedule.getSplitedTwo())
+					schedule.getGridPaneVBox4().setDisable(b);
 			}
 		}
 		
@@ -315,20 +320,12 @@ public class Scanner extends Thread
 	public Course getValue() {
 		return value;
 	}
-	public void setValue(Course value) 
-	{
-		this.value = value;
-	}
-	
-	
-	
+
+
 	public boolean equals(Object obj)
 	{
 		Scanner scan=(Scanner)obj;
-		if(scan.getID().equals(this.ID))
-			return true;
-		else
-			return false;
+		return scan.getID().equals(this.ID);
 	}
 	
 	private void fixNull(Course course)
@@ -348,13 +345,9 @@ public class Scanner extends Thread
 		}
 	}
 
-	public String getID() 
+	private String getID()
 	{
 		return ID;
-	}
-	public void setID(String iD) 
-	{
-		ID = iD;
 	}
 
 }

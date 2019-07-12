@@ -8,13 +8,13 @@ public class Department
 {
     private String name;
     private ArrayList<Semester> Semesters;
-    public static ArrayList<Department> department=new ArrayList<Department>();
-    public static Set<Course> Courselist=new HashSet<Course>();
+    public static ArrayList<Department> department= new ArrayList<>();
+    public static Set<Course> Courselist= new HashSet<>();
 
     public Department(String name)
     {
         this.name=name;
-        Semesters=new ArrayList<Semester>();
+        Semesters= new ArrayList<>();
     }
 
     public void add(Semester a)

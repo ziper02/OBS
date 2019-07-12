@@ -9,80 +9,54 @@ public class Days implements Serializable
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String realName;
 	private String name;
 	private int index;
 	
 	public Days(String realName) 
 	{
-		this.realName=realName;
-		if (realName.equals("א")) 
+		switch (realName)
 		{
-			this.index = 6;
-			this.name = new String("ראשון");
+			case "א":
+				this.index = 6;
+				this.name = "ראשון";
+				break;
+			case "ב":
+				this.index = 5;
+				this.name = "שני";
+				break;
+			case "ג":
+				this.index = 4;
+				this.name = "שלישי";
+				break;
+			case "ד":
+				this.index = 3;
+				this.name = "רביעי";
+				break;
+			case "ה":
+				this.index = 2;
+				this.name = "חמישי";
+				break;
+			case "ו":
+				this.index = 1;
+				this.name = "שישי";
+				break;
+			case "ש":
+				this.index = 0;
+				this.name = "שבת";
+				break;
 		}
-		else if (realName.equals("ב")) 
-		{
-			this.index = 5;
-			this.name = new String("שני");
-		}
-		else if (realName.equals("ג")) 
-		{
-			this.index = 4;
-			this.name = new String("שלישי");
-		}
-		else if (realName.equals("ד")) 
-		{
-			this.index = 3;
-			this.name = new String("רביעי");
-		}
-		else if (realName.equals("ה")) 
-		{
-			this.index = 2;
-			this.name = new String("חמישי");
-		}
-		else if (realName.equals("ו")) 
-		{
-			this.index = 1;
-			this.name = new String("שישי");
-		}
-		else if (realName.equals("ש")) 
-		{
-			this.index = 0;
-			this.name = new String("שבת");
-		}
-	}
-	
-	public String getRealName() 
-	{
-		return realName;
 	}
 
-	public void setRealName(String realName) 
-	{
-		this.realName = realName;
-	}
-
-	public String getName() 
+	public String getName()
 	{
 		return name;
 	}
 
-	public void setName(String name) 
-	{
-		this.name = name;
-	}
-
-	public int getIndex() 
+	public int getIndex()
 	{
 		return index;
 	}
 
-	public void setIndex(int num) 
-	{
-		this.index = num;
-	}
-	
 	public String toString()
 	{
 		return name;
@@ -90,28 +64,27 @@ public class Days implements Serializable
 
 	public static String DayListOfSchedule(ArrayList<Schedule> sc)
 	{
-		String DayList="";
+		StringBuilder DayList= new StringBuilder();
 		int[] counter=new int[7];
-		for(int i=0;i<sc.size();i++)
-		{
-			if(counter[sc.get(i).getDay().getIndex()]==0)
-				counter[sc.get(i).getDay().getIndex()]++;
-			if(sc.get(i).getTwoTimes())
-				if(counter[sc.get(i).getDayTwo().getIndex()]==0)
-					counter[sc.get(i).getDayTwo().getIndex()]++;
+		for (Schedule schedule : sc) {
+			if (counter[schedule.getDay().getIndex()] == 0)
+				counter[schedule.getDay().getIndex()]++;
+			if (schedule.getTwoTimes())
+				if (counter[schedule.getDayTwo().getIndex()] == 0)
+					counter[schedule.getDayTwo().getIndex()]++;
 		}
 		for(int i=1;i<7;i++)
 		{
 			if(counter[i]==1)
 			{
 				if(DayList.length()==0)
-					DayList="יום "+indexToName(i);
+					DayList = new StringBuilder("יום " + indexToName(i));
 				else
-					DayList=DayList+"יום "+indexToName(i)+",";
+					DayList.append("יום ").append(indexToName(i)).append(",");
 			}
 		}
 		DayList.substring(0, DayList.length() - 1);
-		return DayList;
+		return DayList.toString();
 	}
 	
 	private static String indexToName(int x)
