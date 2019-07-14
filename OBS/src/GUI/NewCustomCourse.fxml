@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTabPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
@@ -18,16 +18,15 @@
             <Font size="19.0" />
          </font>
       </Label>
-      <Label fx:id="IDcourseLBL" layoutX="210.0" layoutY="63.0" nodeOrientation="RIGHT_TO_LEFT" text="קוד קורס:" />
-      <TextField fx:id="IDcourseTF" alignment="CENTER_RIGHT" layoutX="115.0" layoutY="89.0" nodeOrientation="LEFT_TO_RIGHT" onInputMethodTextChanged="#ValidTextSearchChanged" onKeyPressed="#makeSearchWithEnterBtn" onKeyTyped="#keyTypedCourseTF" prefHeight="27.0" prefWidth="146.0" promptText="קוד הקורס" />
-      <JFXButton fx:id="SearchBTN" layoutX="30.0" layoutY="90.0" onAction="#searchCourse" prefHeight="25.0" prefWidth="59.0" style="-fx-background-color: #6495ed;" text="חפש" />
-      <TabPane fx:id="SelectPane" layoutY="172.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="846.0" prefWidth="275.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
+      <TextField fx:id="IDcourseTF" alignment="CENTER_RIGHT" layoutX="87.0" layoutY="89.0" nodeOrientation="LEFT_TO_RIGHT" onInputMethodTextChanged="#ValidTextSearchChanged" onKeyPressed="#makeSearchWithEnterBtn" onKeyTyped="#keyTypedCourseTF" prefHeight="27.0" prefWidth="174.0" promptText="קוד הקורס/שם קורס" />
+      <JFXButton fx:id="SearchBTN" layoutX="14.0" layoutY="90.0" onAction="#searchCourse" prefHeight="25.0" prefWidth="59.0" style="-fx-background-color: #6495ed;" text="חפש" />
+      <JFXTabPane fx:id="SelectPane" layoutY="172.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="846.0" prefWidth="275.0" tabMinHeight="3.0">
+         <tabs>
           <Tab fx:id="lectureTAB" closable="false" text="הרצאה">
                <content>
-                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                  <ScrollPane prefHeight="200.0" prefWidth="275.0">
                      <content>
-                        <FlowPane fx:id="lecturePane" prefHeight="815.0" prefWidth="269.0" />
+                        <FlowPane fx:id="lecturePane" hgap="5.0" layoutY="2.0" prefHeight="803.0" prefWidth="269.0" />
                      </content>
                   </ScrollPane>
                </content>
@@ -36,7 +35,7 @@
                <content>
                   <ScrollPane prefHeight="200.0" prefWidth="200.0">
                      <content>
-                        <FlowPane fx:id="exercisePane" prefHeight="817.0" prefWidth="275.0" />
+                        <FlowPane fx:id="exercisePane" hgap="5.0" prefHeight="800.0" prefWidth="269.0" />
                      </content>
                   </ScrollPane>
                </content>
@@ -45,13 +44,13 @@
                <content>
                   <ScrollPane prefHeight="200.0" prefWidth="200.0">
                      <content>
-                        <FlowPane fx:id="labPane" prefHeight="816.0" prefWidth="275.0" />
+                        <FlowPane fx:id="labPane" hgap="5.0" prefHeight="794.0" prefWidth="269.0" />
                      </content>
                   </ScrollPane>
                </content>
           </Tab>
-        </tabs>
-      </TabPane>
+         </tabs>
+      </JFXTabPane>
       <Label fx:id="CourseName" alignment="CENTER" layoutY="131.0" prefHeight="41.0" prefWidth="275.0" visible="false">
          <font>
             <Font size="19.0" />

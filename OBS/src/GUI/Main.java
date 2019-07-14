@@ -65,6 +65,7 @@ public class Main extends Application
         pool.execute(Main::loadBio);
         pool.execute(Main::loadMath);
         pool.execute(Main::loadPhy);
+		pool.execute(Main::loadEle);
         pool.shutdown();
         try
         {
@@ -74,16 +75,18 @@ public class Main extends Application
 		{
 
 		}
-        for(Department d: Department.department)
+        for(Department d: Department.department.values())
             for(Semester s: d.getSemesters())
-				Department.Courselist.addAll(s.getCourses());
+				for(Course c: s.getCourses())
+					if(!Department.Courselist.containsKey(c.getID()))
+						Department.Courselist.put(c.getID(),c);
 	}
 
 
 	private static void loadSoftware()
 	{
 		Department d=new Department("הנדסת תוכנה");
-		Department.department.add(d);
+		Department.department.put(d.getName(),d);
 		Semester s=new Semester("סמסטר א'",false);
 		Course c=new Course();
 		c.setName("אנגלית בסיסי");
@@ -462,7 +465,7 @@ public class Main extends Application
 	private static void loadMech()
 	{
 		Department d=new Department("הנדסת מכונות");
-		Department.department.add(d);
+		Department.department.put(d.getName(),d);
 		Semester s=new Semester("סמסטר א'",false);
 		Course c;
 		c=new Course();
@@ -873,7 +876,7 @@ public class Main extends Application
 	private static void loadInus()
 	{
 		Department d = new Department("הנדסת תעשייה וניהול");
-		Department.department.add(d);
+		Department.department.put(d.getName(),d);
 		Semester s = new Semester("סמסטר א'", false);
 		Course c;
 		c = new Course();
@@ -1087,12 +1090,263 @@ public class Main extends Application
 		c.setID("51152");
 		s.add(c);
 		d.add(s);
+
+		s = new Semester("אשכול מידע וטכנולוגיה", true);
+		c = new Course();
+		c.setName("פיזיקה מודרנית");
+		c.setID("11198");
+		s.add(c);
+		c = new Course();
+		c.setName("תגליות מדעיות ששינו את החשיבה האנושית");
+		c.setID("11214");
+		s.add(c);
+		c = new Course();
+		c.setName("עקרונות מדעיים בשרות הטכנולוגיה");
+		c.setID("11215");
+		s.add(c);
+		c = new Course();
+		c.setName("סימטריות בטבע");
+		c.setID("11216");
+		s.add(c);
+		c = new Course();
+		c.setName("נושאים נבחרים בפיזיקה");
+		c.setID("11217");
+		s.add(c);
+		c = new Course();
+		c.setName("מבוא למחשבים");
+		c.setID("31230");
+		s.add(c);
+		c = new Course();
+		c.setName("מיתוג ומערכות ספרתיות");
+		c.setID("31510");
+		s.add(c);
+		c = new Course();
+		c.setName("כימיה א");
+		c.setID("41090");
+		s.add(c);
+		c = new Course();
+		c.setName("מבוא לביולוגיה מולקולרית וגנטיקה");
+		c.setID("41942");
+		s.add(c);
+		c = new Course();
+		c.setName("ניתוח בעיות באופטיקה גיאומטית");
+		c.setID("391407");
+		s.add(c);
+		d.add(s);
+
+		s = new Semester("אשכול תכן ותפעול של מערכות ייצור ושירות 1", true);
+		c = new Course();
+		c.setName("מערכות מלאי");
+		c.setID("51106");
+		s.add(c);
+		c = new Course();
+		c.setName("אירועים בהנדסת תעשייה");
+		c.setID("51113");
+		s.add(c);
+		c = new Course();
+		c.setName("תורת השיבוץ");
+		c.setID("51120");
+		s.add(c);
+		c = new Course();
+		c.setName("סדנה לניהול משאבי הארגון");
+		c.setID("51124");
+		s.add(c);
+		c = new Course();
+		c.setName("סמינר בהנדסת תעשייה");
+		c.setID("51128");
+		s.add(c);
+		c = new Course();
+		c.setName("מערכות שינוע ואחסנה");
+		c.setID("51129");
+		s.add(c);
+		c = new Course();
+		c.setName("מבוא ליישומי RAMST במערכות הנדסיות");
+		c.setID("51130");
+		s.add(c);
+		c = new Course();
+		c.setName("גישות מתקדמות בהנדסת שיטות");
+		c.setID("51135");
+		s.add(c);
+		c = new Course();
+		c.setName("מדידת פריון ויעילות ברמת הארגון");
+		c.setID("51140");
+		s.add(c);
+		c = new Course();
+		c.setName("ניהול תהליכים עסקיים");
+		c.setID("51142");
+		s.add(c);
+		d.add(s);
+
+
+		s = new Semester("אשכול תכן ותפעול של מערכות ייצור ושירות 2", true);
+		c = new Course();
+		c.setName("מיבמ מתקדם");
+		c.setID("51143");
+		s.add(c);
+		c = new Course();
+		c.setName("יישומי חקר ביצועים בעזרת מחשב");
+		c.setID("51144");
+		s.add(c);
+		c = new Course();
+		c.setName("ניהול והערכת סיכונים בפרויקטים הנדסיים");
+		c.setID("51145");
+		s.add(c);
+		c = new Course();
+		c.setName("מבוא להנדסת מערכות");
+		c.setID("51146");
+		s.add(c);
+		c = new Course();
+		c.setName("תכנון משאבים ודרישת חומרים");
+		c.setID("51147");
+		s.add(c);
+		c = new Course();
+		c.setName("זיהוי אלחוטי: טכנולוגיה ויישומים");
+		c.setID("51148");
+		s.add(c);
+		c = new Course();
+		c.setName("מבוא לניתוח ותכנון תחבורה משולבת");
+		c.setID("51149");
+		s.add(c);
+		c = new Course();
+		c.setName("תכנון והערכת מערכות אימון");
+		c.setID("51150");
+		s.add(c);
+		c = new Course();
+		c.setName("ניהול סיכונים תפעוליים");
+		c.setID("51153");
+		s.add(c);
+		d.add(s);
+
+		s = new Semester("אשכול תכן ותפעול של מערכות ייצור ושירות 3", true);
+		c = new Course();
+		c.setName("מבוא ל ERP ומערכות ארגוניות");
+		c.setID("51154");
+		s.add(c);
+		c = new Course();
+		c.setName("ניהול התפעול על פי גישות ניהול רזה");
+		c.setID("51155");
+		s.add(c);
+		c = new Course();
+		c.setName("מבוא להנדסת מערכות שירות");
+		c.setID("51156");
+		s.add(c);
+		c = new Course();
+		c.setName("יישומי הנדסת אנוש במערכות שונות");
+		c.setID("51157");
+		s.add(c);
+		c = new Course();
+		c.setName("אמינות");
+		c.setID("51202");
+		s.add(c);
+		c = new Course();
+		c.setName("הנדסת איכות");
+		c.setID("51206");
+		s.add(c);
+		c = new Course();
+		c.setName("כלים מתקדמים בהנדסת איכות");
+		c.setID("51211");
+		s.add(c);
+		c = new Course();
+		c.setName("כלכלת מיקום");
+		c.setID("51214");
+		s.add(c);
+		d.add(s);
+
+		s = new Semester("אשכול תכן ותפעול של מערכות ייצור ושירות 4", true);
+		c = new Course();
+		c.setName("תכנון מתקדם משולב מדע נתונים");
+		c.setID("51218");
+		s.add(c);
+		c = new Course();
+		c.setName("סדנה לפתרון בעיות");
+		c.setID("51428");
+		s.add(c);
+		c = new Course();
+		c.setName("ניתוח כדאיות פרויקטים");
+		c.setID("51614");
+		s.add(c);
+		c = new Course();
+		c.setName("סדרות עתדיות וחיזוי");
+		c.setID("51715");
+		s.add(c);
+		c = new Course();
+		c.setName("אופטימיזציה");
+		c.setID("51716");
+		s.add(c);
+		c = new Course();
+		c.setName("מודלים הסתברותיים בתפעול מערכות");
+		c.setID("51718");
+		s.add(c);
+		d.add(s);
+
+		s=new Semester("אשכול מערכות מידע 1",true);
+		c=new Course();
+		c.setName("מבוא ל-ERP ומערכות ארגוניות");
+		c.setID("51154");
+		s.add(c);
+		c=new Course();
+		c.setName("מבנה נתונים ואלגרותמים");
+		c.setID("51514");
+		s.add(c);
+		c=new Course();
+		c.setName("פיתוח מנשקי אדם-מחשב");
+		c.setID("51515");
+		s.add(c);
+		c=new Course();
+		c.setName("ניהול מידע הנדסי");
+		c.setID("51517");
+		s.add(c);
+		c=new Course();
+		c.setName("תקשורת מחשבים");
+		c.setID("51518");
+		s.add(c);
+		c=new Course();
+		c.setName("מערכות מסדי נתונים");
+		c.setID("51519");
+		s.add(c);
+		c=new Course();
+		c.setName("כריית נתונים");
+		c.setID("51525");
+		s.add(c);
+		c=new Course();
+		c.setName("פיתוח יישומים מונחי עצמים");
+		c.setID("51527");
+		s.add(c);
+		d.add(s);
+
+		s=new Semester("אשכול מערכות מידע 2",true);
+		c=new Course();
+		c.setName("ניהול מידע בארגונים");
+		c.setID("51528");
+		s.add(c);
+		c=new Course();
+		c.setName("מודלים לתכן בעזרת מחשב");
+		c.setID("51533");
+		s.add(c);
+		c=new Course();
+		c.setName("ניהול ידע הלכה למעשה");
+		c.setID("51534");
+		s.add(c);
+		c=new Course();
+		c.setName("מבני נתונים");
+		c.setID("61747");
+		s.add(c);
+		c=new Course();
+		c.setName("גרפיקה ממוחשבת");
+		c.setID("61764");
+		s.add(c);
+		c=new Course();
+		c.setName("ניהול ידע");
+		c.setID("61831");
+		s.add(c);
+		d.add(s);
 	}
 
 
-	private static void loadInfor() {
+	private static void loadInfor()
+	{
 		Department d = new Department("הנדסת מערכות מידע");
-		Department.department.add(d);
+		Department.department.put(d.getName(),d);
 		Semester s = new Semester("סמסטר א'", false);
 		Course c = new Course();
 		c.setName("אנגלית בסיסי");
@@ -1467,12 +1721,14 @@ public class Main extends Application
 		d.add(s);
 
 
+
+
 	}
 
 	private static void loadBio()
 	{
 		Department d = new Department("הנדסת ביוטכנולוגיה");
-		Department.department.add(d);
+		Department.department.put(d.getName(),d);
 		Semester s=new Semester("סמסטר א'",false);
 		Course c=new Course();
 		c.setName("אנגלית בסיסי");
@@ -1483,7 +1739,7 @@ public class Main extends Application
 	private static void loadMath()
 	{
 		Department d = new Department("מתמטיקה יישומית");
-		Department.department.add(d);
+		Department.department.put(d.getName(),d);
 		Semester s = new Semester("סמסטר א'", false);
 		Course c ;
 		c = new Course();
@@ -1611,12 +1867,297 @@ public class Main extends Application
 		s.add(c);
 		d.add(s);
 
+		s = new Semester("קורסי בחירה מתמטיים 1", true);
+		c = new Course();
+		c.setName("מכניקת רצף");
+		c.setID("201012");
+		s.add(c);
+		c = new Course();
+		c.setName("תורת הכאוס");
+		c.setID("201013");
+		s.add(c);
+		c = new Course();
+		c.setName("אלמנטים של אנליזה פונקציונלית");
+		c.setID("201014");
+		s.add(c);
+		c = new Course();
+		c.setName("פונקציות מוככלות");
+		c.setID("201016");
+		s.add(c);
+		c = new Course();
+		c.setName("תורה איכותית של משוואות דיפרנציאליות");
+		c.setID("201017");
+		s.add(c);
+		c = new Course();
+		c.setName("חשבון ווריאציות");
+		c.setID("201018");
+		s.add(c);
+		c = new Course();
+		c.setName("תורת הקירובים");
+		c.setID("201020");
+		s.add(c);
+		c = new Course();
+		c.setName("מבוא לחבורות ושדות");
+		c.setID("201182");
+		s.add(c);
+		c = new Course();
+		c.setName("תבניות דיפרנציאליות על יריעות");
+		c.setID("201184");
+		s.add(c);
+		c = new Course();
+		c.setName("מבוא לחבורות לי של מטרציות");
+		c.setID("201186");
+		s.add(c);
+		d.add(s);
+
+		s = new Semester("קורסי בחירה מתמטיים 2", true);
+		c = new Course();
+		c.setName("מבוא לגיאומטריה דיפרנציאלית");
+		c.setID("201188");
+		s.add(c);
+		c = new Course();
+		c.setName("מבוא לטופולוגיה וטופולוגיה אלגברית");
+		c.setID("201190");
+		s.add(c);
+		c = new Course();
+		c.setName("נושאים באנליזה הרמונית וWavelets");
+		c.setID("201192");
+		s.add(c);
+		c = new Course();
+		c.setName("מערכות מכניות וסימטריות");
+		c.setID("201194");
+		s.add(c);
+		c = new Course();
+		c.setName("בעיות שאינן מוגדרות היטב");
+		c.setID("201196");
+		s.add(c);
+		c = new Course();
+		c.setName("תורת המשחקים");
+		c.setID("201198");
+		s.add(c);
+		c = new Course();
+		c.setName("מבוא לאנליזה הרמונית");
+		c.setID("11150");
+		s.add(c);
+		c = new Course();
+		c.setName("אותות ומערכות");
+		c.setID("31420");
+		s.add(c);
+		c = new Course();
+		c.setName("מבוא לעיבוד אותות ספרתי");
+		c.setID("31440");
+		s.add(c);
+		c = new Course();
+		c.setName("אותות אקראיים ורעש מ");
+		c.setID("31451");
+		s.add(c);
+		d.add(s);
+
+		s = new Semester("קורסי בחירה מתמטיים 3", true);
+		c = new Course();
+		c.setName("מעבדה לעיבוד אותות");
+		c.setID("31470");
+		s.add(c);
+		c = new Course();
+		c.setName("מיתוג ומערכות ספרתיות");
+		c.setID("31510");
+		s.add(c);
+		c = new Course();
+		c.setName("עיבוד תמונה");
+		c.setID("31651");
+		s.add(c);
+		c = new Course();
+		c.setName("אמינות של מערכות אלקטרוניות");
+		c.setID("31870");
+		s.add(c);
+		c = new Course();
+		c.setName("מבוא לבקרה");
+		c.setID("31910");
+		s.add(c);
+		c = new Course();
+		c.setName("בקרה ספרותית");
+		c.setID("31930");
+		s.add(c);
+		c = new Course();
+		c.setName("בקרה לא לינארית");
+		c.setID("31931");
+		s.add(c);
+		d.add(s);
+
+		s = new Semester("קורסי בחירה בתחום של כלכלה 1", true);
+		c = new Course();
+		c.setName("מבוא לכלכלה");
+		c.setID("51600");
+		s.add(c);
+		c = new Course();
+		c.setName("סטטיסטיקה");
+		c.setID("51723");
+		s.add(c);
+		c.setName("מודלים דטרמינסטים בחקבצ");
+		c.setID("51702");
+		s.add(c);
+		c = new Course();
+		c.setName("מודלים סטוכסטיים בחקבצ");
+		c.setID("51703");
+		s.add(c);
+		c.setName("מודלים הסתברותיים בתפעול מערכות");
+		c.setID("51718");
+		s.add(c);
+		c = new Course();
+		c.setName("יישומים כלכליים ועסקיים באמצעות משחקים");
+		c.setID("51733");
+		s.add(c);
+		c.setName("כלכלת מיקום");
+		c.setID("51214");
+		s.add(c);
+		c = new Course();
+		c.setName("בעיות נבחרות בכלכלה");
+		c.setID("51601");
+		s.add(c);
+		d.add(s);
+
+		s = new Semester("קורסי בחירה בתחום של כלכלה 2", true);
+		c = new Course();
+		c.setName("ניהול פיננסי");
+		c.setID("51608");
+		s.add(c);
+		c = new Course();
+		c.setName("כלכלת סביבה");
+		c.setID("51609");
+		s.add(c);
+		c.setName("סטטיסטיקה יישומית");
+		c.setID("51704");
+		s.add(c);
+		c = new Course();
+		c.setName("אקונומטריקה");
+		c.setID("51904");
+		s.add(c);
+		c.setName("כלכלת הסקטור הציבורי ומימון ציבורי");
+		c.setID("51906");
+		s.add(c);
+		c = new Course();
+		c.setName("כלכלת אי-ודאות");
+		c.setID("51910");
+		s.add(c);
+		c.setName("מודלים של צמיחה כלכלית");
+		c.setID("51911");
+		s.add(c);
+		d.add(s);
+
+		s = new Semester("קורסי בחירה בתחום של מדעי המחשב ואלגורתמיקה 1", true);
+		c = new Course();
+		c.setName("מערכות ספרתיות");
+		c.setID("61740");
+		s.add(c);
+		c = new Course();
+		c.setName("לוגיקה");
+		c.setID("61746");
+		s.add(c);
+		c = new Course();
+		c.setName("תכנות מונחה עצמים");
+		c.setID("61751");
+		s.add(c);
+		c = new Course();
+		c.setName("אלגורתמים");
+		c.setID("61753");
+		s.add(c);
+		c = new Course();
+		c.setName("אוטומטים וחישוביות");
+		c.setID("61759");
+		s.add(c);
+		c = new Course();
+		c.setName("כריית נתונים ומערכות לומדות");
+		c.setID("61761");
+		s.add(c);
+		c = new Course();
+		c.setName("תורת הקומפילציה");
+		c.setID("61763");
+		s.add(c);
+		d.add(s);
+
+		s = new Semester("קורסי בחירה בתחום של מדעי המחשב ואלגורתמיקה 2", true);
+		c = new Course();
+		c.setName("גרפיקה ממוחשבת");
+		c.setID("61764");
+		s.add(c);
+		c = new Course();
+		c.setName("אבטחת מידע וקריפטולוגיה");
+		c.setID("61767");
+		s.add(c);
+		c = new Course();
+		c.setName("תורת המידע");
+		c.setID("61958");
+		s.add(c);
+		c = new Course();
+		c.setName("גיאומטריה חישובית ומידול");
+		c.setID("61962");
+		s.add(c);
+		c = new Course();
+		c.setName("בינה מלאכותית");
+		c.setID("61963");
+		s.add(c);
+		c = new Course();
+		c.setName("דחיסת נתונים");
+		c.setID("61975");
+		s.add(c);
+		d.add(s);
+
+		s = new Semester("קורסי בחירה בתחום של מדעים 1", true);
+		c = new Course();
+		c.setName("כימיה כללית ואנליטית 1");
+		c.setID("41014");
+		s.add(c);
+		c = new Course();
+		c.setName("כימיה כללית ונליטית 2");
+		c.setID("41016");
+		s.add(c);
+		c = new Course();
+		c.setName("כימיה אורגנית 1");
+		c.setID("41050");
+		s.add(c);
+		c = new Course();
+		c.setName("כימיה אורגנית 2");
+		c.setID("41060");
+		s.add(c);
+		c = new Course();
+		c.setName("כימיה מכ");
+		c.setID("41077");
+		s.add(c);
+		c = new Course();
+		c.setName("כימיה א");
+		c.setID("41090");
+		s.add(c);
+		d.add(s);
+
+		s = new Semester("קורסי בחירה בתחום של מדעים 2", true);
+		c = new Course();
+		c.setName("ביולוגיה של תא");
+		c.setID("41113");
+		s.add(c);
+		c = new Course();
+		c.setName("תורת הגלים ותורת הרטט");
+		c.setID("391140");
+		s.add(c);
+		c = new Course();
+		c.setName("פיזיקה מודרנית ומבוא לתורת הקוונטים");
+		c.setID("391150");
+		s.add(c);
+		c = new Course();
+		c.setName("אופטיקה גיאומטרית");
+		c.setID("391405");
+		s.add(c);
+		c = new Course();
+		c.setName("אופטיקה פיזקלית");
+		c.setID("391410");
+		s.add(c);
+		d.add(s);
+
 	}
 
 	private static void loadPhy()
 	{
 		Department d = new Department("פיזיקה והנדסה אופטית");
-		Department.department.add(d);
+		Department.department.put(d.getName(),d);
 		Semester s=new Semester("סמסטר א'",false);
 		Course c=new Course();
 		c.setName("אנגלית בסיסי");
@@ -1625,4 +2166,14 @@ public class Main extends Application
 	}
 
 
+	private static void loadEle()
+	{
+		Department d = new Department("הנדסת חשמל");
+		Department.department.put(d.getName(),d);
+		Semester s=new Semester("סמסטר א'",false);
+		Course c=new Course();
+		c.setName("");
+		c.setID("");
+		s.add(c);
+	}
 }

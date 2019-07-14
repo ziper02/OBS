@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="1016.0" prefWidth="1639.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ScheduleController">
+<AnchorPane prefHeight="1016.0" prefWidth="1639.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ScheduleController">
    <children>
       <Pane maxHeight="1014.0" maxWidth="1637.0" prefHeight="1014.0" prefWidth="1637.0">
          <children>

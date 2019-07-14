@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import com.jfoenix.controls.JFXButton;
 
+import com.jfoenix.controls.JFXTabPane;
 import entity.Course;
 import entity.Department;
 import entity.Schedule;
@@ -30,8 +31,7 @@ import util.Scanner;
 
 public class NewCustomCourseController {
 
-    @FXML
-    private Label IDcourseLBL;
+
 
     @FXML
     private TextField IDcourseTF;
@@ -40,7 +40,7 @@ public class NewCustomCourseController {
     private JFXButton SearchBTN;
 
     @FXML
-    public TabPane SelectPane;
+    public JFXTabPane SelectPane;
 
     @FXML
     public Tab lectureTAB;
@@ -89,7 +89,7 @@ public class NewCustomCourseController {
 		labPane.setHgap(4);
 		labPane.setPrefWrapLength(300); // preferred width = 300
 		SelectPane.setVisible(false);
-		autoCompletionBinding = TextFields.bindAutoCompletion(IDcourseTF, Department.Courselist);
+		autoCompletionBinding = TextFields.bindAutoCompletion(IDcourseTF, Department.Courselist.values());
 		autoCompletionBinding.setOnAutoCompleted(new EventHandler<AutoCompletionBinding.AutoCompletionEvent<Course>>()
 		{
 			@Override
@@ -186,27 +186,27 @@ public class NewCustomCourseController {
  			Platform.runLater(()->
  			{ 
  				boolean countLec=false,countEx=false,countLab=false;
-    		lecturePane.getChildren().clear();
-    		exercisePane.getChildren().clear();
-    		labPane.getChildren().clear();
-    		CourseName.setText(course.getName());
-    		for(int i=0;i<course.getSchedule().size();i++)
-    		{
-    			Schedule schedule=course.get(i);
-    			JFXButton button=new JFXButton();
-    			if(schedule.getTwoTimes())
-    			{
-        			button.setText("שם המרצה: "+schedule.getLecturer()+"\r\n" + 
-        					"יום: "+schedule.getDay()+"\r\n" + 
-        					"שעת התחלה: "+schedule.getStartTime()+"\r\n" + 
-        					"שעת סיום: "+schedule.getEndTime()+"\r\n" + 
-        					"כיתה: "+schedule.getClasslec()+"\r\n" +
-        					"מפגש נוסף:\r\n"+
-        					"יום: "+schedule.getDayTwo()+"\r\n" +
-        					"שעת התחלה: "+schedule.getStartTimeTwo()+"\r\n" + 
-        					"שעת סיום: "+schedule.getEndTimeTwo()+"\r\n" + 
-        					"כיתה: "+schedule.getClasslecTwo());
-        					button.setPrefHeight(180);
+				lecturePane.getChildren().clear();
+				exercisePane.getChildren().clear();
+				labPane.getChildren().clear();
+				CourseName.setText(course.getName());
+				for(int i=0;i<course.getSchedule().size();i++)
+				{
+					Schedule schedule=course.get(i);
+					JFXButton button=new JFXButton();
+					if(schedule.getTwoTimes())
+					{
+						button.setText("שם המרצה: "+schedule.getLecturer()+"\r\n" +
+								"יום: "+schedule.getDay()+"\r\n" +
+								"שעת התחלה: "+schedule.getStartTime()+"\r\n" +
+								"שעת סיום: "+schedule.getEndTime()+"\r\n" +
+								"כיתה: "+schedule.getClasslec()+"\r\n" +
+								"מפגש נוסף:\r\n"+
+								"יום: "+schedule.getDayTwo()+"\r\n" +
+								"שעת התחלה: "+schedule.getStartTimeTwo()+"\r\n" +
+								"שעת סיום: "+schedule.getEndTimeTwo()+"\r\n" +
+								"כיתה: "+schedule.getClasslecTwo());
+								button.setPrefHeight(180);
     			}
     			else
     			{

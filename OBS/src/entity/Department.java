@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -8,8 +9,8 @@ public class Department
 {
     private String name;
     private ArrayList<Semester> Semesters;
-    public static ArrayList<Department> department= new ArrayList<>();
-    public static Set<Course> Courselist= new HashSet<>();
+    public static HashMap<String,Department> department= new HashMap<>();
+    public static HashMap<String,Course> Courselist= new HashMap<>();
 
     public Department(String name)
     {

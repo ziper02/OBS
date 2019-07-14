@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.*;
 import java.io.IOException;
 
 import javafx.application.Platform;
@@ -9,7 +10,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import util.Scanner;
@@ -51,8 +51,13 @@ public class LoadingPanelController
 					e1.printStackTrace();
 			}
 			Main.scheduleController=loader.getController();
-
-			scene=new Scene(root, 1639, 1016);
+			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+			double width = screenSize.getWidth();
+			double height = screenSize.getHeight();
+			if(width==1280 && height==720)
+				scene=new Scene(root, 900, 650);
+			else
+				scene=new Scene(root, 1639, 1016);
 			Stage stage=new Stage(StageStyle.DECORATED);
 			stage.setScene( scene );
 			stage.getIcons().add(new Image(Main.class.getResourceAsStream("/icons/date_and_time_clock-512.png")));

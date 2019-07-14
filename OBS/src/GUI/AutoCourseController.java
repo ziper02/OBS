@@ -29,8 +29,7 @@ import util.Scanner;
 
 public class AutoCourseController {
 
-    @FXML
-    private  Label IDcourseLBL;
+
 
     @FXML
     private   TextField IDcourseTF;
@@ -103,7 +102,7 @@ public class AutoCourseController {
 			}
 			
 	    });
-		autoCompletionBinding = TextFields.bindAutoCompletion(IDcourseTF, Department.Courselist);
+		autoCompletionBinding = TextFields.bindAutoCompletion(IDcourseTF, Department.Courselist.values());
 		autoCompletionBinding.setOnAutoCompleted(new EventHandler<AutoCompletionBinding.AutoCompletionEvent<Course>>()
 		{
 			@Override
@@ -128,7 +127,6 @@ public class AutoCourseController {
     {
     	IDcourseTF.setVisible(true);
     	SearchBTN.setVisible(true);
-    	IDcourseLBL.setVisible(true);
     	SelectedCourses.setVisible(true);
     	StartAuto.setVisible(true);
     	FPResult.setVisible(false);
@@ -143,7 +141,6 @@ public class AutoCourseController {
     {
     	IDcourseTF.setVisible(true);
     	SearchBTN.setVisible(true);
-    	IDcourseLBL.setVisible(true);
     	SelectedCourses.setVisible(true);
     	StartAuto.setVisible(true);
     	FPResult.setVisible(false);
@@ -167,7 +164,6 @@ public class AutoCourseController {
     	StartAuto.setVisible(false);
     	IDcourseTF.setVisible(false);
     	SearchBTN.setVisible(false);
-    	IDcourseLBL.setVisible(false);
     	
     	for(int i=0;i<NumberOfGA;i++)
     	{
