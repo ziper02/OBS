@@ -10,19 +10,20 @@ import entity.Schedule;
 public class GA extends Thread
 {
 	private static HashMap<Integer, Course> map = new HashMap<>(); 
-	private static ArrayList<Course> list=new ArrayList<Course>();
+	private static ArrayList<Course> list=new ArrayList<>();
 	
-	public Population population;
-    public Chromosome fittest;
-    public Chromosome secondFittest;
-    public int generationCount = 0;
+
+	private Population population;
+    private Chromosome fittest;
+    private Chromosome secondFittest;
+    private int generationCount = 0;
     
     private int mode;
-    public int generations;
-    public double value;
+    private int generations;
+    private double value;
     private ArrayList<ArrayList<Schedule>> sc;
-    public static ArrayList<ArrayList<Schedule>> Finalsc=new ArrayList<ArrayList<Schedule>>();
-    private static ArrayList<GA> threads=new ArrayList<GA>();
+    public static ArrayList<ArrayList<Schedule>> Finalsc=new ArrayList<>();
+    //private static ArrayList<GA> threads=new ArrayList<GA>();
     public static double choosenValue=0;
     public static int countValues=0;
     
@@ -33,7 +34,7 @@ public class GA extends Thread
     	secondFittest=population.getSecondFittest();
     	this.value=value;
     	this.generations=generations;
-    	sc=new ArrayList<ArrayList<Schedule>>();
+    	sc=new ArrayList<>();
     	this.mode=mode;
     }
     
@@ -47,7 +48,7 @@ public class GA extends Thread
         secondFittest = population.getSecondFittest();
     }
 	
-    public void crossover() 
+    private void crossover()
     {
         Random rn = new Random();
 
@@ -64,7 +65,7 @@ public class GA extends Thread
         }
     }
     
-    public void mutation() {
+    private void mutation() {
         Random rn = new Random();
 
         //Select a random mutation point
@@ -81,7 +82,7 @@ public class GA extends Thread
         secondFittest.getGenes().set(mutationPoint,course.randomReplaceSchdule(sc));
     }
 
-    public void addFittestOffspring() 
+    private void addFittestOffspring()
     {
 
     	population.calculateConflicts();
@@ -106,15 +107,8 @@ public class GA extends Thread
 		map.remove(Integer.valueOf(course.getID()));
 		list.remove(course);
 	}
-	public static Course getCourse(Integer ID)
-	{
-		return map.get(ID);  
-	}
-	
-	public static Boolean couseExist(Integer ID)
-	{
-		return map.containsKey(ID);
-	}
+
+
 	
 	public static Boolean isEmpty()
 	{
@@ -128,22 +122,22 @@ public class GA extends Thread
 	
 	public static ArrayList<Schedule> getSchduledCourses()
 	{
-		ArrayList<Course> list = new ArrayList<Course>(map.values());
-		ArrayList<Schedule> result = new ArrayList<Schedule>();
-		for(int i=0;i<list.size();i++)
+		ArrayList<Course> list = new ArrayList<>(map.values());
+		ArrayList<Schedule> result = new ArrayList<>();
+		for (Course course : list)
 		{
-			for(int j=0;j<list.get(i).getSchedule().size();j++)
+			for (int j = 0; j < course.getSchedule().size(); j++)
 			{
-				if(list.get(i).getSchedule().get(j).getSelected()==true)
+				if (course.getSchedule().get(j).getSelected())
 				{
-					result.add(list.get(i).getSchedule().get(j));
+					result.add(course.getSchedule().get(j));
 				}
 			}
 		}
 		return result;
 	}
 	
-	public static ArrayList<Course> getList() 
+	static ArrayList<Course> getList()
 	{
 		return list;
 	}
@@ -183,10 +177,8 @@ public class GA extends Thread
 	    		for(int i=0;i<population.getChromosomes().size();i++)
 	    		{
 	    			if(population.getChromosomes().get(i).getFitness()>=value)
-	    			{
-	    				if(Schedule.contaninsSameScheduleListSameOrder(sc,population.getChromosomes().get(i).getGenes())==false)
-	    						sc.add(population.getChromosomes().get(i).getGenes());
-	    			}
+						if (!Schedule.contaninsSameScheduleListSameOrder(sc, population.getChromosomes().get(i).getGenes()))
+							sc.add(population.getChromosomes().get(i).getGenes());
 	    		}
 	    		choosenValue=value;
 	    	}
@@ -205,7 +197,7 @@ public class GA extends Thread
 	}
 
 	
-	public void startManuelAlgo()
+	private void startManuelAlgo()
 	{
 		Random rn = new Random();
     	while(fittest.getFitness()<value && generationCount<generations) 
@@ -222,10 +214,8 @@ public class GA extends Thread
     		for(int i=0;i<population.getChromosomes().size();i++)
     		{
     			if(population.getChromosomes().get(i).getFitness()>=value)
-    			{
-    				if(Schedule.contaninsSameScheduleListSameOrder(Finalsc,population.getChromosomes().get(i).getGenes())==false)
-    					Finalsc.add(population.getChromosomes().get(i).getGenes());
-    			}
+					if (!Schedule.contaninsSameScheduleListSameOrder(Finalsc, population.getChromosomes().get(i).getGenes()))
+						Finalsc.add(population.getChromosomes().get(i).getGenes());
     		}
     	}
     	countValues++;
@@ -234,75 +224,10 @@ public class GA extends Thread
     		ScheduleController.controllerAuto.resultOfGASecound();
     	}
 	}
-	
-	public static HashMap<Integer, Course> getMap() 
-	{
-		return map;
-	}
-
-	public static void setMap(HashMap<Integer, Course> map) 
-	{
-		GA.map = map;
-	}
-
-	public Population getPopulation() 
-	{
-		return population;
-	}
-
-	public void setPopulation(Population population) 
-	{
-		this.population = population;
-	}
-
-	public Chromosome getFittest() 
-	{
-		return fittest;
-	}
-
-	public void setFittest(Chromosome fittest) 
-	{
-		this.fittest = fittest;
-	}
-
-	public Chromosome getSecondFittest() 
-	{
-		return secondFittest;
-	}
-
-	public void setSecondFittest(Chromosome secondFittest) 
-	{
-		this.secondFittest = secondFittest;
-	}
-
-	public int getGenerationCount() 
-	{
-		return generationCount;
-	}
-
-	public void setGenerationCount(int generationCount) 
-	{
-		this.generationCount = generationCount;
-	}
-
-	public int getGenerations() 
-	{
-		return generations;
-	}
-
-	public void setGenerations(int generations) 
-	{
-		this.generations = generations;
-	}
 
 	public double getValue() 
 	{
 		return value;
-	}
-
-	public void setValue(double value) 
-	{
-		this.value = value;
 	}
 
 	public ArrayList<ArrayList<Schedule>> getSc() 
@@ -310,43 +235,4 @@ public class GA extends Thread
 		return sc;
 	}
 
-	public void setSc(ArrayList<ArrayList<Schedule>> sc) 
-	{
-		this.sc = sc;
-	}
-
-	public static ArrayList<GA> getThreads() 
-	{
-		return threads;
-	}
-
-	public static void setThreads(ArrayList<GA> threads) 
-	{
-		GA.threads = threads;
-	}
-
-	public static double getChoosenValue() 
-	{
-		return choosenValue;
-	}
-
-	public static void setChoosenValue(double choosenValue) 
-	{
-		GA.choosenValue = choosenValue;
-	}
-
-	public static int getCountValues() 
-	{
-		return countValues;
-	}
-
-	public static void setCountValues(int countValues) 
-	{
-		GA.countValues = countValues;
-	}
-
-	public static void setList(ArrayList<Course> list) 
-	{
-		GA.list = list;
-	}
 }

@@ -72,45 +72,30 @@ public class AutoCourseController {
     public int NumberOfGA=5;
     public int SecoundNumberOfGA=10;
     
-    ArrayList<GA> ga=new ArrayList<GA>();
+    private ArrayList<GA> ga=new ArrayList<>();
 
 
-	AutoCompletionBinding<Course> autoCompletionBinding;
+	private AutoCompletionBinding<Course> autoCompletionBinding;
 
 
-	public void initialize() 
+	public void initialize()
 	{
 		FPResult.setVgap(8);
 		FPResult.setHgap(4);
 		FPResult.setPrefWrapLength(300); // preferred width = 300
 		FPResult.setAlignment(Pos.TOP_RIGHT);
-		SelectedCourses.setOnMouseClicked(new EventHandler<MouseEvent>() 
+		SelectedCourses.setOnMouseClicked(arg0 -> Platform.runLater(()->
 		{
-			@Override
-			public void handle(MouseEvent arg0) 
+			int index = SelectedCourses.getSelectionModel().getSelectedIndex();
+			Course course=SelectedCourses.getSelectionModel().getSelectedItem();
+			if (index >= 0)
 			{
-				Platform.runLater(()->
-				{
-					int index = SelectedCourses.getSelectionModel().getSelectedIndex();
-					Course course=SelectedCourses.getSelectionModel().getSelectedItem();
-					if (index >= 0) 
-					{
-						SelectedCourses.getItems().remove(index);
-						GA.removeCourse(course);
-					}
-				});
+				SelectedCourses.getItems().remove(index);
+				GA.removeCourse(course);
 			}
-			
-	    });
+		}));
 		autoCompletionBinding = TextFields.bindAutoCompletion(IDcourseTF, Department.Courselist.values());
-		autoCompletionBinding.setOnAutoCompleted(new EventHandler<AutoCompletionBinding.AutoCompletionEvent<Course>>()
-		{
-			@Override
-			public void handle(AutoCompletionBinding.AutoCompletionEvent<Course> event)
-			{
-				IDcourseTF.setText(event.getCompletion().getID());
-			}
-		});
+		autoCompletionBinding.setOnAutoCompleted(event -> IDcourseTF.setText(event.getCompletion().getID()));
 	}
     
     
@@ -118,7 +103,7 @@ public class AutoCourseController {
     @FXML
     void ValidTextSearchChanged(InputMethodEvent event) 
     {
-    	//util.GUI.IDcourseTFChanged(IDcourseTF);
+		/* util.GUI.IDcourseTFChanged(IDcourseTF); */
     }
 
     
@@ -151,13 +136,18 @@ public class AutoCourseController {
     }
     
     @FXML
-    void StartAlgoritam(ActionEvent event) 
+    void StartAlgoritam()
     {
+		if(GA.listSize()==0)
+		{
+			util.GUI.alertErrorWithOption("הרשימה ריקה אנא בחר קורסים","הרשימה ריקה","אישור");
+			return;
+		}
 		GA.countValues=0;
 		GA.choosenValue=0;
-		if(GA.isEmpty()==false)
+		if(!GA.isEmpty())
 			GA.Finalsc.clear();
-		if(ga.isEmpty()==false)
+		if(!ga.isEmpty())
 			ga.clear();
     	PBar2.setVisible(true);
     	SelectedCourses.setVisible(false);
@@ -173,13 +163,13 @@ public class AutoCourseController {
     	}
     }
 
-    public void addToGrid(Object userData)
+    private void addToGrid(Object userData)
     {
     	@SuppressWarnings("unchecked")
 		ArrayList<Schedule> schedule=(ArrayList<Schedule>)userData;
     	ScheduleController.removeAllSchedule();
-    	for(int i=0;i<schedule.size();i++)
-        	NewCustomCourseController.addToGrid(schedule.get(i));
+		for (Schedule value : schedule)
+			NewCustomCourseController.addToGrid(value);
     }
     
     
@@ -190,7 +180,7 @@ public class AutoCourseController {
     	GA.choosenValue=0;
     	for(int i=0;i<ga.size();i++)
     	{
-    		if(ga.get(i).getSc().isEmpty()==false && ga.get(i).getValue()>GA.choosenValue)
+    		if(!ga.get(i).getSc().isEmpty() && ga.get(i).getValue()>GA.choosenValue)
     		{
     			GA.choosenValue=ga.get(i).getValue();
     			maxi=i;
@@ -260,6 +250,7 @@ public class AutoCourseController {
     @FXML
     void searchCourse(ActionEvent event) 
     {
+
     	if(GA.listSize()<7)
     	{
     		if(IDcourseTF.getText().length()==5)

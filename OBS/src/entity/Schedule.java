@@ -177,7 +177,7 @@ public class Schedule implements Serializable
 		if(endTime!=null && startTime!=null && day!=null&&lecturer!=null&&classlec!=null)
 		{
 			setVBox();
-			if(twoTimes==true &&endTimeTwo!=null && startTimeTwo!=null && dayTwo!=null&&lecturer!=null&&classlecTwo!=null )
+			if(twoTimes &&endTimeTwo!=null && startTimeTwo!=null && dayTwo!=null&&lecturer!=null&&classlecTwo!=null )
 			{
 				setVBoxTwo();
 			}
@@ -220,20 +220,22 @@ public class Schedule implements Serializable
 		{
 			if( e.isPrimaryButtonDown()) 
 			{
+				Main.scheduleController.LoadNewCusomCourseController();
 				ScheduleController.controller.course=Course.getCourse(Integer.parseInt(course.getID()));
 				ScheduleController.controller.resultSearchCouse();
-				if(type.equals("הרצאה")||type.equals("שו\"ת"))
-				{
-					ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.lectureTAB);
-				}
-				else if(type.equals("תרגיל"))
-				{
-					ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.exerciseTAB);
-				}
-				else if(type.equals("מעבדה"))
-				{
-					ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.labTAB);
-				}	
+                switch (type)
+                {
+                    case "הרצאה":
+                    case "שו\"ת":
+                        ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.lectureTAB);
+                        break;
+                    case "תרגיל":
+                        ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.exerciseTAB);
+                        break;
+                    case "מעבדה":
+                        ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.labTAB);
+                        break;
+                }
             } 
 			else if( e.isSecondaryButtonDown()) 
             {
@@ -261,23 +263,21 @@ public class Schedule implements Serializable
 			{
 				if( e.isPrimaryButtonDown()) 
 				{
+					Main.scheduleController.LoadNewCusomCourseController();
 					ScheduleController.controller.course=Course.getCourse(Integer.parseInt(course.getID()));
 					ScheduleController.controller.resultSearchCouse();
-					if(type.equals("הרצאה") ||type.equals("שו\"ת"))
-					{
-						Main.scheduleController.LoadNewCusomCourseController(new ActionEvent());
-						ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.lectureTAB);
+					switch (type) {
+						case "הרצאה":
+						case "שו\"ת":
+							ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.lectureTAB);
+							break;
+						case "תרגיל":
+							ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.exerciseTAB);
+							break;
+						case "מעבדה":
+							ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.labTAB);
+							break;
 					}
-					else if(type.equals("תרגיל"))
-					{
-						Main.scheduleController.LoadNewCusomCourseController(new ActionEvent());
-						ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.exerciseTAB);
-					}
-					else if(type.equals("מעבדה"))
-					{
-						Main.scheduleController.LoadNewCusomCourseController(new ActionEvent());
-						ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.labTAB);
-					}	
 	            } 
 				else if( e.isSecondaryButtonDown()) 
 	            {
@@ -384,18 +384,18 @@ public class Schedule implements Serializable
 			{
 				ScheduleController.controller.course=Course.getCourse(Integer.parseInt(course.getID()));
 				ScheduleController.controller.resultSearchCouse();
-				if(type.equals("הרצאה")||type.equals("שו\"ת"))
-				{
-					ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.lectureTAB);
+				switch (type) {
+					case "הרצאה":
+					case "שו\"ת":
+						ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.lectureTAB);
+						break;
+					case "תרגיל":
+						ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.exerciseTAB);
+						break;
+					case "מעבדה":
+						ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.labTAB);
+						break;
 				}
-				else if(type.equals("תרגיל"))
-				{
-					ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.exerciseTAB);
-				}
-				else if(type.equals("מעבדה"))
-				{
-					ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.labTAB);
-				}	
             } 
 			else if( e.isSecondaryButtonDown()) 
             {
@@ -423,20 +423,21 @@ public class Schedule implements Serializable
 			{
 				if( e.isPrimaryButtonDown()) 
 				{
+					Main.scheduleController.LoadNewCusomCourseController();
 					ScheduleController.controller.course=Course.getCourse(Integer.parseInt(course.getID()));
 					ScheduleController.controller.resultSearchCouse();
-					if(type.equals("הרצאה")||type.equals("שו\"ת"))
-					{
-						ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.lectureTAB);
+					switch (type) {
+						case "הרצאה":
+						case "שו\"ת":
+							ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.lectureTAB);
+							break;
+						case "תרגיל":
+							ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.exerciseTAB);
+							break;
+						case "מעבדה":
+							ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.labTAB);
+							break;
 					}
-					else if(type.equals("תרגיל"))
-					{
-						ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.exerciseTAB);
-					}
-					else if(type.equals("מעבדה"))
-					{
-						ScheduleController.controller.SelectPane.getSelectionModel().select(ScheduleController.controller.labTAB);
-					}	
 	            } 
 				else if( e.isSecondaryButtonDown()) 
 	            {
@@ -536,30 +537,22 @@ public class Schedule implements Serializable
 		return GridPaneVBox3;
 	}
 
-	public void setGridPaneVBox3(VBox gridPaneVBox3) 
-	{
-		GridPaneVBox3 = gridPaneVBox3;
-	}
 
 	public VBox getGridPaneVBox4() 
 	{
 		return GridPaneVBox4;
 	}
 
-	public void setGridPaneVBox4(VBox gridPaneVBox4) 
-	{
-		GridPaneVBox4 = gridPaneVBox4;
-	}
 	
 	public static Boolean checkIfAvailable(Schedule sc)
 	{
 		Course course=Course.getCourse(Integer.parseInt(sc.getCourse().getID()));
 		ArrayList<Schedule> list=course.getSchedule();
-		for(int i=0;i<list.size();i++)
-		{
-			if(sc.equals(list.get(i)))
-				return true;
-		}
+        for (Schedule schedule : list)
+        {
+            if (sc.equals(schedule))
+                return true;
+        }
 		return false;	
 	}
 	
@@ -590,22 +583,19 @@ public class Schedule implements Serializable
 			}
 			if(this.getTwoTimes())
 			{
-				if((schedule.getStartTimeTwo().getIndex()>=this.getStartTimeTwo().getIndex() &&schedule.getEndTimeTwo().getIndex()<=this.getEndTimeTwo().getIndex() &&schedule.getDayTwo().getIndex()==this.getDayTwo().getIndex())||
-						(schedule.getStartTimeTwo().getIndex()<this.getStartTimeTwo().getIndex() &&schedule.getEndTimeTwo().getIndex()>this.getStartTimeTwo().getIndex() &&schedule.getDayTwo().getIndex()==this.getDayTwo().getIndex())||
-				(schedule.getStartTimeTwo().getIndex()>this.getStartTimeTwo().getIndex() &&schedule.getStartTimeTwo().getIndex()<this.getEndTimeTwo().getIndex() &&schedule.getDayTwo().getIndex()==this.getDayTwo().getIndex()))
-				{
-					return true;
-				}
+                return (schedule.getStartTimeTwo().getIndex() >= this.getStartTimeTwo().getIndex() && schedule.getEndTimeTwo().getIndex() <= this.getEndTimeTwo().getIndex() && schedule.getDayTwo().getIndex() == this.getDayTwo().getIndex()) ||
+                        (schedule.getStartTimeTwo().getIndex() < this.getStartTimeTwo().getIndex() && schedule.getEndTimeTwo().getIndex() > this.getStartTimeTwo().getIndex() && schedule.getDayTwo().getIndex() == this.getDayTwo().getIndex()) ||
+                        (schedule.getStartTimeTwo().getIndex() > this.getStartTimeTwo().getIndex() && schedule.getStartTimeTwo().getIndex() < this.getEndTimeTwo().getIndex() && schedule.getDayTwo().getIndex() == this.getDayTwo().getIndex());
 			}
 		}
 		return false;
 	}
 	
-	public static Boolean sameScheduleListSameOrder(ArrayList <Schedule> sc,ArrayList <Schedule> sc1)
+	private static Boolean sameScheduleListSameOrder(ArrayList<Schedule> sc, ArrayList<Schedule> sc1)
 	{
 		for(int i=0;i<sc.size();i++)
 		{
-			if(sc.get(i).equals(sc1.get(i))==false)
+			if(!sc.get(i).equals(sc1.get(i)))
 				return false;
 		}
 		return true;
@@ -613,35 +603,26 @@ public class Schedule implements Serializable
 	
 	public static Boolean contaninsSameScheduleListSameOrder(ArrayList <ArrayList<Schedule>> sc,ArrayList <Schedule> sc1)
 	{
-		for(int i=0;i<sc.size();i++)
-		{
-			if(sameScheduleListSameOrder(sc.get(i),sc1))
-				return true;
-		}
+        for (ArrayList<Schedule> schedules : sc)
+        {
+            if (sameScheduleListSameOrder(schedules, sc1))
+                return true;
+        }
 		return false;
 	}
 	@Override
 	public boolean equals(Object obj) 
-	{ 
+	{
+		if(!(obj instanceof Schedule))
+			return false;
 		Schedule sc=(Schedule)obj;
 		if(sc.getCourse().equals(this.course))
-		{
 			if(sc.getLecturer().equals(this.lecturer) && sc.getType().equals(this.type)&& sc.getClasslec().equals(this.classlec))
-			{
 				if(sc.getDay().equals(this.day) && sc.getStartTime().equals(this.startTime) && sc.getEndTime().equals(this.endTime))
-				{
-					if(sc.getTwoTimes()==true)
-					{
-						if(sc.getDayTwo().equals(this.dayTwo) && sc.getStartTimeTwo().equals(this.startTimeTwo) && sc.getEndTimeTwo().equals(this.endTimeTwo))
-						{
-							return true;
-						}
-					}
+					if(sc.getTwoTimes())
+                        return sc.getDayTwo().equals(this.dayTwo) && sc.getStartTimeTwo().equals(this.startTimeTwo) && sc.getEndTimeTwo().equals(this.endTimeTwo);
 					else
 						return true;
-				}
-			}
-		}
 		return false;
 	}
 

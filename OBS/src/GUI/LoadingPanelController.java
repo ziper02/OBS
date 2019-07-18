@@ -57,7 +57,7 @@ public class LoadingPanelController
 			if(width==1280 && height==720)
 				scene=new Scene(root, 900, 650);
 			else
-				scene=new Scene(root, 1639, 1016);
+				scene=new Scene(root, 1639, 894);
 			Stage stage=new Stage(StageStyle.DECORATED);
 			stage.setScene( scene );
 			stage.getIcons().add(new Image(Main.class.getResourceAsStream("/icons/date_and_time_clock-512.png")));

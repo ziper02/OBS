@@ -73,7 +73,7 @@ public class NewCustomCourseController {
     
     private Boolean byThread;
 
-	AutoCompletionBinding<Course> autoCompletionBinding ;
+	private AutoCompletionBinding<Course> autoCompletionBinding ;
 
 	@FXML 
 	public void initialize() 
@@ -90,14 +90,7 @@ public class NewCustomCourseController {
 		labPane.setPrefWrapLength(300); // preferred width = 300
 		SelectPane.setVisible(false);
 		autoCompletionBinding = TextFields.bindAutoCompletion(IDcourseTF, Department.Courselist.values());
-		autoCompletionBinding.setOnAutoCompleted(new EventHandler<AutoCompletionBinding.AutoCompletionEvent<Course>>()
-		{
-			@Override
-			public void handle(AutoCompletionBinding.AutoCompletionEvent<Course> event)
-			{
-				IDcourseTF.setText(event.getCompletion().getID());
-			}
-		});
+		autoCompletionBinding.setOnAutoCompleted(event -> IDcourseTF.setText(event.getCompletion().getID()));
 	}
 
 
@@ -179,7 +172,7 @@ public class NewCustomCourseController {
     	}
     	else
     	{
-    		if(Course.couseExist(Integer.parseInt(course.getID()))==false)
+    		if(!Course.couseExist(Integer.parseInt(course.getID())))
     		{
     			Course.addCourse(course);
     		}
@@ -238,30 +231,21 @@ public class NewCustomCourseController {
     				labPane.getChildren().add(button);
     			} 				
     		}
-    		if(countLec==true)
-    		{
+    		if(countLec)
     			lectureTAB.setDisable(false);
-    		}
     		else
-    		{
     			lectureTAB.setDisable(true);
-    		}
-    		if(countEx==true)
-    		{
+
+    		if(countEx)
     			exerciseTAB.setDisable(false);
-    		}
     		else
-    		{
     			exerciseTAB.setDisable(true);
-    		}
-    		if(countLab==true)
-    		{
+
+    		if(countLab)
     			labTAB.setDisable(false);
-    		}
     		else
-    		{
     			labTAB.setDisable(true);
-    		}
+
     		SearchBTN.setDisable(false);
     		PBar.setVisible(false);
     		CourseName.setVisible(true);
@@ -273,51 +257,44 @@ public class NewCustomCourseController {
 
 
 
-	public static void addToGrid(Object userData) 
+	static void addToGrid(Object userData)
 	{
 			Schedule schedule=(Schedule)userData;
 			replaceCourse(schedule);
 			ArrayList<Schedule> list = Course.getSchduledCourses();
-			for(int i=0;i<list.size();i++)
-			{
-				if((schedule.getStartTime().getIndex()>=list.get(i).getStartTime().getIndex() &&schedule.getEndTime().getIndex()<=list.get(i).getEndTime().getIndex() &&schedule.getDay().getIndex()==list.get(i).getDay().getIndex())||
-						(schedule.getStartTime().getIndex()<list.get(i).getStartTime().getIndex() &&schedule.getEndTime().getIndex()>list.get(i).getStartTime().getIndex() &&schedule.getDay().getIndex()==list.get(i).getDay().getIndex())||
-				(schedule.getStartTime().getIndex()>list.get(i).getStartTime().getIndex() &&schedule.getStartTime().getIndex()<list.get(i).getEndTime().getIndex() &&schedule.getDay().getIndex()==list.get(i).getDay().getIndex()))
-				{
+		for (Schedule value : list)
+		{
+			if ((schedule.getStartTime().getIndex() >= value.getStartTime().getIndex() && schedule.getEndTime().getIndex() <= value.getEndTime().getIndex() && schedule.getDay().getIndex() == value.getDay().getIndex()) ||
+					(schedule.getStartTime().getIndex() < value.getStartTime().getIndex() && schedule.getEndTime().getIndex() > value.getStartTime().getIndex() && schedule.getDay().getIndex() == value.getDay().getIndex()) ||
+					(schedule.getStartTime().getIndex() > value.getStartTime().getIndex() && schedule.getStartTime().getIndex() < value.getEndTime().getIndex() && schedule.getDay().getIndex() == value.getDay().getIndex())) {
+				GUI.infoAlert("קיימת התנגשות במערכת", "התנגשות", "חזור");
+				return;
+			}
+			if (value.getTwoTimes()) {
+				if ((schedule.getStartTime().getIndex() >= value.getStartTimeTwo().getIndex() && schedule.getEndTime().getIndex() <= value.getEndTimeTwo().getIndex() && schedule.getDay().getIndex() == value.getDayTwo().getIndex()) ||
+						(schedule.getStartTime().getIndex() < value.getStartTimeTwo().getIndex() && schedule.getEndTime().getIndex() > value.getStartTimeTwo().getIndex() && schedule.getDay().getIndex() == value.getDayTwo().getIndex()) ||
+						(schedule.getStartTime().getIndex() > value.getStartTimeTwo().getIndex() && schedule.getStartTime().getIndex() < value.getEndTimeTwo().getIndex() && schedule.getDay().getIndex() == value.getDayTwo().getIndex())) {
 					GUI.infoAlert("קיימת התנגשות במערכת", "התנגשות", "חזור");
-					return ;
+					return;
 				}
-				if(list.get(i).getTwoTimes())
-				{
-					if((schedule.getStartTime().getIndex()>=list.get(i).getStartTimeTwo().getIndex() &&schedule.getEndTime().getIndex()<=list.get(i).getEndTimeTwo().getIndex() &&schedule.getDay().getIndex()==list.get(i).getDayTwo().getIndex())||
-							(schedule.getStartTime().getIndex()<list.get(i).getStartTimeTwo().getIndex() &&schedule.getEndTime().getIndex()>list.get(i).getStartTimeTwo().getIndex() &&schedule.getDay().getIndex()==list.get(i).getDayTwo().getIndex())||
-					(schedule.getStartTime().getIndex()>list.get(i).getStartTimeTwo().getIndex() &&schedule.getStartTime().getIndex()<list.get(i).getEndTimeTwo().getIndex() &&schedule.getDay().getIndex()==list.get(i).getDayTwo().getIndex()))
-					{
-						GUI.infoAlert("קיימת התנגשות במערכת", "התנגשות", "חזור");
-						return ;
-					}
+			}
+			if (schedule.getTwoTimes()) {
+				if ((schedule.getStartTimeTwo().getIndex() >= value.getStartTime().getIndex() && schedule.getEndTimeTwo().getIndex() <= value.getEndTime().getIndex() && schedule.getDayTwo().getIndex() == value.getDay().getIndex()) ||
+						(schedule.getStartTimeTwo().getIndex() < value.getStartTime().getIndex() && schedule.getEndTimeTwo().getIndex() > value.getStartTime().getIndex() && schedule.getDayTwo().getIndex() == value.getDay().getIndex()) ||
+						(schedule.getStartTimeTwo().getIndex() > value.getStartTime().getIndex() && schedule.getStartTimeTwo().getIndex() < value.getEndTime().getIndex() && schedule.getDayTwo().getIndex() == value.getDay().getIndex())) {
+					GUI.infoAlert("קיימת התנגשות במערכת", "התנגשות", "חזור");
+					return;
 				}
-				if(schedule.getTwoTimes())
-				{
-					if((schedule.getStartTimeTwo().getIndex()>=list.get(i).getStartTime().getIndex() &&schedule.getEndTimeTwo().getIndex()<=list.get(i).getEndTime().getIndex() &&schedule.getDayTwo().getIndex()==list.get(i).getDay().getIndex())||
-							(schedule.getStartTimeTwo().getIndex()<list.get(i).getStartTime().getIndex() &&schedule.getEndTimeTwo().getIndex()>list.get(i).getStartTime().getIndex() &&schedule.getDayTwo().getIndex()==list.get(i).getDay().getIndex())||
-					(schedule.getStartTimeTwo().getIndex()>list.get(i).getStartTime().getIndex() &&schedule.getStartTimeTwo().getIndex()<list.get(i).getEndTime().getIndex() &&schedule.getDayTwo().getIndex()==list.get(i).getDay().getIndex()))
-					{
+				if (value.getTwoTimes()) {
+					if ((schedule.getStartTimeTwo().getIndex() >= value.getStartTimeTwo().getIndex() && schedule.getEndTimeTwo().getIndex() <= value.getEndTimeTwo().getIndex() && schedule.getDayTwo().getIndex() == value.getDayTwo().getIndex()) ||
+							(schedule.getStartTimeTwo().getIndex() < value.getStartTimeTwo().getIndex() && schedule.getEndTimeTwo().getIndex() > value.getStartTimeTwo().getIndex() && schedule.getDayTwo().getIndex() == value.getDayTwo().getIndex()) ||
+							(schedule.getStartTimeTwo().getIndex() > value.getStartTimeTwo().getIndex() && schedule.getStartTimeTwo().getIndex() < value.getEndTimeTwo().getIndex() && schedule.getDayTwo().getIndex() == value.getDayTwo().getIndex())) {
 						GUI.infoAlert("קיימת התנגשות במערכת", "התנגשות", "חזור");
-						return ;
-					}
-					if(list.get(i).getTwoTimes())
-					{
-						if((schedule.getStartTimeTwo().getIndex()>=list.get(i).getStartTimeTwo().getIndex() &&schedule.getEndTimeTwo().getIndex()<=list.get(i).getEndTimeTwo().getIndex() &&schedule.getDayTwo().getIndex()==list.get(i).getDayTwo().getIndex())||
-								(schedule.getStartTimeTwo().getIndex()<list.get(i).getStartTimeTwo().getIndex() &&schedule.getEndTimeTwo().getIndex()>list.get(i).getStartTimeTwo().getIndex() &&schedule.getDayTwo().getIndex()==list.get(i).getDayTwo().getIndex())||
-						(schedule.getStartTimeTwo().getIndex()>list.get(i).getStartTimeTwo().getIndex() &&schedule.getStartTimeTwo().getIndex()<list.get(i).getEndTimeTwo().getIndex() &&schedule.getDayTwo().getIndex()==list.get(i).getDayTwo().getIndex()))
-						{
-							GUI.infoAlert("קיימת התנגשות במערכת", "התנגשות", "חזור");
-							return ;
-						}
+						return;
 					}
 				}
 			}
+		}
 		Platform.runLater(()->
 		{ 
 			if (schedule.getSplited()) 
@@ -363,26 +340,21 @@ public class NewCustomCourseController {
 	private static void replaceCourse(Schedule schedule)
 	{
 		ArrayList<Schedule> list = Course.getSchduledCourses();
-		for(int i=0;i<list.size();i++)
+		for (Schedule value : list)
 		{
-			if(list.get(i).getCourse().getID()==schedule.getCourse().getID())
-			{
-				if(list.get(i).getType().equals(schedule.getType()))
-				{
-					Main.scheduleController.getScheduleGrid().getChildren().remove(list.get(i).getGridPaneVBox1());
-					if(list.get(i).getSplited())
-					{
-						Main.scheduleController.getScheduleGrid().getChildren().remove(list.get(i).getGridPaneVBox2());
+			if (value.getCourse().getID().equals(schedule.getCourse().getID())) {
+				if (value.getType().equals(schedule.getType())) {
+					Main.scheduleController.getScheduleGrid().getChildren().remove(value.getGridPaneVBox1());
+					if (value.getSplited()) {
+						Main.scheduleController.getScheduleGrid().getChildren().remove(value.getGridPaneVBox2());
 					}
-					if(list.get(i).getTwoTimes())
-					{
-						Main.scheduleController.getScheduleGrid().getChildren().remove(list.get(i).getGridPaneVBox3());
-						if(list.get(i).getSplitedTwo())
-						{
-							Main.scheduleController.getScheduleGrid().getChildren().remove(list.get(i).getGridPaneVBox4());
+					if (value.getTwoTimes()) {
+						Main.scheduleController.getScheduleGrid().getChildren().remove(value.getGridPaneVBox3());
+						if (value.getSplitedTwo()) {
+							Main.scheduleController.getScheduleGrid().getChildren().remove(value.getGridPaneVBox4());
 						}
 					}
-					list.get(i).setSelected(false);
+					value.setSelected(false);
 					return;
 				}
 			}
@@ -393,9 +365,7 @@ public class NewCustomCourseController {
 	void makeSearchWithEnterBtn(KeyEvent event)
     {
     	if(event.getCode().equals(KeyCode.ENTER))
-    	{
-    		searchCourse(new ActionEvent());
-       }
+			searchCourse(new ActionEvent());
     }
 	
 

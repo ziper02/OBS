@@ -68,7 +68,7 @@ public class ScheduleController
 	private GridPane ScheduleGrid;
 
 	public static ArrayList<Scanner> st;
-	static ArrayList<Schedule> schedule;
+	private static ArrayList<Schedule> schedule;
 
     @FXML
     public JFXButton SaveSchedulePNG;
@@ -77,9 +77,9 @@ public class ScheduleController
 	private static int lastSelection;
 	public static NewCustomCourseController controller=null;
 	public static AutoCourseController controllerAuto=null;
-	public static  Pane saveSchedule;
+	static  Pane saveSchedule;
     @FXML
-    public void LoadNewCusomCourseController(ActionEvent event) 
+    public void LoadNewCusomCourseController()
     {
     	Pane newLoadedPane;
 		try 
@@ -120,7 +120,7 @@ public class ScheduleController
 			{
 				FXMLLoader loader=new FXMLLoader(getClass().getResource("/GUI/AutoCourse.fxml"));
 				newLoadedPane = loader.load();
-				if(controller!=null)
+				if(controller!=null && MiddlePane.getChildren().size()!=0)
 					MiddlePane.getChildren().remove(0);
 				MiddlePane.getChildren().add(newLoadedPane);
 				controllerAuto=loader.getController();
@@ -172,7 +172,7 @@ public class ScheduleController
 					ObjectInputStream ois = new ObjectInputStream(fis);
 					@SuppressWarnings("unchecked")
 					List<Schedule> list2 = (List<Schedule>) ois.readObject();
-					ArrayList<Schedule> list=new ArrayList<Schedule>(list2);
+					ArrayList<Schedule> list = new ArrayList<>(list2);
 					ois.close();
 					lastSelection=selection;
 					selection=4;
