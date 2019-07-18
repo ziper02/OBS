@@ -68,7 +68,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="PhyButton" contentDisplay="TOP" layoutX="47.0" layoutY="907.0" mnemonicParsing="false" onAction="#PhyButtonPressed" prefHeight="87.0" prefWidth="182.0" text="הנדסה אופטית">
+      <Button fx:id="PhyButton" contentDisplay="TOP" layoutX="47.0" layoutY="907.0" mnemonicParsing="false" onAction="#PhyButtonPressed" prefHeight="87.0" prefWidth="182.0" text="הנדסה אופטית" visible="false">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>

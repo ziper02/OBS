@@ -1,5 +1,6 @@
 package util;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.geometry.NodeOrientation;
@@ -9,6 +10,8 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.control.Button;
 
 import java.util.Optional;
 
@@ -87,6 +90,18 @@ public abstract class GUI
 				System.exit(0);
 			}
 		});
+	}
+
+
+	public static void disableButtons(Pane p)
+	{
+		for(Node n:p.getChildren())
+		{
+			if(n instanceof Pane)
+				disableButtons((Pane)n);
+			else if(n instanceof Button)
+				n.setDisable(true);
+		}
 	}
 
 }

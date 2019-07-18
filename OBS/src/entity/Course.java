@@ -31,6 +31,16 @@ public class Course implements Serializable
 		exercise= new ArrayList<>();
 		lab=new ArrayList<>();
 	}
+
+	public Course(String iD)
+	{
+		ID = iD;
+		Name = "";
+		Schedule=new ArrayList<>();
+		lecture=new ArrayList<>();
+		exercise= new ArrayList<>();
+		lab=new ArrayList<>();
+	}
 	
 	public Course()
 	{

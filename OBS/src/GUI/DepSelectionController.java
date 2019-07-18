@@ -3,7 +3,8 @@ package GUI;
 import entity.Department;
 import javafx.fxml.FXML;
 
-public class DepSelectionController {
+public class DepSelectionController
+{
 
 
     @FXML

@@ -4,16 +4,23 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import entity.Course;
 import entity.Department;
+import entity.Schedule;
 import entity.Semester;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import util.Scanner;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MultiSelectionController
 {
@@ -205,7 +212,7 @@ public class MultiSelectionController
                 hBox.setSpacing(10);
                 hBox.setPrefWidth(185);
                 hBox.setPrefHeight(20);
-                hBox.setAccessibleHelp(course.getID());
+                cb.setAccessibleHelp(course.getID());
                 FlowPanes.get(i).getChildren().add(hBox);
             }
             i++;
@@ -219,7 +226,42 @@ public class MultiSelectionController
     void AccepetButtonPressed(ActionEvent event)
     {
 
+        ScheduleController.st =new ArrayList<>();
+        List<Course> checkedList = new ArrayList<>();
+        for(FlowPane f : FlowPanes)
+        {
+            for (Object node1 : f.getChildren())
+                if (node1 instanceof HBox)
+                   for (Object node : ((HBox)node1).getChildren())
+                       if (node instanceof CheckBox)
+                           if (((CheckBox) node).isSelected())
+                               checkedList.add(new Course(((CheckBox) node).getAccessibleHelp()));
+        }
+
+        if (checkedList.size()==0)
+        {
+            util.GUI.alertErrorWithOption("לא נבחרו קורסים","","אישור");
+            return;
+        }
+        for (Course value : checkedList)
+        {
+            String courseID = value.getID();
+            if (!Course.couseExist(Integer.parseInt(courseID)))
+            {
+                Scanner temp = new Scanner(courseID);
+                if (!ScheduleController.st.contains(temp))
+                    ScheduleController.st.add(temp);
+            }
+        }
+
+        util.GUI.disableButtons(Main.scheduleController.MiddlePane);
+        util.GUI.disableButtons(Main.scheduleController.LeftPane);
+        for (Scanner scanner : ScheduleController.st)
+            scanner.start();
     }
+
+
+
 
     @FXML
     void BackButtonPressed(ActionEvent event)
@@ -227,7 +269,7 @@ public class MultiSelectionController
 
         Main.scheduleController.LeftPane.getChildren().remove(0);
         Main.scheduleController.MiddlePane.getChildren().remove(0);
-        Main.scheduleController.LeftPane.getChildren().add(Main.scheduleController.saveSchedule);
-        Main.scheduleController.selection=(-1);
+        Main.scheduleController.LeftPane.getChildren().add(ScheduleController.saveSchedule);
+        ScheduleController.selection =(-1);
     }
 }

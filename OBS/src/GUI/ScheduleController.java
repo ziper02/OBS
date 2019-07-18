@@ -88,10 +88,18 @@ public class ScheduleController
 			{
 				FXMLLoader loader=new FXMLLoader(getClass().getResource("/GUI/NewCustomCourse.fxml"));
 				newLoadedPane = loader.load();
-				if(controllerAuto!=null)
+				if(controllerAuto!=null && MiddlePane.getChildren().size()!=0)
 					MiddlePane.getChildren().remove(0);
+
 				MiddlePane.getChildren().add(newLoadedPane);
 				controller=loader.getController();
+				selection=1;
+			}
+			else if(selection==3)
+			{
+				LeftPane.getChildren().remove(0);
+				MiddlePane.getChildren().remove(0);
+				LeftPane.getChildren().add(saveSchedule);
 				selection=1;
 			}
 		} 
@@ -118,6 +126,13 @@ public class ScheduleController
 				controllerAuto=loader.getController();
 				selection=2;
 			}
+			else if(selection==3)
+			{
+				LeftPane.getChildren().remove(0);
+				MiddlePane.getChildren().remove(0);
+				LeftPane.getChildren().add(saveSchedule);
+				selection=2;
+			}
 		} 
 		catch (IOException e) 
 		{
@@ -130,14 +145,16 @@ public class ScheduleController
 		return ScheduleGrid;
 	}
 
-	public void setScheduleGrid(GridPane scheduleGrid) 
-	{
-		ScheduleGrid = scheduleGrid;
-	}
 
 	@FXML
-	void LoadSchedulePressed(ActionEvent event) 
+	void LoadSchedulePressed()
 	{
+		if(selection==3)
+		{
+			LeftPane.getChildren().remove(0);
+			MiddlePane.getChildren().remove(0);
+			LeftPane.getChildren().add(saveSchedule);
+		}
 		util.GUI.infoAlert("טעינת הקובץ עלולה לקחת כמה שניות"+"\n עקב בדיקה עם השעות עדיין רלוונטיות.", "אישור הבקשה", "אישור");
 		FileChooser fc=new FileChooser();
 		fc.getExtensionFilters().add(new ExtensionFilter("TMP Files","*.tmp"));
@@ -158,7 +175,7 @@ public class ScheduleController
 					ArrayList<Schedule> list=new ArrayList<Schedule>(list2);
 					ois.close();
 					lastSelection=selection;
-					selection=3;
+					selection=4;
 					checkForUpdate(list);
 				}
 				catch (Exception e) 
@@ -175,8 +192,14 @@ public class ScheduleController
 	}
 
 	@FXML
-	void SaveSchedulePressed(ActionEvent event) 
+	void SaveSchedulePressed()
 	{
+		if(selection==3)
+		{
+			LeftPane.getChildren().remove(0);
+			MiddlePane.getChildren().remove(0);
+			LeftPane.getChildren().add(saveSchedule);
+		}
 		FileChooser fc=new FileChooser();
 		fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("TMP File","*.tmp"));
 		fc.setTitle("Save My Schedule");
@@ -200,60 +223,72 @@ public class ScheduleController
 	}
 
 	@FXML
-	void VaildSchedulePressed(ActionEvent event) 
+	void ValidSchedulePressed()
 	{
+		if(selection==3)
+		{
+			LeftPane.getChildren().remove(0);
+			MiddlePane.getChildren().remove(0);
+			LeftPane.getChildren().add(saveSchedule);
+		}
 		Course.VaildSchedule();
 	}
 
     @FXML
-    void SaveSchedulePNGPressed(ActionEvent event) 
+    void SaveSchedulePNGPressed()
     {
-    	  WritableImage image = ScheduleGrid.snapshot(new SnapshotParameters(), null);
-    	    //File file2 = new File("MySchedule.png");
-    	    
-    	    try 
-    	    {
-    	        //ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file2);
-    	        FileChooser fc=new FileChooser();
-    			fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG File","*.png"));
-    			fc.setTitle("Save My Schedule");
-    			fc.setInitialFileName("MySchedule.png");
-    			File file =fc.showSaveDialog(Main.primaryStage);
-    			if(file!=null)
-    			{
-    				try 
-    				{
-    					RenderedImage renderedImage = SwingFXUtils.fromFXImage(image, null);
-    					// Write the snapshot to the chosen file
-    					ImageIO.write(renderedImage, "png", file);
-    				} 
-    				catch (Exception e) 
-    				{
-    					e.printStackTrace();
-    				}
-    			}
-    		}
-    	    catch (Exception e) 
-    	    {
-    	    	e.printStackTrace();
-    	    }
+		if(selection==3)
+		{
+			LeftPane.getChildren().remove(0);
+			MiddlePane.getChildren().remove(0);
+			LeftPane.getChildren().add(saveSchedule);
+		}
+    	WritableImage image = ScheduleGrid.snapshot(new SnapshotParameters(), null);
+    	try
+		{
+			FileChooser fc=new FileChooser();
+			fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG File","*.png"));
+		  	fc.setTitle("Save My Schedule");
+		  	fc.setInitialFileName("MySchedule.png");
+		  	File file =fc.showSaveDialog(Main.primaryStage);
+		  	if(file!=null)
+		  	{
+		  		try
+				{
+					RenderedImage renderedImage = SwingFXUtils.fromFXImage(image, null);
+					// Write the snapshot to the chosen file
+					ImageIO.write(renderedImage, "png", file);
+				}
+		  		catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+		  	}
+		}
+    	catch (Exception e)
+		{
+			e.printStackTrace();
+		}
     }
 
 	private void checkForUpdate(ArrayList<Schedule> list)
 	{
-		st=new ArrayList<Scanner>();
+		st=new ArrayList<>();
 		schedule=list;
 		LoadSchedule.setVisible(false);
 		PBar.setVisible(true);
-		for (Schedule value : list) {
+		for (Schedule value : list)
+		{
 			String courseID = value.getCourse().getID();
-			if (Course.couseExist(Integer.parseInt(courseID)) == false) {
+			if (!Course.couseExist(Integer.parseInt(courseID)))
+			{
 				Scanner temp = new Scanner(courseID);
-				if (st.contains(temp) == false)
+				if (!st.contains(temp))
 					st.add(temp);
 			}
 		}
-		for (Scanner scanner : st) {
+		for (Scanner scanner : st)
+		{
 			scanner.start();
 		}
 		
@@ -335,7 +370,7 @@ public class ScheduleController
 	
 
     @FXML
-    void MultiLoadAction(ActionEvent event) 
+    void MultiLoadAction()
     {
 		Pane newLoadedPane;
 		try
@@ -365,8 +400,25 @@ public class ScheduleController
     }
 
 
-	
-	
+	public void MultiSelectionResult()
+	{
+		Platform.runLater(() ->
+		{
+			for (Scanner scanner : st)
+			{
+				Course course = scanner.getValue();
+				if(course!= null)
+					Course.addCourse(course);
+			}
+			LeftPane.getChildren().remove(0);
+			MiddlePane.getChildren().remove(0);
+			LeftPane.getChildren().add(saveSchedule);
+			selection=(-1);
+			util.GUI.infoAlert("הקורסים נטענו בהצלחה", "נטען בהצלחה", "אישור");
+		});
+
+	}
+
 
 
 

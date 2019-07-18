@@ -12,14 +12,14 @@
    <children>
       <FlowPane fx:id="TitleSelected" hgap="9.0" prefHeight="92.0" prefWidth="1140.0" vgap="5.0">
          <children>
-            <Button fx:id="AccepetButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#AccepetButtonPressed" prefHeight="90.0" prefWidth="238.0" text="הוסף את המבוקשים למערכת">
+            <Button fx:id="BackButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#BackButtonPressed" prefHeight="96.0" prefWidth="234.0" text="חזור למערכת">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
                <graphic>
-                  <ImageView fitHeight="51.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="52.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../icons/ok.png" />
+                        <Image url="@../icons/return.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -172,14 +172,14 @@
       </FlowPane>
       <AnchorPane prefHeight="96.0" prefWidth="1139.0">
          <children>
-            <Button fx:id="BackButton" contentDisplay="TOP" layoutX="434.0" layoutY="-8.0" mnemonicParsing="false" onAction="#BackButtonPressed" prefHeight="96.0" prefWidth="234.0" text="חזור למערכת">
+            <Button fx:id="AccepetButton" contentDisplay="TOP" layoutX="436.0" mnemonicParsing="false" onAction="#AccepetButtonPressed" prefHeight="90.0" prefWidth="238.0" text="הוסף את המבוקשים למערכת">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
                <graphic>
-                  <ImageView fitHeight="52.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="51.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../icons/return.png" />
+                        <Image url="@../icons/ok.png" />
                      </image>
                   </ImageView>
                </graphic>

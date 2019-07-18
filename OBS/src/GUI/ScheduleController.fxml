@@ -22,7 +22,7 @@
          <children>
             <Pane fx:id="RightPane" layoutX="1423.0" layoutY="-1.0" prefHeight="1019.0" prefWidth="206.0">
                <children>
-                  <JFXButton fx:id="VaildSchedule" layoutY="440.0" onAction="#VaildSchedulePressed" prefHeight="61.0" prefWidth="208.0" style="-fx-background-color: #6495ed;" text="בדיקת תקינות מערכת" textFill="#fff8f8">
+                  <JFXButton fx:id="VaildSchedule" layoutY="440.0" onAction="#ValidSchedulePressed" prefHeight="61.0" prefWidth="208.0" style="-fx-background-color: #6495ed;" text="בדיקת תקינות מערכת" textFill="#fff8f8">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -57,7 +57,7 @@
                         <Font size="15.0" />
                      </font>
                   </JFXButton>
-                  <ProgressIndicator fx:id="PBar" layoutX="72.0" layoutY="650.0" prefHeight="61.0" prefWidth="61.0" visible="false" />
+                  <ProgressIndicator fx:id="PBar" layoutX="77.0" layoutY="791.0" prefHeight="61.0" prefWidth="61.0" visible="false" />
                   <JFXButton fx:id="MultiLoad" layoutY="355.0" onAction="#MultiLoadAction" prefHeight="61.0" prefWidth="208.0" style="-fx-background-color: #6495ed;" text="טעינה מרובה של קורסים" textFill="#fff8f8">
                      <font>
                         <Font size="15.0" />

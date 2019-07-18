@@ -178,8 +178,18 @@ public class Scanner extends Thread
 			 	    	boolean stopThisSet=true;
 			 	    	schedule.setCourse(course);
 			 	    	schedule.setSelected(false);
-			 	    	schedule.setType(splitedTypeCourse[2]);
-			 	    	schedule.setGroupID(splitedTypeCourse[5]+splitedTypeCourse[6]);
+			 	    	try
+						{
+							schedule.setType(splitedTypeCourse[2]);
+							schedule.setGroupID(splitedTypeCourse[5]+splitedTypeCourse[6]);
+						}
+						catch (Exception e)
+						{
+							tempTypeCourse=typeOfelement.get(i-1).getText();
+							splitedTypeCourse = tempTypeCourse.split("\\s+");
+							schedule.setType(splitedTypeCourse[2]);
+							schedule.setGroupID(splitedTypeCourse[5]+splitedTypeCourse[6]);
+						}
 			 	    	try
 			 	    	{
 			 	    		schedule.setDay(new Days(splitedNameCourse[2]));
@@ -286,7 +296,7 @@ public class Scanner extends Thread
 				{
 					ScheduleController.controllerAuto.resultSearchCouse();
 				}
-				if(ScheduleController.selection==3)
+				if(ScheduleController.selection==4)
 				{
 					tempCount++;
 					if(tempCount==ScheduleController.st.size())
@@ -295,6 +305,16 @@ public class Scanner extends Thread
 						Main.scheduleController.LoadSchedule.setVisible(true);
 						Main.scheduleController.PBar.setVisible(false);
 						ScheduleController.checkForUpdateResult();
+					}
+				}
+				if(ScheduleController.selection==3)
+				{
+					tempCount++;
+					if(tempCount==ScheduleController.st.size())
+					{
+						tempCount=0;
+						Main.scheduleController.PBar.setVisible(false);
+						Main.scheduleController.MultiSelectionResult();
 					}
 				}
 			}	
