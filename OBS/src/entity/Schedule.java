@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import GUI.Main;
 import GUI.ScheduleController;
-import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -62,30 +61,18 @@ public class Schedule implements Serializable
 		return GridPaneVBox1;
 	}
 
-	public void setGridPaneVBox1(VBox gridPaneVBox1) 
-	{
-		GridPaneVBox1 = gridPaneVBox1;
-	}
 
 	public VBox getGridPaneVBox2() 
 	{
 		return GridPaneVBox2;
 	}
 
-	public void setGridPaneVBox2(VBox gridPaneVBox2) 
-	{
-		GridPaneVBox2 = gridPaneVBox2;
-	}
 	
 	public Boolean getSplited() 
 	{
 		return splited;
 	}
 
-	public void setSplited(Boolean splited) 
-	{
-		this.splited = splited;
-	}
 	public Course getCourse() 
 	{
 		return course;
@@ -118,10 +105,6 @@ public class Schedule implements Serializable
 		return splitedTwo;
 	}
 
-	public void setSplitedTwo(Boolean splitedTwo) 
-	{
-		this.splitedTwo = splitedTwo;
-	}
 
 	public void setType(String type) 
 	{
@@ -467,10 +450,6 @@ public class Schedule implements Serializable
 		this.selected = selected;
 	}
 
-	public String getGroupID() 
-	{
-		return GroupID;
-	}
 
 	public void setGroupID(String groupID) 
 	{
