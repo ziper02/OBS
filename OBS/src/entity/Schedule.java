@@ -40,6 +40,8 @@ public class Schedule implements Serializable
 	private transient VBox GridPaneVBox3, GridPaneVBox4;
 
 
+	private static Object lock2 = new Object();
+
 	public Schedule()
 	{
 		
@@ -539,7 +541,7 @@ public class Schedule implements Serializable
 	{
 		if((schedule.getStartTime().getIndex()>=this.getStartTime().getIndex() &&schedule.getEndTime().getIndex()<=this.getEndTime().getIndex() &&schedule.getDay().getIndex()==this.getDay().getIndex())||
 				(schedule.getStartTime().getIndex()<this.getStartTime().getIndex() &&schedule.getEndTime().getIndex()>this.getStartTime().getIndex() &&schedule.getDay().getIndex()==this.getDay().getIndex())||
-		(schedule.getStartTime().getIndex()>this.getStartTime().getIndex() &&schedule.getStartTime().getIndex()<this.getEndTime().getIndex() &&schedule.getDay().getIndex()==this.getDay().getIndex()))
+		(schedule.getEndTime().getIndex()>this.getStartTime().getIndex() &&schedule.getStartTime().getIndex()<this.getEndTime().getIndex() &&schedule.getDay().getIndex()==this.getDay().getIndex()))
 		{
 			return true;
 		}
@@ -547,7 +549,7 @@ public class Schedule implements Serializable
 		{
 			if((schedule.getStartTime().getIndex()>=this.getStartTimeTwo().getIndex() &&schedule.getEndTime().getIndex()<=this.getEndTimeTwo().getIndex() &&schedule.getDay().getIndex()==this.getDayTwo().getIndex())||
 					(schedule.getStartTime().getIndex()<this.getStartTimeTwo().getIndex() &&schedule.getEndTime().getIndex()>this.getStartTimeTwo().getIndex() &&schedule.getDay().getIndex()==this.getDayTwo().getIndex())||
-			(schedule.getStartTime().getIndex()>this.getStartTimeTwo().getIndex() &&schedule.getStartTime().getIndex()<this.getEndTimeTwo().getIndex() &&schedule.getDay().getIndex()==this.getDayTwo().getIndex()))
+			(schedule.getEndTime().getIndex()>this.getStartTimeTwo().getIndex() &&schedule.getStartTime().getIndex()<this.getEndTimeTwo().getIndex() &&schedule.getDay().getIndex()==this.getDayTwo().getIndex()))
 			{
 				return true;
 			}
@@ -556,7 +558,7 @@ public class Schedule implements Serializable
 		{
 			if((schedule.getStartTimeTwo().getIndex()>=this.getStartTime().getIndex() &&schedule.getEndTimeTwo().getIndex()<=this.getEndTime().getIndex() &&schedule.getDayTwo().getIndex()==this.getDay().getIndex())||
 					(schedule.getStartTimeTwo().getIndex()<this.getStartTime().getIndex() &&schedule.getEndTimeTwo().getIndex()>this.getStartTime().getIndex() &&schedule.getDayTwo().getIndex()==this.getDay().getIndex())||
-			(schedule.getStartTimeTwo().getIndex()>this.getStartTime().getIndex() &&schedule.getStartTimeTwo().getIndex()<this.getEndTime().getIndex() &&schedule.getDayTwo().getIndex()==this.getDay().getIndex()))
+			(schedule.getEndTimeTwo().getIndex()>this.getStartTime().getIndex() &&schedule.getStartTimeTwo().getIndex()<this.getEndTime().getIndex() &&schedule.getDayTwo().getIndex()==this.getDay().getIndex()))
 			{
 				return true;
 			}
@@ -564,7 +566,7 @@ public class Schedule implements Serializable
 			{
                 return (schedule.getStartTimeTwo().getIndex() >= this.getStartTimeTwo().getIndex() && schedule.getEndTimeTwo().getIndex() <= this.getEndTimeTwo().getIndex() && schedule.getDayTwo().getIndex() == this.getDayTwo().getIndex()) ||
                         (schedule.getStartTimeTwo().getIndex() < this.getStartTimeTwo().getIndex() && schedule.getEndTimeTwo().getIndex() > this.getStartTimeTwo().getIndex() && schedule.getDayTwo().getIndex() == this.getDayTwo().getIndex()) ||
-                        (schedule.getStartTimeTwo().getIndex() > this.getStartTimeTwo().getIndex() && schedule.getStartTimeTwo().getIndex() < this.getEndTimeTwo().getIndex() && schedule.getDayTwo().getIndex() == this.getDayTwo().getIndex());
+                        (schedule.getEndTimeTwo().getIndex() > this.getStartTimeTwo().getIndex() && schedule.getStartTimeTwo().getIndex() < this.getEndTimeTwo().getIndex() && schedule.getDayTwo().getIndex() == this.getDayTwo().getIndex());
 			}
 		}
 		return false;
@@ -582,12 +584,36 @@ public class Schedule implements Serializable
 	
 	public static Boolean contaninsSameScheduleListSameOrder(ArrayList <ArrayList<Schedule>> sc,ArrayList <Schedule> sc1)
 	{
-        for (ArrayList<Schedule> schedules : sc)
-        {
-            if (sameScheduleListSameOrder(schedules, sc1))
-                return true;
-        }
-		return false;
+		synchronized(lock2)
+		{
+            try
+            {
+                for (ArrayList<Schedule> schedules : sc)
+                {
+
+                        if (sameScheduleListSameOrder(schedules, sc1))
+                            return true;
+                }
+            }
+            catch(Exception e)
+            {
+                try
+                {
+                    for (ArrayList<Schedule> schedules : sc)
+                    {
+
+                        if (sameScheduleListSameOrder(schedules, sc1))
+                            return true;
+                    }
+                }
+                catch(Exception e1) {
+                    return true;
+                }
+            }
+
+
+			return false;
+		}
 	}
 	@Override
 	public boolean equals(Object obj) 

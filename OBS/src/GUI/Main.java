@@ -395,6 +395,10 @@ public class Main extends Application
 		c.setName("ביולוגיה חישובית");
 		c.setID("61976");
 		s.add(c);
+		c=new Course();
+		c.setName("ראיית מכונה");
+		c.setID("61994");
+		s.add(c);
 		d.add(s);
 
 		s=new Semester("אשכול הנדסת תכנה",true);

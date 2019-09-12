@@ -11,7 +11,9 @@ public class GA extends Thread
 {
 	private static HashMap<Integer, Course> map = new HashMap<>(); 
 	private static ArrayList<Course> list=new ArrayList<>();
-	
+
+	private Object lock1 = new Object();
+
 
 	private Population population;
     private Chromosome fittest;
@@ -173,7 +175,7 @@ public class GA extends Thread
 	    	}
 	    	if(fittest.getFitness()>=value)
 	    	{
-	    		
+
 	    		for(int i=0;i<population.getChromosomes().size();i++)
 	    		{
 	    			if(population.getChromosomes().get(i).getFitness()>=value)
@@ -210,13 +212,16 @@ public class GA extends Thread
     	}
     	if(fittest.getFitness()>=value)
     	{
-    		
-    		for(int i=0;i<population.getChromosomes().size();i++)
-    		{
-    			if(population.getChromosomes().get(i).getFitness()>=value)
-					if (!Schedule.contaninsSameScheduleListSameOrder(Finalsc, population.getChromosomes().get(i).getGenes()))
-						Finalsc.add(population.getChromosomes().get(i).getGenes());
-    		}
+			synchronized(lock1)
+			{
+				for(int i=0;i<population.getChromosomes().size();i++)
+				{
+					if(population.getChromosomes().get(i).getFitness()>=value)
+						if (!Schedule.contaninsSameScheduleListSameOrder(Finalsc, population.getChromosomes().get(i).getGenes()))
+							Finalsc.add(population.getChromosomes().get(i).getGenes());
+				}
+			}
+
     	}
     	countValues++;
     	if(ScheduleController.controllerAuto.SecoundNumberOfGA==countValues)

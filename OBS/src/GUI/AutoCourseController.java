@@ -188,11 +188,14 @@ public class AutoCourseController {
     	}
 		GA.countValues=0;
 		GA.choosenValue=0;
+
+
 		for(int i=0;i<SecoundNumberOfGA;i++)
 		{
 			GA ga1=new GA(100,ga.get(maxi).getValue(),75000,2);
 			ga1.start();
 		}
+
     }
     
     public void resultOfGASecound()
@@ -301,6 +304,7 @@ public class AutoCourseController {
 	       StartAuto.setDisable(false);
 	       IDcourseTF.setDisable(false);
 	   });
+	   IDcourseTF.clear();
    }
 
 }
