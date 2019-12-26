@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
+import entity.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
@@ -17,10 +18,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import GUI.LoadingPanelController;
 import GUI.Main;
 import GUI.ScheduleController;
-import entity.Schedule;
-import entity.Course;
-import entity.Days;
-import entity.Hours;
 
 public class Scanner extends Thread
 {
@@ -128,25 +125,10 @@ public class Scanner extends Thread
 			 	}
 			 	else
 			 	{
-			 		WebElement Name=driver.findElement(By.xpath(".//h1[@style='text-align:center']"));
-			 		StringBuilder tempName= new StringBuilder(Name.getText());
-			 		String[] splitedName = tempName.toString().split("\\s+");
-			 		tempName = new StringBuilder();
-			 		for(int i=1;i<splitedName.length;i++)
-			 		{
-			 			if(splitedName[i].contains("שנה"))
-			 			{
-			 				break;
-			 			}
-			 			else
-			 			{
-			 				tempName.append(" ").append(splitedName[i]);
-			 			}
-			 		}
-			 		course.setName(tempName.toString());
+			 		course.setName(Department.Courselist.get(ID).getName());
 			 		List<WebElement> elements=driver.findElements(By.className("odd"));
 			 		List<WebElement> elementsEven=driver.findElements(By.className("even"));
-			 	    List<WebElement> typeOfelement = driver.findElements(By.xpath(".//div[@class='text'][contains(@style,'text-align:right')]"));
+			 	    List<WebElement> typeOfelement = driver.findElements(By.cssSelector(".text.TextAlignRight"));
 			 	    boolean haveEven;
 			 	    int j=0;
 			 	    String tempEven=null;
