@@ -24,7 +24,7 @@ The optimal schedule is based on "Genetic Algoritam" , and rules such as less da
 ### <p style="text-align: center;">Customized schedule</p>
 ![alt text](https://github.com/ziper02/OBS/blob/master/images/obs.JPG "Customized schedule")
   
-### Fetching few courses{style=text-align:center}
+ <h3><p style="text-align: center;"> Fetching few courses </p></h3>
 ![alt text](https://github.com/ziper02/OBS/blob/master/images/multiselect.JPG "Fetching few courses")
   
 ### <p style="text-align: center;">Optimizted schedule</p>    
