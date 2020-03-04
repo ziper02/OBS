@@ -1,6 +1,6 @@
  # OBS - Ort Braude Scheduler
  
-<div style="text-align:center"><img src="https://github.com/ziper02/OBS/blob/master/images/OBS_logo.png"/></div>
+<p align="center"><img src="https://github.com/ziper02/OBS/blob/master/images/OBS_logo.png"/></p>
 
 
 
