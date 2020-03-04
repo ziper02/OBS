@@ -1,5 +1,5 @@
  # OBS - Ort Braude Scheduler
-![alt text](https://github.com/ziper02/OBS/blob/master/images/OBS_logo.png "OBS Logo")
+![OBS_logo.png](https://github.com/ziper02/OBS/blob/master/images/OBS_logo.png "OBS Logo")
 
 
 ## Software description  
@@ -20,7 +20,8 @@ The optimal schedule is based on "Genetic Algoritam" , and rules such as less da
 * After loading file , Vecrication of availability for stored schedule according to Ort Braude website.
 * Validation check of schedule (that selected lecture,exercise and lab if needed).
 
-<html> <body> <center> <h3>Customized schedule</h3> </center> </body> </html>  
+<p align="justify"> Customized schedule </p>
+
 ![alt text](https://github.com/ziper02/OBS/blob/master/images/obs.JPG "Customized schedule")
   
 <center> <h3>Fetching few courses</h3> </center>  
