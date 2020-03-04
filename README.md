@@ -1,5 +1,5 @@
  # OBS - Ort Braude Scheduler
-![alt text](https://github.com/ziper02/OBS/blob/master/OBS/icons/OBS_logo.png "OBS Logo")
+![alt text](https://github.com/ziper02/OBS/blob/master/images/OBS_logo.png "OBS Logo")
 
 
 ## Software description  
@@ -24,9 +24,9 @@ The optimal schedule is based on "Genetic Algoritam" , and rules such as less da
 ### <p style="text-align: center;">Customized schedule</p>
 ![alt text](https://github.com/ziper02/OBS/blob/master/images/obs.JPG "Customized schedule")
   
-<p style="text-align: center;">
+<div align="center">
 ### Fetching few courses
-</p>  
+</div>  
 ![alt text](https://github.com/ziper02/OBS/blob/master/images/multiselect.JPG "Fetching few courses")
   
 ### <p style="text-align: center;">Optimizted schedule</p>    
