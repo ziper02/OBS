@@ -20,7 +20,7 @@ The optimal schedule is based on "Genetic Algoritam" , and rules such as less da
 * After loading file , Vecrication of availability for stored schedule according to Ort Braude website.
 * Validation check of schedule (that selected lecture,exercise and lab if needed).
 
-### _"<p align="center"> Customized schedule </p>"_
+### _<p align="center"> Customized schedule </p>_
 
 ![alt text](https://github.com/ziper02/OBS/blob/master/images/obs.JPG "Customized schedule")
   
