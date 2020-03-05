@@ -9,11 +9,11 @@ This Software developed as personal project. It allows students from Ort Braude 
 The software is only client side, it allows to student to automatcly obtain in real time the details of the courses ,and offer them option to build custom schedule as they wish, and also provide optimal schedule according to selected courses.  
   
 The data is fetched by [Selenium automation](https://www.selenium.dev/).  
-The optimal schedule is based on "Genetic Algoritam" , and rules such as less days to learn, minimum of free hours etc.
+The optimal schedule is based on "Genetic Algoritam" , and rules such as less days to learn, minimum of free hours, etc.
   
   
 ## Services  
-* Fetching courses (by course id or course name), and get the days and hours of lectures, the name of the lecture , the classroom etc.
+* Fetching courses (by course id or course name), and get the days and hours of lectures, the name of the lecture , the classroom, etc.
 * Fetching few courses in one time.
 * Building customized schedule.
 * Build optimizted schedule (which achieved by Genetic Algoritam).
