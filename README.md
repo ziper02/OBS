@@ -11,7 +11,10 @@ The software is only client side, it allows to student to automatcly obtain in r
 The data is fetched by [Selenium automation](https://www.selenium.dev/).  
 The optimal schedule is based on "Genetic Algoritam" , and rules such as less days to learn, minimum of free hours, etc.
   
-  
+## Requirements
+For this project need Chrome version 76, The version of ChromeDriver only supports this one.
+if you using other version of chrome , you can find out [Here](https://chromedriver.chromium.org/downloads) Chromedriver.exe for your chrome version
+
 ## Services  
 * Fetching courses (by course id or course name), and get the days and hours of lectures, the name of the lecture , the classroom, etc.
 * Fetching few courses in one time.
@@ -21,6 +24,7 @@ The optimal schedule is based on "Genetic Algoritam" , and rules such as less da
 * Save and load the schedule from TMP file that created by the system.
 * After loading file , Vecrication of availability for stored schedule according to Ort Braude website.
 * Validation check of schedule (that selected lecture,exercise and lab if needed).
+
 
 ### _<p align="center"> Customized schedule </p>_
 
